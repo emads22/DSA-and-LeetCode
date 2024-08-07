@@ -45,3 +45,10 @@ Contributions are welcome! Here are some ways you can contribute to the project:
 This project is licensed under the MIT License, which grants permission for free use, modification, distribution, and sublicense of the code, provided that the copyright notice (attributed to [emads22](https://github.com/emads22)) and permission notice are included in all copies or substantial portions of the software. This license is permissive and allows users to utilize the code for both commercial and non-commercial purposes.
 
 Please see the [LICENSE](LICENSE) file for more details.
+
+## Contact
+For more details or inquiries, please contact:
+
+- **Email:** &nbsp; `emadsaab222@gmail.com`
+
+  [<img src="https://img.shields.io/badge/Email-Contact%20Me-red?logo=gmail" width="170">](mailto:emadsaab222@gmail.com)
