@@ -58,13 +58,13 @@ class LinkedList(Generic[ItemType]):
         Returns:
             str: The string representation of the linked list.
         """
-        display = "* "
+        display = "\n\n* "
         temp = self.head
         while temp:
             display += f"{temp} --> "
             temp = temp.next
         display += f"None\n\n  . Head: {self.head}\n  . Tail: {
-            self.tail}\n  . Length: {self.length}\n\n"
+            self.tail}\n  . Length: {self.length}\n"
         return display
 
     def display(self) -> None:

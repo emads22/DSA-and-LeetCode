@@ -61,14 +61,14 @@ class DoublyLinkedList(Generic[ItemType]):
             str: The string representation of the doubly linked list.
         """
         first_link = "None <-- " if self.length > 0 else ""
-        display = f"* {first_link}"
+        display = f"\n\n* {first_link}"
         temp = self.head
         while temp:
             link = "<-->" if temp.next else "-->"
             display += f"{temp} {link} "
             temp = temp.next
         display += f"None\n\n  . Head: {self.head}\n  . Tail: {
-            self.tail}\n  . Length: {self.length}\n\n"
+            self.tail}\n  . Length: {self.length}\n"
         return display
 
     def display(self) -> None:
