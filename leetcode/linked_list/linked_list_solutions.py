@@ -14,8 +14,20 @@ from typing import Optional
 
 
 class Solution:
-
+    """
+    A class that provides solutions for operations on a linked list.
+    
+    Attributes:
+        linked_list (LinkedList): The linked list to perform operations on.
+    """
+     
     def __init__(self, linked_list: LinkedList):
+        """
+        Initialize the Solution with a linked list.
+
+        Args:
+            linked_list (LinkedList): The linked list to be manipulated.
+        """
         self.linked_list = linked_list
 
     def find_middle_node(self) -> Optional[Node]:
