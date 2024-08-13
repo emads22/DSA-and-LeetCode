@@ -92,3 +92,84 @@ class Solution:
         #     runner = runner.prev
         # # Swap the head and tail references
         # self.doubly_linked_list.head, self.doubly_linked_list.tail = self.doubly_linked_list.tail, self.doubly_linked_list.head
+
+    def is_palindrome(self) -> bool:
+        """
+        Checks if the elements in the doubly linked list form a palindrome.
+
+        A palindrome is a sequence that reads the same backward as forward. This method
+        includes two approaches to determine if the list is a palindrome. Only the first
+        approach is executed in the current implementation.
+
+        Returns:
+            bool: True if the doubly linked list is a palindrome, False otherwise.
+        """
+
+        # METHOD 1:
+        # A single element or an empty list is considered a palindrome.
+        if self.doubly_linked_list.length <= 1:
+            return True
+        # Initialize two pointers: one starting from head (beginning) and one from tail (end)
+        forward = self.doubly_linked_list.head
+        backward = self.doubly_linked_list.tail
+        # Iterate through the list comparing values from the front and the back.
+        while forward.value == backward.value:
+            # If pointers meet or are adjacent, it indicates a palindrome.
+            if forward == backward or forward.prev == backward:
+                return True
+            # Move forward pointer to the next node and backward pointer to the previous node.
+            forward = forward.next
+            backward = backward.prev        
+        # If a mismatch is found, the list is not a palindrome.
+        return False
+
+        # # METHOD 2:
+        # if self.doubly_linked_list.length <= 1:
+        #     # If the list has 0 or 1 element, it is trivially a palindrome.
+        #     return True      
+        # # Initialize two pointers: one at the head (start) of the list and one at the tail (end).
+        # forward = self.doubly_linked_list.head
+        # backward = self.doubly_linked_list.tail
+        # # Iterate through the first half of the list.
+        # for _ in range(self.doubly_linked_list.length // 2):
+        #     # Compare the value at the forward pointer with the value at the backward pointer.
+        #     if forward.value != backward.value:
+        #         # If the values do not match, the list is not a palindrome.
+        #         return False
+
+        #     # Move forward pointer to the next node and backward pointer to the previous node.
+        #     forward = forward.next
+        #     backward = backward.prev
+        # # If all compared values match, the list is a palindrome.
+        # return True
+
+    def swap_pairs(self) -> None:
+        if self.doubly_linked_list.length < 2:
+            return
+        current = self.doubly_linked_list.head
+        while current and current.next:
+            adjacent = current.next
+            current.next = adjacent.next
+            # current.prev = adjacent
+            if adjacent.next:
+                adjacent.next.prev = current
+            adjacent.next = current
+            adjacent.prev = current.prev
+            current.prev = adjacent
+            if adjacent.prev is None:
+                self.doubly_linked_list.head = adjacent
+            current = current.next
+    
+
+    
+
+dll = DoublyLinkedList()
+dll.append(1)
+dll.append(2)
+dll.append(3)
+dll.append(4)
+dll.display()
+
+s = Solution(dll)
+s.swap_pairs()
+dll.display()
