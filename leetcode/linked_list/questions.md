@@ -74,6 +74,58 @@ The method should follow these guidelines:
 
 
 
+## 4. Partition List (**Interview Question**)
+  
+**HEADS UP: Advanced Challenge**
+
+### Implement the `partition_list` member function for the LinkedList class, which partitions the list such that all nodes with values less than x come before nodes with values greater than or equal to x.
+
+**Note:** 
+This linked list class does NOT have a tail which will make this method easier to implement.  
+The original relative order of the nodes should be preserved.
+
+### Details:
+The function `partition_list` takes an integer `x` as a parameter and modifies the current linked list in place according to the specified criteria. If the linked list is empty (i.e., head is null), the function should return immediately without making any changes.
+
+### Example 1:
+- **Input:**  
+   - Linked List: `3 -> 8 -> 5 -> 10 -> 2 -> 1`  
+   - x: `5`
+
+- **Process:** 
+   - Values less than 5: `3, 2, 1`  
+   - Values greater than or equal to 5: `8, 5, 10`
+
+- **Output:**  
+   - Linked List: `3 -> 2 -> 1 -> 8 -> 5 -> 10`
+
+
+### Example 2:
+- **Input:**  
+   - Linked List: `1 -> 4 -> 3 -> 2 -> 5 -> 2`  
+   - x: `3`
+
+- **Process:**  
+   - Values less than 3: `1, 2, 2`  
+   - Values greater than or equal to 3: `4, 3, 5`
+
+- **Output:**  
+   - Linked List: `1 -> 2 -> 2 -> 4 -> 3 -> 5`
+
+
+#### Tips:
+- While traversing the linked list, maintain two separate chains: one for values less than x and one for values greater than or equal to x.
+- Use dummy nodes to simplify the handling of the heads of these chains.
+- After processing the entire list, connect the two chains to get the desired arrangement.
+
+#### Constraints:
+- The solution must maintain the relative order of nodes. For instance, in the first example, even though 8 appears before 5 in the original list, the partitioned list must still have 8 before 5 as their relative order remains unchanged.
+- You must solve the problem **without modifying the values** in the list's nodes (i.e., only the nodes' next pointers may be changed).
+
+-----------------------------------------------------------------------------------------
+
+
+
 ## 5. Remove Duplicates (**Interview Question**)
 
 ### Implement a method called `remove_duplicates()` within the `LinkedList` class that removes all duplicate values from the list.
@@ -127,13 +179,11 @@ The `binary_to_decimal` method should start from the head of the linked list and
 The `binary_to_decimal` method should return this calculated decimal number.
 
 #### Examples
-
 Consider the binary number `101`. If this number is represented as a linked list, the head of the linked list will contain the digit `1`, the next node will contain `0`, and the last node will contain `1`. When we apply the `binary_to_decimal` method on this linked list, the method should return the number `5`, which is the decimal equivalent of binary `101`.
 
 Similarly, for a linked list representing the binary number `1101`, the `binary_to_decimal` method should return the number `13`.
 
 #### Example Code
-
 Here's how you can create these linked lists and call the `binary_to_decimal` method:
 
 ```python
@@ -154,5 +204,37 @@ linked_list.append(1)
 # Convert binary to decimal
 print(linked_list.binary_to_decimal())  # Output: 13
 ```
+
+-----------------------------------------------------------------------------------------
+
+
+
+## 7. Reverse Between (**Interview Question**)  
+
+**HEADS UP: Advanced Challenge**
+
+### Implement a method `reverse_between` within the LinkedList class that reverses the nodes of the linked list from `start_index` to `end_index` (inclusive using 0-based indexing) in one pass and in-place.
+
+You are given a singly linked list and two integers `start_index` and `end_index`.
+
+**Note:** The Linked List does not have a tail which will make the implementation easier.
+
+**Assumption:** You can assume that `start_index` and `end_index` are not out of bounds.
+
+#### Input
+- The method `reverse_between` takes two integer inputs `start_index` and `end_index`.
+
+- The method will only be passed valid indexes (you do not need to test whether the indexes are out of bounds).
+
+#### Output
+- The method should modify the linked list in-place by reversing the nodes from `start_index` to `end_index`.
+
+- If the linked list is empty or has only one node, the method should return `None`.
+
+#### Example
+- Suppose the linked list is `1 -> 2 -> 3 -> 4 -> 5`, and `start_index = 2` and `end_index = 4`. Then, the method should modify the linked list to `1 -> 2 -> 5 -> 4 -> 3`.
+
+#### Constraints
+- The algorithm should run in one pass and in-place, with a time complexity of O(n) and a space complexity of O(1).
 
 -----------------------------------------------------------------------------------------

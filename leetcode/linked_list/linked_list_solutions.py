@@ -104,6 +104,44 @@ class Solution:
 
         return slow
 
+    def partition_list(self, x: int) -> None:
+        """
+        Partition the linked list such that all nodes with values less than x come before nodes 
+        with values greater than or equal to x. The relative order of nodes in each partition is preserved.
+
+        Args:
+            x (int): The partitioning value.
+
+        Returns:
+            None: This function modifies the linked list in place and does not return a value.
+        """
+        if self.linked_list.head is None:
+            # If the linked list is empty, there's nothing to partition.
+            return
+        # Initialize two dummy nodes to start the less and greater partitions to simplify the process of adding nodes to each partition.
+        less = dummy1 = Node(0)
+        greater = dummy2 = Node(0)
+        # Start with the head of the original linked list.
+        current = self.linked_list.head
+        # Traverse the linked list, partitioning the nodes into less and greater lists.
+        while current:
+            if current.value < x:
+                # If the current node's value is less than x, add it to the less partition.
+                less.next = current
+                less = less.next
+            else:
+                # If the current node's value is greater than or equal to x, add it to the greater partition.
+                greater.next = current
+                greater = greater.next
+            # Move to the next node in the original list.
+            current = current.next
+        # Terminate the greater list to avoid circular references or dangling pointers.
+        greater.next = None
+        # Connect the less list to the greater list.
+        less.next = dummy2.next
+        # Update the head of the linked list to the start of the less list.
+        self.linked_list.head = dummy1.next
+
     def remove_duplicates(self) -> None:
         """
         Removes all duplicate values from the linked list.
@@ -199,3 +237,19 @@ class Solution:
         #     current = current.next  # Move to the next node
 
         # return decimal_value  # Return the calculated decimal value
+
+
+
+ll = LinkedList()
+
+ll.append(1)
+ll.append(4)
+ll.append(3)
+ll.append(2)
+ll.append(5)
+ll.append(2)
+ll.display()
+
+s = Solution(ll)
+s.partition_list(3)
+ll.display()

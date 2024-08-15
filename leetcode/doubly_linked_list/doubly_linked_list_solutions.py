@@ -119,14 +119,14 @@ class Solution:
                 return True
             # Move forward pointer to the next node and backward pointer to the previous node.
             forward = forward.next
-            backward = backward.prev        
+            backward = backward.prev
         # If a mismatch is found, the list is not a palindrome.
         return False
 
         # # METHOD 2:
         # if self.doubly_linked_list.length <= 1:
         #     # If the list has 0 or 1 element, it is trivially a palindrome.
-        #     return True      
+        #     return True
         # # Initialize two pointers: one at the head (start) of the list and one at the tail (end).
         # forward = self.doubly_linked_list.head
         # backward = self.doubly_linked_list.tail
@@ -144,32 +144,35 @@ class Solution:
         # return True
 
     def swap_pairs(self) -> None:
+        """
+        Swap every two adjacent nodes in the doubly linked list. If the list has an odd number of nodes,
+        the last node remains in place. This method modifies the linked list in place.
+
+        Returns:
+            None: The linked list is modified in place.
+        """
+        # If the list has fewer than 2 nodes, there's nothing to swap.
         if self.doubly_linked_list.length < 2:
             return
-        current = self.doubly_linked_list.head
-        while current and current.next:
-            adjacent = current.next
-            current.next = adjacent.next
-            # current.prev = adjacent
-            if adjacent.next:
-                adjacent.next.prev = current
-            adjacent.next = current
-            adjacent.prev = current.prev
-            current.prev = adjacent
-            if adjacent.prev is None:
-                self.doubly_linked_list.head = adjacent
-            current = current.next
-    
-
-    
-
-dll = DoublyLinkedList()
-dll.append(1)
-dll.append(2)
-dll.append(3)
-dll.append(4)
-dll.display()
-
-s = Solution(dll)
-s.swap_pairs()
-dll.display()
+        # Start with the first node in the list.
+        first = self.doubly_linked_list.head
+        # Update the head to be the second node since the first pair will be swapped.
+        self.doubly_linked_list.head = first.next
+        while first and first.next:
+            # `second` is the node next to `first` that will be swapped with `first`.
+            second = first.next
+            # Update `first`'s next to skip over `second`.
+            first.next = second.next
+            if second.next:
+                # Update the previous pointer of the node after `second` to point back to `first`.
+                second.next.prev = first
+            # Link `second` back to the node before `first`.
+            second.prev = first.prev
+            if first.prev:
+                # Link the previous node of `first` to `second`.
+                first.prev.next = second
+            # Link `first` as the next node after `second`.
+            first.prev = second
+            second.next = first
+            # Move `first` to the next pair.
+            first = first.next
