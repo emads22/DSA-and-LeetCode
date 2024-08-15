@@ -12,15 +12,14 @@ sys.path.append(str(main_project_path))
 from data_structures import Node, LinkedList
 from typing import Optional
 
-
 class Solution:
     """
     A class that provides solutions for operations on a linked list.
-    
+
     Attributes:
         linked_list (LinkedList): The linked list to perform operations on.
     """
-     
+
     def __init__(self, linked_list: LinkedList):
         """
         Initialize the Solution with a linked list.
@@ -238,18 +237,49 @@ class Solution:
 
         # return decimal_value  # Return the calculated decimal value
 
+    def reverse_between(self, start_index: int, end_index: int) -> None:
+        """
+        Reverse the nodes of the linked list from start_index to end_index in one pass and in-place.
 
+        This method modifies the linked list in-place by reversing the nodes between the specified indices.
+        If the linked list is empty or has only one node, no changes are made.
 
-ll = LinkedList()
+        Args:
+            start_index (int): The starting index (inclusive) of the sublist to reverse.
+            end_index (int): The ending index (inclusive) of the sublist to reverse.
 
-ll.append(1)
-ll.append(4)
-ll.append(3)
-ll.append(2)
-ll.append(5)
-ll.append(2)
-ll.display()
-
-s = Solution(ll)
-s.partition_list(3)
-ll.display()
+        Returns:
+            None: The linked list is modified in place.
+        """
+        # If the linked list is empty or has only one node, nothing to reverse.
+        if self.linked_list.length < 2:
+            return
+        # Dummy node to simplify the reversal process.
+        dummy = Node(0)
+        # Pointer to the node before the start_index.
+        previous = None
+        # Start from the head of the linked list.
+        current = self.linked_list.head
+        for idx in range(end_index + 1):
+            if idx < start_index:
+                # Traverse to the start_index while keeping track of the previous node.
+                previous = current
+                current = current.next
+            else:
+                if idx == start_index:
+                    # Mark the node at start_index, it will connect to the node after end_index.
+                    first = current
+                # Reverse the current node's link to point to the previous reversed node.
+                after = current.next
+                current.next = dummy.next
+                dummy.next = current
+                current = after
+        # Connect the node at start_index to the node after end_index.
+        if current:
+            first.next = current
+        # Connect the reversed sublist to the rest of the linked list.
+        if previous:
+            previous.next = dummy.next
+        else:
+            # If start_index is 0, update the head of the list.
+            self.linked_list.head = dummy.next
