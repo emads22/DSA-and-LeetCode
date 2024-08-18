@@ -4,13 +4,13 @@ from typing import TypeVar, Generic, Optional
 ItemType = TypeVar('ItemType')
 
 
-class Node(Generic[ItemType]):
+class Node_LL(Generic[ItemType]):
     """
     A class representing a node in a queue represented as a linked list.
 
     Attributes:
         value (ItemType): The value stored in the node.
-        next (Optional[Node[ItemType]]): The reference to the next node in the linked list.
+        next (Optional[Node_LL[ItemType]]): The reference to the next node in the linked list.
     """
 
     def __init__(self, value: ItemType) -> None:
@@ -21,7 +21,7 @@ class Node(Generic[ItemType]):
             value (ItemType): The value to be stored in the node.
         """
         self.value = value
-        self.next: Optional[Node[ItemType]] = None
+        self.next: Optional[Node_LL[ItemType]] = None
 
     def __repr__(self) -> str:
         """
@@ -39,8 +39,8 @@ class Queue(Generic[ItemType]):
     A class representing a queue.
 
     Attributes:
-        first (Optional[Node[ItemType]]): The first node of the queue.
-        last (Optional[Node[ItemType]]): The last node of the queue.
+        first (Optional[Node_LL[ItemType]]): The first node of the queue.
+        last (Optional[Node_LL[ItemType]]): The last node of the queue.
         length (int): The number of nodes in the queue.
     """
 
@@ -48,8 +48,8 @@ class Queue(Generic[ItemType]):
         """
         Initialize an empty queue represented as a linked list.
         """
-        self.first: Optional[Node[ItemType]] = None
-        self.last: Optional[Node[ItemType]] = None
+        self.first: Optional[Node_LL[ItemType]] = None
+        self.last: Optional[Node_LL[ItemType]] = None
         self.length: int = 0
 
     def __repr__(self) -> str:
@@ -67,8 +67,16 @@ class Queue(Generic[ItemType]):
             temp = temp.next
         else:
             if runner == "":
-                runner = "\n  |     |\n  |     |"
-        display += runner + f"\n          --> OUT\n\n  . First: {self.first}\n  . Last: {self.last}\n  . Length: {self.length}\n"
+                runner = "\n  |     |"
+        display += runner + f"""
+  |     |
+          --> OUT
+
+
+  . First: {self.first}
+  . Last: {self.last}
+  . Length: {self.length}
+"""
         return display
 
     def display(self) -> None:
@@ -105,7 +113,7 @@ class Queue(Generic[ItemType]):
         Returns:
             bool: True indicating the value was successfully added to the queue.
         """
-        new_node = Node(value)
+        new_node = Node_LL(value)
         if self.empty():
             # If the queue is empty, the new node becomes both the first and last node.
             self.first = self.last = new_node
@@ -117,12 +125,12 @@ class Queue(Generic[ItemType]):
         self.length += 1
         return True
 
-    def dequeue(self) -> Optional[Node[ItemType]]:
+    def dequeue(self) -> Optional[Node_LL[ItemType]]:
         """
         Remove and return the value from the front of the queue.
 
         Returns:
-            Optional[Node[ItemType]]: The node that was dequeued from the front of the queue, or None if the queue is empty.
+            Optional[Node_LL[ItemType]]: The node that was dequeued from the front of the queue, or None if the queue is empty.
         """
         if self.empty():
             return None  # if the queue is empty.

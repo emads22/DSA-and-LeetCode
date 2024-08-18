@@ -4,14 +4,14 @@ from typing import TypeVar, Generic, Optional
 ItemType = TypeVar('ItemType')
 
 
-class Node(Generic[ItemType]):
+class Node_DLL(Generic[ItemType]):
     """
     A class representing a node in a doubly linked list.
 
     Attributes:
         value (ItemType): The value stored in the node.
-        next (Optional[Node[ItemType]]): The reference to the next node in the list.
-        prev (Optional[Node[ItemType]]): The reference to the previous node in the list.
+        next (Optional[Node_DLL[ItemType]]): The reference to the next node in the list.
+        prev (Optional[Node_DLL[ItemType]]): The reference to the previous node in the list.
     """
 
     def __init__(self, value: ItemType) -> None:
@@ -22,8 +22,8 @@ class Node(Generic[ItemType]):
             value (ItemType): The value to be stored in the node.
         """
         self.value = value
-        self.next: Optional[Node[ItemType]] = None
-        self.prev: Optional[Node[ItemType]] = None
+        self.next: Optional[Node_DLL[ItemType]] = None
+        self.prev: Optional[Node_DLL[ItemType]] = None
 
     def __repr__(self) -> str:
         """
@@ -40,8 +40,8 @@ class DoublyLinkedList(Generic[ItemType]):
     A class representing a doubly linked list.
 
     Attributes:
-        head (Optional[Node[ItemType]]): The head node of the list.
-        tail (Optional[Node[ItemType]]): The tail node of the list.
+        head (Optional[Node_DLL[ItemType]]): The head node of the list.
+        tail (Optional[Node_DLL[ItemType]]): The tail node of the list.
         length (int): The number of nodes in the list.
     """
 
@@ -49,8 +49,8 @@ class DoublyLinkedList(Generic[ItemType]):
         """
         Initialize an empty doubly linked list.
         """
-        self.head: Optional[Node[ItemType]] = None
-        self.tail: Optional[Node[ItemType]] = None
+        self.head: Optional[Node_DLL[ItemType]] = None
+        self.tail: Optional[Node_DLL[ItemType]] = None
         self.length: int = 0
 
     def __repr__(self) -> str:
@@ -61,14 +61,18 @@ class DoublyLinkedList(Generic[ItemType]):
             str: The string representation of the doubly linked list.
         """
         first_link = "None <-- " if self.length > 0 else ""
-        display = f"\n\n* {first_link}"
+        display = f"\n\n*  {first_link}"
         temp = self.head
         while temp:
             link = "<-->" if temp.next else "-->"
             display += f"{temp} {link} "
             temp = temp.next
-        display += f"None\n\n  . Head: {self.head}\n  . Tail: {
-            self.tail}\n  . Length: {self.length}\n"
+        display += f"""None
+
+    . Head: {self.head}
+    . Tail: {self.tail}
+    . Length: {self.length}
+"""
         return display
 
     def display(self) -> None:
@@ -103,7 +107,7 @@ class DoublyLinkedList(Generic[ItemType]):
         Returns:
             bool: True if the node is successfully appended.
         """
-        new_node = Node(value)
+        new_node = Node_DLL(value)
         if self.empty():
             self.head = self.tail = new_node
         else:
@@ -123,7 +127,7 @@ class DoublyLinkedList(Generic[ItemType]):
         Returns:
             bool: True if the node is successfully prepended.
         """
-        new_node = Node(value)
+        new_node = Node_DLL(value)
         if self.empty():
             self.head = self.tail = new_node
         else:
@@ -133,12 +137,12 @@ class DoublyLinkedList(Generic[ItemType]):
         self.length += 1
         return True
 
-    def pop(self) -> Optional[Node[ItemType]]:
+    def pop(self) -> Optional[Node_DLL[ItemType]]:
         """
         Remove and return the last node from the list.
 
         Returns:
-            Optional[Node[ItemType]]: The removed node, or None if the list is empty.
+            Optional[Node_DLL[ItemType]]: The removed node, or None if the list is empty.
         """
         if self.empty():
             return None
@@ -152,12 +156,12 @@ class DoublyLinkedList(Generic[ItemType]):
         self.length -= 1
         return node_to_pop
 
-    def pop_first(self) -> Optional[Node[ItemType]]:
+    def pop_first(self) -> Optional[Node_DLL[ItemType]]:
         """
         Remove and return the first node from the list.
 
         Returns:
-            Optional[Node[ItemType]]: The removed node, or None if the list is empty.
+            Optional[Node_DLL[ItemType]]: The removed node, or None if the list is empty.
         """
         if self.empty():
             return None
@@ -171,7 +175,7 @@ class DoublyLinkedList(Generic[ItemType]):
         self.length -= 1
         return node_to_pop
 
-    def get(self, index: int) -> Optional[Node[ItemType]]:
+    def get(self, index: int) -> Optional[Node_DLL[ItemType]]:
         """
         Retrieve the node at a specific index in the list.
 
@@ -179,7 +183,7 @@ class DoublyLinkedList(Generic[ItemType]):
             index (int): The index of the node to retrieve.
 
         Returns:
-            Optional[Node[ItemType]]: The node at the specified index, or None if the index is out of range.
+            Optional[Node_DLL[ItemType]]: The node at the specified index, or None if the index is out of range.
         """
         if index < 0 or index >= self.length:
             return None
@@ -228,7 +232,7 @@ class DoublyLinkedList(Generic[ItemType]):
         if index == self.length:
             return self.append(value)
 
-        new_node = Node(value)
+        new_node = Node_DLL(value)
         node_before = self.get(index - 1)
         node_after = node_before.next
 
@@ -239,7 +243,7 @@ class DoublyLinkedList(Generic[ItemType]):
         self.length += 1
         return True
 
-    def remove(self, index: int) -> Optional[Node[ItemType]]:
+    def remove(self, index: int) -> Optional[Node_DLL[ItemType]]:
         """
         Remove and return the node at a specific index in the list.
 
@@ -247,7 +251,7 @@ class DoublyLinkedList(Generic[ItemType]):
             index (int): The index of the node to remove.
 
         Returns:
-            Optional[Node[ItemType]]: The removed node, or None if the index is out of range.
+            Optional[Node_DLL[ItemType]]: The removed node, or None if the index is out of range.
         """
         if index < 0 or index >= self.length:
             return None

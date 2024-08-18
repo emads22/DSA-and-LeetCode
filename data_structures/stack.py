@@ -4,13 +4,13 @@ from typing import TypeVar, Generic, Optional
 ItemType = TypeVar('ItemType')
 
 
-class Node(Generic[ItemType]):
+class Node_LL(Generic[ItemType]):
     """
     A class representing a node in a stack represented as a linked list.
 
     Attributes:
         value (ItemType): The value stored in the node.
-        next (Optional[Node[ItemType]]): The reference to the next node in the linked list.
+        next (Optional[Node_LL[ItemType]]): The reference to the next node in the linked list.
     """
 
     def __init__(self, value: ItemType) -> None:
@@ -21,7 +21,7 @@ class Node(Generic[ItemType]):
             value (ItemType): The value to be stored in the node.
         """
         self.value = value
-        self.next: Optional[Node[ItemType]] = None
+        self.next: Optional[Node_LL[ItemType]] = None
 
     def __repr__(self) -> str:
         """
@@ -39,7 +39,7 @@ class Stack(Generic[ItemType]):
     A class representing a stack.
 
     Attributes:
-        top (Optional[Node[ItemType]]): The head node of the stack.
+        top (Optional[Node_LL[ItemType]]): The head node of the stack.
         height (int): The number of nodes in the stack.
     """
 
@@ -47,7 +47,7 @@ class Stack(Generic[ItemType]):
         """
         Initialize an empty stack represented as a linked list.
         """
-        self.top: Optional[Node[ItemType]] = None
+        self.top: Optional[Node_LL[ItemType]] = None
         self.height: int = 0
 
     def __repr__(self) -> str:
@@ -66,8 +66,12 @@ class Stack(Generic[ItemType]):
         else:
             if runner == "":
                 runner += f"\n  |     |"
-        display += runner + \
-            f"\n  |_____|\n\n  . Top: {self.top}\n  . Height: {self.height}\n"
+        display += runner + f"""
+  |_____|
+
+  . Top: {self.top}
+  . Height: {self.height}
+"""
         return display
 
     def display(self) -> None:
@@ -104,7 +108,7 @@ class Stack(Generic[ItemType]):
         Returns:
             bool: True indicating the value was successfully pushed onto the stack.
         """
-        new_node = Node(value)
+        new_node = Node_LL(value)
         if self.empty():
             # If the stack is empty, the new node becomes the top node.
             self.top = new_node
@@ -116,12 +120,12 @@ class Stack(Generic[ItemType]):
         self.height += 1
         return True
 
-    def pop(self) -> Optional[Node[ItemType]]:
+    def pop(self) -> Optional[Node_LL[ItemType]]:
         """
         Pop the top value from the stack.
 
         Returns:
-            Optional[Node[ItemType]]: The node that was popped from the stack, or None if the stack is empty.
+            Optional[Node_LL[ItemType]]: The node that was popped from the stack, or None if the stack is empty.
         """
         if self.empty():
             return None  # if the stack is empty.
