@@ -34,9 +34,8 @@ class Node_LL(Generic[ItemType]):
 
 
 class Queue(Generic[ItemType]):
-
     """
-    A class representing a queue.
+    A class representing a queue implemented as a linked list.
 
     Attributes:
         first (Optional[Node_LL[ItemType]]): The first node of the queue.
@@ -103,15 +102,12 @@ class Queue(Generic[ItemType]):
         self.first = self.last = None
         self.length = 0
 
-    def enqueue(self, value: ItemType) -> bool:
+    def enqueue(self, value: ItemType) -> None:
         """
         Add a new value to the end of the queue.
 
         Args:
             value (ItemType): The value to be added to the queue.
-
-        Returns:
-            bool: True indicating the value was successfully added to the queue.
         """
         new_node = Node_LL(value)
         if self.empty():
@@ -123,7 +119,6 @@ class Queue(Generic[ItemType]):
             self.last = new_node
         # Increment the length of the queue as a new node has been added.
         self.length += 1
-        return True
 
     def dequeue(self) -> Optional[Node_LL[ItemType]]:
         """

@@ -34,9 +34,8 @@ class Node_LL(Generic[ItemType]):
 
 
 class Stack(Generic[ItemType]):
-
     """
-    A class representing a stack.
+    A class representing a stack implemented as a linked list.
 
     Attributes:
         top (Optional[Node_LL[ItemType]]): The head node of the stack.
@@ -98,15 +97,12 @@ class Stack(Generic[ItemType]):
         self.top = None
         self.height = 0
 
-    def push(self, value: ItemType) -> bool:
+    def push(self, value: ItemType) -> None:
         """
         Push a new value onto the stack.
 
         Args:
             value (ItemType): The value to be added to the stack.
-
-        Returns:
-            bool: True indicating the value was successfully pushed onto the stack.
         """
         new_node = Node_LL(value)
         if self.empty():
@@ -118,7 +114,6 @@ class Stack(Generic[ItemType]):
             self.top = new_node
         # Increment the height of the stack as a new node has been added.
         self.height += 1
-        return True
 
     def pop(self) -> Optional[Node_LL[ItemType]]:
         """
