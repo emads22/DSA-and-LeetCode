@@ -95,5 +95,49 @@ class Solution:
         stack (LinkedList): The linked list to perform operations on.
     """
 
-    def stack_as_list(self):
+    def stack_as_list(self) -> Stack:
+        """
+        Return a new stack instance implemented as a list.
+        """
         return Stack()
+
+    def is_balanced_parentheses(self, parentheses: str) -> bool:
+        """
+        Check if the parentheses string is balanced.
+
+        Args:
+            parentheses (str): The string to check.
+
+        Returns:
+            bool: True if balanced, False otherwise.
+        """
+        stack = Stack()
+
+        for char in parentheses:
+            if char == "(":
+                stack.push(char)  # Push open parenthesis
+            elif char == ")":
+                if stack.pop() is None:  # Pop for close parenthesis
+                    return False
+            else:
+                return False  # Invalid character
+
+        return stack.empty()  # Check if all open parentheses were matched
+
+    def reverse_string(self, string: str) -> str:
+        """
+        Reverse the given string using a stack.
+
+        Args:
+            string (str): The string to reverse.
+
+        Returns:
+            str: The reversed string.
+        """
+        stack = Stack()  # Initialize stack
+        reverse = ""  # Store reversed string
+        for char in string:
+            stack.push(char)  # Push each character onto the stack
+        while stack.peak():
+            reverse += stack.pop()  # Pop characters to form the reversed string
+        return reverse  # Return the reversed string
