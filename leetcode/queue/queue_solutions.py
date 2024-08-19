@@ -42,7 +42,7 @@ class Queue(Generic[ItemType]):
   |___|                |___|
 
   STACK_1              STACK_2
-  
+
 
   . Top: {self.peak()}
   . Height: {self.size()}
@@ -130,22 +130,3 @@ class Solution:
         Remove and return the front element of the queue.
         """
         return self.queue.dequeue()
-
-
-
-
-s = Solution()
-
-s.queue.display()
-
-s.queue.enqueue(1)
-s.queue.display()
-s.queue.enqueue(2)
-s.queue.display()
-s.queue.enqueue(3)
-s.queue.display()
-s.queue.enqueue(4)
-s.queue.display()
-s.queue.enqueue(5)
-s.queue.display()
-
