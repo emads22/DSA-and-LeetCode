@@ -24,24 +24,25 @@ class Queue(Generic[ItemType]):
         `Stack1` primarily represents the queue, where elements are stored in the correct order.
         `Stack2` is used temporarily during operations to maintain the queue order.
         """
-
-        def __init__(self):
-            self.stack1 = []
-            self.stack2 = []
+        self.stack1 = []
+        self.stack2 = []
 
     def __repr__(self) -> str:
         """
         Return a string representation of the queue.
         """
-        display = "\n\n*         <-- IN\n          --> OUT"
+        display = "\n\n*         <-- IN               <-- IN\n          --> OUT              --> OUT"
         runner = ""
         for element in self.stack1:
-            runner = f"\n  | {element} |" + runner
+            runner = f"\n  | {element} |                |   |" + runner
         else:
             if runner == "":
                 runner += f"\n  |   |"
         display += runner + f"""
-  |___|
+  |___|                |___|
+
+  STACK_1              STACK_2
+  
 
   . Top: {self.peak()}
   . Height: {self.size()}
@@ -80,58 +81,71 @@ class Queue(Generic[ItemType]):
         """
         self.stack1.clear()
 
+    def enqueue(self, value: ItemType) -> None:
+        """
+        Add an element to the back of the queue.
+        """
+        # Move all elements from stack1 to stack2 to access the bottom.
+        while len(self.stack1) > 0:
+            self.stack2.append(self.stack1.pop())
+        # Add the new value to the bottom of stack1.
+        self.stack1.append(value)
+        # Move all elements back from stack2 to stack1 to restore order.
+        while len(self.stack2) > 0:
+            self.stack1.append(self.stack2.pop())
+
+    def dequeue(self) -> Optional[ItemType]:
+        """        
+        Remove and return the front element of the queue.
+        """
+        if self.empty():
+            return None
+        return self.stack1.pop()
+
 
 class Solution:
     """
-    A class that provides solutions for operations on a stack.
-
-    Attributes:
-        stack (LinkedList): The linked list to perform operations on.
+    A class that provides an interface for queue operations using a Queue instance.
     """
 
-    def stack_as_list(self) -> Stack:
+    def __init__(self):
         """
-        Return a new stack instance implemented as a list.
-        """
-        return Stack()
+        Initialize the Solution with a new queue instance.
 
-    def is_balanced_parentheses(self, parentheses: str) -> bool:
+        This constructor creates a new Queue object and assigns it to the Solution instance.
         """
-        Check if the parentheses string is balanced.
+        self.queue = Queue()
+
+    def enqueue_method(self, value: ItemType) -> None:
+        """
+        Add an element to the queue.
 
         Args:
-            parentheses (str): The string to check.
-
-        Returns:
-            bool: True if balanced, False otherwise.
+            value (ItemType): The element to add to the queue.
         """
-        stack = Stack()
+        self.queue.enqueue(value)
 
-        for char in parentheses:
-            if char == "(":
-                stack.push(char)  # Push open parenthesis
-            elif char == ")":
-                if stack.pop() is None:  # Pop for close parenthesis
-                    return False
-            else:
-                return False  # Invalid character
-
-        return stack.empty()  # Check if all open parentheses were matched
-
-    def reverse_string(self, string: str) -> str:
+    def dequeue_method(self) -> Optional[ItemType]:
+        """        
+        Remove and return the front element of the queue.
         """
-        Reverse the given string using a stack.
+        return self.queue.dequeue()
 
-        Args:
-            string (str): The string to reverse.
 
-        Returns:
-            str: The reversed string.
-        """
-        stack = Stack()  # Initialize stack
-        reverse = ""  # Store reversed string
-        for char in string:
-            stack.push(char)  # Push each character onto the stack
-        while stack.peak():
-            reverse += stack.pop()  # Pop characters to form the reversed string
-        return reverse  # Return the reversed string
+
+
+s = Solution()
+
+s.queue.display()
+
+s.queue.enqueue(1)
+s.queue.display()
+s.queue.enqueue(2)
+s.queue.display()
+s.queue.enqueue(3)
+s.queue.display()
+s.queue.enqueue(4)
+s.queue.display()
+s.queue.enqueue(5)
+s.queue.display()
+
