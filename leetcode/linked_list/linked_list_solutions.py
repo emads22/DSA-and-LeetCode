@@ -9,8 +9,9 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from data_structures import Node, LinkedList
 from typing import Optional
+from data_structures import Node_LL, LinkedList
+
 
 class Solution:
     """
@@ -20,16 +21,13 @@ class Solution:
         linked_list (LinkedList): The linked list to perform operations on.
     """
 
-    def __init__(self, linked_list: LinkedList):
+    def __init__(self) -> None:
         """
-        Initialize the Solution with a linked list.
-
-        Args:
-            linked_list (LinkedList): The linked list to be manipulated.
+        Initialize the Solution with a new linked list instance.
         """
-        self.linked_list = linked_list
+        self.linked_list = LinkedList()
 
-    def find_middle_node(self) -> Optional[Node]:
+    def find_middle_node(self) -> Optional[Node_LL]:
         """
         Finds the middle node of the linked list.
 
@@ -38,7 +36,7 @@ class Solution:
         When the fast pointer reaches the end of the list, the slow pointer will be at the middle node.
 
         Returns:
-            Optional[Node]: The middle node of the linked list, or the first node of the second half 
+            Optional[Node_LL]: The middle node of the linked list, or the first node of the second half 
                             if the list has an even number of nodes.
         """
         slow = fast = self.linked_list.head  # Initialize both pointers to the head of the list
@@ -71,7 +69,7 @@ class Solution:
         return False
 
     @staticmethod
-    def find_kth_from_end(linked_list: LinkedList, k: int) -> Optional[Node]:
+    def find_kth_from_end(linked_list: LinkedList, k: int) -> Optional[Node_LL]:
         """
         Finds the k-th node from the end of the linked list.
 
@@ -84,7 +82,7 @@ class Solution:
             k (int): The position from the end to find the node.
 
         Returns:
-            Optional[Node]: The k-th node from the end of the list, or None if the position is out of bounds.
+            Optional[Node_LL]: The k-th node from the end of the list, or None if the position is out of bounds.
         """
         slow = fast = linked_list.head
 
@@ -118,8 +116,8 @@ class Solution:
             # If the linked list is empty, there's nothing to partition.
             return
         # Initialize two dummy nodes to start the less and greater partitions to simplify the process of adding nodes to each partition.
-        less = dummy1 = Node(0)
-        greater = dummy2 = Node(0)
+        less = dummy1 = Node_LL(0)
+        greater = dummy2 = Node_LL(0)
         # Start with the head of the original linked list.
         current = self.linked_list.head
         # Traverse the linked list, partitioning the nodes into less and greater lists.
@@ -255,7 +253,7 @@ class Solution:
         if self.linked_list.length < 2:
             return
         # Dummy node to simplify the reversal process.
-        dummy = Node(0)
+        dummy = Node_LL(0)
         # Pointer to the node before the start_index.
         previous = None
         # Start from the head of the linked list.

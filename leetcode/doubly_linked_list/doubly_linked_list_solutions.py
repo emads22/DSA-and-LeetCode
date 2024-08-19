@@ -7,9 +7,8 @@ main_project_path = Path(__file__).resolve().parent.parent.parent
 # Add the main_project directory to sys.path
 sys.path.append(str(main_project_path))
 
-
+from data_structures import Node_DLL, DoublyLinkedList
 from typing import Optional
-from data_structures import Node, DoublyLinkedList
 
 
 class Solution:
@@ -20,14 +19,11 @@ class Solution:
         doubly_linked_list (DoublyLinkedList): The doubly linked list to perform operations on.
     """
 
-    def __init__(self, doubly_linked_list: DoublyLinkedList):
+    def __init__(self) -> None:
         """
-        Initialize the Solution with a doubly linked list.
-
-        Args:
-            doubly_linked_list (DoublyLinkedList): The doubly linked list to be manipulated.
+        Initialize the Solution with a new doubly linked list instance.
         """
-        self.doubly_linked_list = doubly_linked_list
+        self.doubly_linked_list = DoublyLinkedList()
 
     def swap_first_last(self) -> None:
         """
@@ -56,7 +52,7 @@ class Solution:
         """
 
         # # METHOD 1: using a dummy node
-        # dummy = Node(0)
+        # dummy = Node_DLL(0)
         # dummy.next = runner = self.doubly_linked_list.head
         # while runner:
         #     # Temporarily store the next node
