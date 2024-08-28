@@ -90,9 +90,6 @@ class Stack(Generic[ItemType]):
 class Solution:
     """
     A class that provides solutions for operations on a stack.
-
-    Attributes:
-        stack (LinkedList): The linked list to perform operations on.
     """
 
     def stack_as_list(self) -> Stack:
