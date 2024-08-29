@@ -50,7 +50,7 @@ class BinarySearchTree(Generic[ItemType]):
         """
         self.root: Optional[Node_BST[ItemType]] = None
 
-    def _list_repr_(self, node):
+    def _to_list(self, node: Node_BST[ItemType]) -> list[ItemType]:
         """
         Convert the binary search tree (BST) to a list representation recursively.
 
@@ -64,7 +64,7 @@ class BinarySearchTree(Generic[ItemType]):
         if node is None:
             return []
         # Recursive case: add the current node's value, traverse the left subtree, then traverse the right subtree
-        return [node.value] + self._list_repr_(node.left) + self._list_repr_(node.right)
+        return [node.value] + self._to_list(node.left) + self._to_list(node.right)
 
     def display(self) -> None:
         """
@@ -72,11 +72,72 @@ class BinarySearchTree(Generic[ItemType]):
         """
         display = f"""
 
-*  {self._list_repr_(self.root)}
+*  {self._to_list(self.root)}
 
     . Root: {self.root}
 """
         print(display)
+
+    def contains(self, value: ItemType) -> bool:
+        """
+        Check if the binary search tree contains a specific value.
+
+        Args:
+            value (ItemType): The value to search for in the tree.
+
+        Returns:
+            bool: True if the value is found in the tree, False otherwise.
+        """
+        temp = self.root
+        while temp:
+            if value < temp.value:
+                # Traverse to left subtree if the value is less than the current node's value
+                temp = temp.left
+            elif value > temp.value:
+                # Traverse to right subtree if the value is greater than the current node's value
+                temp = temp.right
+            else:
+                # Return True if the value is found
+                return True
+        # Return False if the value is not found in the tree (also if the tree is empty)
+        return False
+
+    def r_contains(self, value: ItemType) -> bool:
+        """
+        Public method to check if a value exists in the binary search tree using recursion.
+
+        Args:
+            value (ItemType): The value to search for in the tree.
+
+        Returns:
+            bool: True if the value is found in the tree, False otherwise.
+        """
+        # Start the recursive search from the root of the tree
+        return self._r_contains_(self.root, value)
+
+    def _r_contains_(self, current_node: Optional[Node_BST[ItemType]], value: ItemType) -> bool:
+        """
+        Recursively checks if a value exists in the binary search tree.
+
+        Args:
+            current_node (Optional[Node_BST[ItemType]]): The current node being checked.
+            value (ItemType): The value to search for in the tree.
+
+        Returns:
+            bool: True if the value is found in the tree, False otherwise.
+        """
+        if current_node is None:
+            # If the current node is None, the value is not in the tree
+            return False
+        if value == current_node.value:
+            # If the current node's value matches the target value, return True
+            return True
+        if value < current_node.value:
+            # If the target value is less than the current node's value, search the left subtree
+            return self._r_contains_(current_node.left, value)
+        if value > current_node.value:
+            # If the target value is greater than the current node's value, search the right subtree
+            return self._r_contains_(current_node.right, value)
 
     def insert(self, value: ItemType) -> bool:
         """
@@ -111,26 +172,110 @@ class BinarySearchTree(Generic[ItemType]):
                 # Return False if the value already exists in the tree
                 return False
 
-    def contains(self, value: ItemType) -> bool:
+    def r_insert(self, value: ItemType) -> None:
         """
-        Check if the binary search tree contains a specific value.
+        Public method to insert a value into the binary search tree using recursion.
 
         Args:
-            value (ItemType): The value to search for in the tree.
+            value (ItemType): The value to be inserted into the tree.
+        """
+        if self.root is None:
+            # If the tree is empty, create a new root node with the given value
+            self.root = Node_BST(value)
+            return
+        # Recursively insert the value starting from the root node
+        self.root = self._r_insert_(self.root, value)
+        # Alternatively: `self._r_insert_(self.root, value)` directly
+        # without assignement since the root does not change
+
+    def _r_insert_(self, current_node: Optional[Node_BST[ItemType]], value: ItemType) -> Node_BST[ItemType]:
+        """
+        Recursively inserts a value into the binary search tree.
+
+        Args:
+            current_node (Optional[Node_BST[ItemType]]): The current node being checked.
+            value (ItemType): The value to be inserted into the tree.
 
         Returns:
-            bool: True if the value is found in the tree, False otherwise.
+            Node_BST[ItemType]: The updated node after insertion.
         """
-        temp = self.root
-        while temp:
-            if value < temp.value:
-                # Traverse to left subtree if the value is less than the current node's value
-                temp = temp.left
-            elif value > temp.value:
-                # Traverse to right subtree if the value is greater than the current node's value
-                temp = temp.right
+        if current_node is None:
+            # If the current node is None, create a new node with the given value
+            return Node_BST(value)
+        if value < current_node.value:
+            # If the value is less than the current node's value, insert into the left subtree
+            current_node.left = self._r_insert_(current_node.left, value)
+        elif value > current_node.value:
+            # If the value is greater than the current node's value, insert into the right subtree
+            current_node.right = self._r_insert_(current_node.right, value)
+        # Return the current node after insertion
+        return current_node
+
+    def r_delete(self, value: ItemType) -> None:
+        """
+        Public method to delete a value from the binary search tree using recursion.
+
+        Args:
+            value (ItemType): The value to be deleted from the tree.
+        """
+        # Start the recursive deletion process from the root node
+        self.root = self._r_delete_(self.root, value)
+
+    def _r_delete_(self, current_node: Optional[Node_BST[ItemType]], value: ItemType) -> Optional[Node_BST[ItemType]]:
+        """
+        Recursively deletes a value from the binary search tree.
+
+        Args:
+            current_node (Optional[Node_BST[ItemType]]): The current node being checked.
+            value (ItemType): The value to be deleted from the tree.
+
+        Returns:
+            Optional[Node_BST[ItemType]]: The updated node after deletion.
+        """
+        if current_node is None:
+            # If the current node is None, the value is not found in the tree
+            return None
+        if value < current_node.value:
+            # If the value to be deleted is less than the current node's value,
+            # continue searching in the left subtree
+            current_node.left = self._r_delete_(current_node.left, value)
+        elif value > current_node.value:
+            # If the value to be deleted is greater than the current node's value,
+            # continue searching in the right subtree
+            current_node.right = self._r_delete_(current_node.right, value)
+        else:  # The value to be deleted is found
+            # Case 1: The node is a leaf node (no children)
+            if current_node.left is None and current_node.right is None:
+                current_node = None  # Remove the node by setting it to None
+            # Case 2: The node has only one child (right child)
+            elif current_node.right is None:
+                current_node = current_node.left  # Replace the node with its left child
+            # Case 3: The node has only one child (left child)
+            elif current_node.left is None:
+                current_node = current_node.right  # Replace the node with its right child
+            # Case 4: The node has two children
             else:
-                # Return True if the value is found
-                return True
-        # Return False if the value is not found in the tree (also if the tree is empty)
-        return False
+                # Find the minimum value in the right subtree
+                min_value_right = self._min_value(current_node.right)
+                # Replace the value of the current node with the minimum value found
+                current_node.value = min_value_right
+                # Delete the duplicate node with the minimum value from the right subtree
+                current_node.right = self._r_delete_(
+                    current_node.right, min_value_right)
+        # Return the updated current node after deletion
+        return current_node
+
+    def _min_value(self, current_node: Node_BST[ItemType]) -> ItemType:
+        """
+        Finds the minimum value in a subtree.
+
+        Args:
+            current_node (Node_BST[ItemType]): The root node of the subtree.
+
+        Returns:
+            ItemType: The minimum value found in the subtree.
+        """
+        # Traverse to the leftmost node to find the minimum value
+        while current_node.left:
+            current_node = current_node.left
+        return current_node.value
