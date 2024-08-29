@@ -1,7 +1,6 @@
-# from typing import Optional, List, Any as ItemType
 import sys
 from pathlib import Path
-from typing import TypeVar, Generic, Optional
+from typing import TypeVar, Optional
 
 
 # Get the absolute path of the main_project directory

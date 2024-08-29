@@ -9,8 +9,8 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from data_structures import Node_BST, BinarySearchTree
 from typing import Optional
+from data_structures import Node_BST, BinarySearchTree
 
 
 class Solution:
@@ -74,7 +74,7 @@ class Solution:
         # METHOD 1 (returning value):
         # Start the recursive inversion from the root of the tree and update the root reference
         self.bst.root = self.__invert_tree(self.bst.root)
-        
+
         # # METHOD 2 (in place):
         # # Start the recursive inversion from the root of the tree directly
         # without assignement since the root does not change
