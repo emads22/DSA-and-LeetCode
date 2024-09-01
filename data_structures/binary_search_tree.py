@@ -374,7 +374,7 @@ class BinarySearchTree(Generic[ItemType]):
             current_node = current_node.left
         return current_node.value
 
-    def dfs_pre_order(self) -> list[ItemType]:
+    def DFS_pre_order(self) -> list[ItemType]:
         """
         Perform a depth-first search (DFS) pre-order traversal of the binary search tree.
 
@@ -405,7 +405,7 @@ class BinarySearchTree(Generic[ItemType]):
         traverse(self.root)
         return output
 
-    def dfs_in_order(self) -> list[ItemType]:
+    def DFS_in_order(self) -> list[ItemType]:
         """
         Perform a depth-first search (DFS) in-order traversal of the binary search tree.
 
@@ -437,7 +437,7 @@ class BinarySearchTree(Generic[ItemType]):
         traverse(self.root)
         return output
 
-    def dfs_post_order(self) -> list[ItemType]:
+    def DFS_post_order(self) -> list[ItemType]:
         """
         Perform a depth-first search (DFS) post-order traversal of the binary search tree.
 
@@ -466,4 +466,36 @@ class BinarySearchTree(Generic[ItemType]):
 
         # Start the traversal from the root node
         traverse(self.root)
+        return output
+
+    def BFS(self) -> list[ItemType]:
+        """
+        Perform a breadth-first search (BFS) traversal of the binary search tree.
+
+        In BFS, nodes are processed level by level, starting from the root and moving 
+        to each level's child nodes from left to right.
+
+        Returns:
+            list[ItemType]: A list containing all values in the tree in BFS order.
+        """
+        # Initialize an empty queue to hold nodes to be processed and an output list to store the values.
+        queue = []
+        output = []
+        # Start the traversal from the root node.
+        current_node = self.root
+        # Add the root node to the queue if it exists.
+        queue.append(current_node)
+        # Continue until there are no more nodes to process in the queue.
+        while len(queue) > 0:
+            # Dequeue the first node from the queue.
+            current_node = queue.pop(0)
+            # Add the current node's value to the output list.
+            output.append(current_node.value)
+            # Enqueue the left child node if it exists.
+            if current_node.left is not None:
+                queue.append(current_node.left)
+            # Enqueue the right child node if it exists.
+            if current_node.right is not None:
+                queue.append(current_node.right)
+        # Return the list of values obtained from the BFS traversal.
         return output
