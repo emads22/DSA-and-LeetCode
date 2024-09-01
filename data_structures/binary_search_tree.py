@@ -211,6 +211,100 @@ class BinarySearchTree(Generic[ItemType]):
         # Return the current node after insertion
         return current_node
 
+    def delete(self, value: ItemType) -> Optional[Node_BST[ItemType]]:
+        """
+        Iteratively deletes a node with the specified value from the binary search tree.
+
+        Args:
+            value (ItemType): The value of the node to delete.
+
+        Returns:
+            Optional[Node_BST[ItemType]]: The deleted node if found, otherwise None.
+        """
+        if self.root is None:
+            # If the tree is empty, there is nothing to delete
+            return None
+
+        current = self.root
+        parent = None
+        to_delete = None
+
+        # Traverse the tree to find the node to delete
+        while True:
+            if value < current.value:
+                # If the value is less than the current node's value, move left
+                if current.left:
+                    parent = current
+                    current = current.left
+                else:
+                    # If there's no left child, the value isn't in the tree
+                    return None
+            elif value > current.value:
+                # If the value is greater than the current node's value, move right
+                if current.right:
+                    parent = current
+                    current = current.right
+                else:
+                    # If there's no right child, the value isn't in the tree
+                    return None
+            else:
+                # Node with the matching value is found
+                to_delete = current
+
+                # Case 1: The node is a leaf node (no children)
+                if current.left is None and current.right is None:
+                    if parent:
+                        # If the node has a parent, disconnect it from the parent
+                        if parent.left == current:
+                            parent.left = None
+                        else:
+                            parent.right = None
+                    else:
+                        # If the node is the root, set the root to None
+                        self.root = None
+
+                # Case 2: The node has only one child (left child)
+                elif current.right is None:
+                    if parent:
+                        # Connect the parent to the left child of the current node
+                        if parent.left == current:
+                            parent.left = current.left
+                        else:
+                            parent.right = current.left
+                    else:
+                        # If the root is being deleted, update the root
+                        self.root = self.root.left
+
+                # Case 3: The node has only one child (right child)
+                elif current.left is None:
+                    if parent:
+                        # Connect the parent to the right child of the current node
+                        if parent.left == current:
+                            parent.left = current.right
+                        else:
+                            parent.right = current.right
+                    else:
+                        # If the root is being deleted, update the root
+                        self.root = self.root.right
+
+                # Case 4: The node has two children
+                else:
+                    # Find the minimum value in the right subtree (in-order successor)
+                    temp_parent = current
+                    temp = current.right
+                    while temp.left:
+                        temp_parent = temp
+                        temp = temp.left
+
+                    # Replace the value of the current node with the minimum value found
+                    current.value = temp.value
+
+                    # Remove the minimum node by linking the parent's left to the right child of temp
+                    temp_parent.left = temp.right  # Works whether temp.right is None or not
+
+                # Return the deleted node
+                return to_delete
+
     def r_delete(self, value: ItemType) -> None:
         """
         Public method to delete a value from the binary search tree using recursion.
@@ -247,16 +341,16 @@ class BinarySearchTree(Generic[ItemType]):
             # Case 1: The node is a leaf node (no children)
             if current_node.left is None and current_node.right is None:
                 current_node = None  # Remove the node by setting it to None
-            # Case 2: The node has only one child (right child)
+            # Case 2: The node has only one child (left child)
             elif current_node.right is None:
                 current_node = current_node.left  # Replace the node with its left child
-            # Case 3: The node has only one child (left child)
+            # Case 3: The node has only one child (right child)
             elif current_node.left is None:
                 current_node = current_node.right  # Replace the node with its right child
             # Case 4: The node has two children
             else:
                 # Find the minimum value in the right subtree
-                min_value_right = self._min_value(current_node.right)
+                min_value_right = self._subtree_min_value(current_node.right)
                 # Replace the value of the current node with the minimum value found
                 current_node.value = min_value_right
                 # Delete the duplicate node with the minimum value from the right subtree
@@ -265,7 +359,7 @@ class BinarySearchTree(Generic[ItemType]):
         # Return the updated current node after deletion
         return current_node
 
-    def _min_value(self, current_node: Node_BST[ItemType]) -> ItemType:
+    def _subtree_min_value(self, current_node: Node_BST[ItemType]) -> ItemType:
         """
         Finds the minimum value in a subtree.
 
@@ -279,3 +373,4 @@ class BinarySearchTree(Generic[ItemType]):
         while current_node.left:
             current_node = current_node.left
         return current_node.value
+
