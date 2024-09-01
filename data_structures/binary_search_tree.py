@@ -58,7 +58,7 @@ class BinarySearchTree(Generic[ItemType]):
             node (Node_BST[ItemType]): The current node in the BST.
 
         Returns:
-            List[ItemType]: A list containing all the values in the BST in in-order traversal.
+            List[ItemType]: A list containing all the values in the BST in pre-order traversal.
         """
         # Base case: if the current node is None, return an empty list
         if node is None:
@@ -374,3 +374,96 @@ class BinarySearchTree(Generic[ItemType]):
             current_node = current_node.left
         return current_node.value
 
+    def dfs_pre_order(self) -> list[ItemType]:
+        """
+        Perform a depth-first search (DFS) pre-order traversal of the binary search tree.
+
+        In pre-order traversal, the current node is processed before its child nodes.
+
+        Returns:
+            list[ItemType]: A list containing all values in the tree in pre-order traversal order.
+        """
+        output = []
+
+        def traverse(current_node: Node_BST[ItemType]) -> None:
+            """
+            Recursive helper function to perform pre-order traversal.
+
+            Args:
+                current_node (Node_BST[ItemType]): The current node being traversed.
+            """
+            # Process the current node's value
+            output.append(current_node.value)
+            # Traverse the left subtree if it exists
+            if current_node.left is not None:
+                traverse(current_node.left)
+            # Traverse the right subtree if it exists
+            if current_node.right is not None:
+                traverse(current_node.right)
+
+        # Start the traversal from the root node
+        traverse(self.root)
+        return output
+
+    def dfs_in_order(self) -> list[ItemType]:
+        """
+        Perform a depth-first search (DFS) in-order traversal of the binary search tree.
+
+        In in-order traversal, the left subtree is processed first, 
+        followed by the current node, and then the right subtree.
+
+        Returns:
+            list[ItemType]: A list containing all values in the tree in in-order traversal order.
+        """
+        output = []
+
+        def traverse(current_node: Node_BST[ItemType]) -> None:
+            """
+            Recursive helper function to perform in-order traversal.
+
+            Args:
+                current_node (Node_BST[ItemType]): The current node being traversed.
+            """
+            # Traverse the left subtree if it exists
+            if current_node.left is not None:
+                traverse(current_node.left)
+            # Process the current node's value
+            output.append(current_node.value)
+            # Traverse the right subtree if it exists
+            if current_node.right is not None:
+                traverse(current_node.right)
+
+        # Start the traversal from the root node
+        traverse(self.root)
+        return output
+
+    def dfs_post_order(self) -> list[ItemType]:
+        """
+        Perform a depth-first search (DFS) post-order traversal of the binary search tree.
+
+        In post-order traversal, the left and right subtrees are processed before the current node.
+
+        Returns:
+            list[ItemType]: A list containing all values in the tree in post-order traversal order.
+        """
+        output = []
+
+        def traverse(current_node: Node_BST[ItemType]) -> None:
+            """
+            Recursive helper function to perform post-order traversal.
+
+            Args:
+                current_node (Node_BST[ItemType]): The current node being traversed.
+            """
+            # Traverse the left subtree if it exists
+            if current_node.left is not None:
+                traverse(current_node.left)
+            # Traverse the right subtree if it exists
+            if current_node.right is not None:
+                traverse(current_node.right)
+            # Process the current node's value
+            output.append(current_node.value)
+
+        # Start the traversal from the root node
+        traverse(self.root)
+        return output
