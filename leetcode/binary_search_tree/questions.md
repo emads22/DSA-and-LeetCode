@@ -73,3 +73,47 @@ Achieving a height-balanced tree is crucial for optimizing the efficiency of tre
 This problem requires understanding binary trees, recursion, and the ability to manipulate tree nodes directly. The solution should ensure that every node's left and right children are swapped all the way down the tree, effectively creating a mirror image of the original structure.
 
 -----------------------------------------------------------------------------------------
+
+
+
+## 3. Validate BST (**Interview Question**)
+
+### Write a method called `is_valid_bst` in the `BinarySearchTree` class that checks whether a binary search tree is a valid binary search tree.
+
+Your method should use the `dfs_in_order` method to get the node values of the binary search tree in ascending order, and then check whether each node value is greater than the previous node value.
+
+- If the node values are not sorted in ascending order, the method should return `False`, indicating that the binary search tree is not valid.
+- If all node values are sorted in ascending order, the method should return `True`, indicating that the binary search tree is a valid binary search tree.
+
+**Key Points**:
+- Use the dfs_in_order method to traverse the tree and collect node values.
+- Validate that the collected node values are in strictly ascending order.
+- Return True if valid, otherwise False.
+
+-----------------------------------------------------------------------------------------
+
+
+
+## 4. Kth Smallest Node (**Interview Question**)
+
+### Given a binary search tree, write a method `find_kth_smallest(self, k)` that finds the kth smallest element in the tree. For example, if the tree contains the elements `[1, 2, 3, 4, 5]`, the 3rd smallest element would be `3`.
+
+The solution to this problem usually involves traversing the tree in-order (left, root, right) and keeping track of the number of nodes visited until you find the kth smallest element. There are two main approaches to doing this:
+
+1. **Iterative Approach Using a Stack:**
+   - This approach involves maintaining a stack of nodes that still need to be visited, starting with the leftmost node.
+   - At each step, you pop a node off the stack, decrement the kth smallest counter, and check whether you have found the kth smallest element.
+   - If you have not, you continue traversing the tree by moving to the right child of the current node.
+
+2. **Recursive Approach:**
+   - This approach involves recursively traversing the tree in-order and keeping track of the number of nodes visited until you find the kth smallest element.
+   - You can use a helper function that takes a node and a value of `k` as input, and recursively calls itself on the left and right children of the node until it finds the kth smallest element.
+
+Both of these approaches have their own advantages and disadvantages, and the best approach to use may depend on the specific problem constraints and the interviewer's preferences.
+
+**Key Points**:
+- Use in-order traversal to get elements in ascending order.
+- Maintain a count of nodes visited to determine the kth smallest.
+- Choose between iterative (stack-based) or recursive approach based on context and requirements.
+
+-----------------------------------------------------------------------------------------

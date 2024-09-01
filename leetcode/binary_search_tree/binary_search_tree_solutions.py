@@ -9,8 +9,8 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from typing import Optional
 from data_structures import Node_BST, BinarySearchTree
+from typing import Optional
 
 
 class Solution:
@@ -116,3 +116,132 @@ class Solution:
         # # Recursively invert the left and right subtrees
         # self.__invert_tree(node.left)
         # self.__invert_tree(node.right)
+
+    def is_valid_bst(self) -> bool:
+        """
+        Check if the binary search tree (BST) is valid.
+
+        A valid BST is defined as a tree where for every node, 
+        all values in its left subtree are less than the node's value, 
+        and all values in its right subtree are greater.
+
+        This function provides two methods to verify if the tree is a valid BST:
+        - **Method 1**: Compares the in-order traversal of the BST with its sorted version.
+        - **Method 2**: Checks each adjacent element in the in-order traversal to ensure 
+        that the current value is less than the next value.
+
+        Returns:
+            bool: True if the BST is valid, False otherwise.
+        """
+        # # METHOD 1: Check if the in-order traversal is sorted.
+        # # An in-order traversal of a BST should produce a sorted list.
+        # bst_list = self.bst.DFS_in_order()  # O(n) time complexity for the in-order traversal.
+        # # Check if the BST list matches its sorted version.
+        # # This comparison takes O(n), but the sorting operation takes O(n log n),
+        # # making this method less efficient overall.
+        # if bst_list == sorted(bst_list):  # Sorting takes O(n log n) time.
+        #     return True
+
+        # METHOD 2: Check if each element is less than the next in the in-order traversal.
+        # O(n) time complexity for the in-order traversal.
+        bst_list = self.bst.DFS_in_order()
+        # Iterate through the list and check if each value is less than the next.
+        # O(n) time complexity for the loop.
+        for i in range(len(bst_list) - 1):
+            if bst_list[i] >= bst_list[i + 1]:
+                # Return False if any element is not less than the next, indicating an invalid BST.
+                return False
+        # Return True if all checks pass, confirming a valid BST.
+        return True
+
+    def find_kth_smallest(self, k: int) -> Optional[int]:
+        """
+        Find the k-th smallest element in the binary search tree (BST).
+
+        This method provides two approaches to find the k-th smallest element:
+        1. **Iterative Method**: Uses an in-order traversal with a stack to find the k-th smallest element.
+        2. **Recursive Method**: Uses a recursive in-order traversal to track the k-th smallest element.
+
+        Args:
+            k (int): The k-th position to find in the sorted order of the BST values.
+
+        Returns:
+            Optional[int]: The value of the k-th smallest element if it exists, 
+                        otherwise None if k is out of bounds.
+        """
+        # METHOD 1: ITERATIVE APPROACH
+        stack = []
+        left_side_leftmost = self.bst.root
+        # Traverse to the leftmost node starting from the root, pushing nodes onto the stack.
+        while left_side_leftmost:
+            stack.append(left_side_leftmost)
+            left_side_leftmost = left_side_leftmost.left
+        # Process nodes in in-order sequence.
+        while len(stack) > 0:
+            popped = stack.pop()  # Pop the top node from the stack.
+            k -= 1  # Decrement the kth smallest counter
+            if k == 0:
+                # Return the value if the k-th smallest node is found.
+                return popped.value
+            # If the popped node has a right child, traverse its leftmost path.
+            if popped.right is not None:
+                right_side_leftmost = popped.right
+                while right_side_leftmost:
+                    stack.append(right_side_leftmost)
+                    right_side_leftmost = right_side_leftmost.left
+        # If k is still greater than zero, the k-th element does not exist.
+        if k > 0:
+            return None
+
+        # # METHOD 2: RECURSIVE APPROACH
+        # nodes_visited = 0  # Counter to keep track of nodes visited during in-order traversal.
+
+        # def __find_kth_smallest(current_node: Node_BST[int], k: int) -> Optional[Node_BST[int]]:
+        #     """
+        #     Recursive helper function to find the k-th smallest element using in-order traversal.
+
+        #     Args:
+        #         current_node (Node_BST[int]): The current node being traversed.
+        #         k (int): The target k-th position to find.
+
+        #     Returns:
+        #         Optional[Node_BST[int]]: The k-th smallest node if found, otherwise None.
+        #     """
+        #     # Use nonlocal to modify the `nodes_visited` variable from the outer `find_kth_smallest` function,
+        #     # allowing us to update the count of visited nodes.
+        #     # This refers specifically to the nearest parent scope where `nodes_visited` is defined,
+        #     # not to a global scope variable, ensuring it affects the intended variable in the outer function.
+        #     nonlocal nodes_visited
+        #     # Base case: if the current node is None, return None to stop recursion in this path.
+        #     if current_node is None:
+        #         return None
+        #     # Recursively search the left subtree.
+        #     result = __find_kth_smallest(current_node.left, k)
+        #     if result is not None:
+        #         # If the left subtree found the k-th node, propagate it up without further traversal.
+        #         return result
+        #     # Increment the visited nodes count.
+        #     nodes_visited += 1
+        #     # If the k-th node is the current node, return it.
+        #     if nodes_visited == k:
+        #         return current_node
+        #     # Recursively search the right subtree.
+        #     result = __find_kth_smallest(current_node.right, k)
+        #     if result is not None:
+        #         # If the right subtree found the k-th node, propagate it up.
+        #         return result
+        #     # Return None if the k-th node is not found in this path, ensuring recursion handles
+        #     # cases where traversal ends without finding the k-th element.
+        #     return None
+        # # Call the recursive helper function starting from the root.
+        # kth_smallest_node = __find_kth_smallest(self.bst.root, k)
+        # # Return the value of the k-th smallest node if found. This serves as a safeguard to ensure that
+        # # if the node was found during traversal, its value is returned correctly; otherwise, it returns None.
+        # if kth_smallest_node:
+        #     return kth_smallest_node.value
+        # # Return None if the k-th smallest element does not exist.
+        # # This serves as a safeguard ensuring that if the loop or recursion completes
+        # # without finding the k-th element—such as when `k` is larger than the total number
+        # # of nodes—the function returns a clear indication that the element is not present,
+        # # rather than failing silently or causing unexpected behavior.
+        # return None
