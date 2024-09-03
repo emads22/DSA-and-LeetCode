@@ -9,8 +9,8 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from typing import Optional
 from data_structures import Node_BST, BinarySearchTree
+from typing import Optional
 
 
 class Solution:
@@ -154,13 +154,9 @@ class Solution:
         # Return True if all checks pass, confirming a valid BST.
         return True
 
-    def find_kth_smallest(self, k: int) -> Optional[int]:
+    def find_kth_smallest_iterative(self, k: int) -> Optional[int]:
         """
         Find the k-th smallest element in the binary search tree (BST).
-
-        This method provides two approaches to find the k-th smallest element:
-        1. **Iterative Method**: Uses an in-order traversal with a stack to find the k-th smallest element.
-        2. **Recursive Method**: Uses a recursive in-order traversal to track the k-th smallest element.
 
         Args:
             k (int): The k-th position to find in the sorted order of the BST values.
@@ -169,31 +165,58 @@ class Solution:
             Optional[int]: The value of the k-th smallest element if it exists, 
                         otherwise None if k is out of bounds.
         """
-        # METHOD 1:
+        # METHOD 1: Iterative In-Order Traversal
         stack = []
         left_side_leftmost = self.bst.root
-        # Traverse to the leftmost node starting from the root, pushing nodes onto the stack.
+        # Traverse to the leftmost node, pushing nodes onto the stack.
         while left_side_leftmost:
             stack.append(left_side_leftmost)
             left_side_leftmost = left_side_leftmost.left
         # Process nodes in in-order sequence.
-        while len(stack) > 0:
-            popped = stack.pop()  # Pop the top node from the stack.
-            k -= 1  # Decrement the kth smallest counter
+        while stack:
+            popped = stack.pop()  # Pop the next node in order.
+            k -= 1  # Decrement k, moving closer to the k-th smallest.
             if k == 0:
-                # Return the value if the k-th smallest node is found.
-                return popped.value
-            # If the popped node has a right child, traverse its leftmost path.
-            if popped.right is not None:
+                return popped.value  # Return the k-th smallest element.
+            # Traverse the leftmost path of the right subtree if it exists.
+            if popped.right:
                 right_side_leftmost = popped.right
                 while right_side_leftmost:
                     stack.append(right_side_leftmost)
                     right_side_leftmost = right_side_leftmost.left
-        # If k is still greater than zero, the k-th element does not exist.
+        # Return None if k is out of bounds.
         if k > 0:
             return None
 
-        # METHOD 2: RECURSIVE APPROACH
+        # # METHOD 2: Integrated Iterative In-Order Traversal
+        # stack = []
+        # current_node = self.root
+        # # Traverse the tree using in-order traversal.
+        # while stack or current_node:
+        #     # Push left nodes onto the stack.
+        #     while current_node:
+        #         stack.append(current_node)
+        #         current_node = current_node.left
+        #     popped_node = stack.pop()  # Pop the next node in order.
+        #     k -= 1
+        #     if k == 0:
+        #         return popped_node.value  # Return the k-th smallest element.
+        #     current_node = popped_node.right  # Move to the right subtree.
+        # # Return None if the k-th element does not exist.
+        # return None
+
+    def find_kth_smallest_recursive(self, k: int) -> Optional[int]:
+        """
+        Find the k-th smallest element in the binary search tree (BST).
+
+        Args:
+            k (int): The k-th position to find in the sorted order of the BST values.
+
+        Returns:
+            Optional[int]: The value of the k-th smallest element if it exists, 
+                        otherwise None if k is out of bounds.
+        """
+
         # Counter to keep track of the number of nodes visited during the in-order traversal.
         n_visited_nodes = 0
 
