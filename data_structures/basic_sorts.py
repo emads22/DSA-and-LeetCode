@@ -14,8 +14,8 @@ def bubble_sort(my_list: list) -> list:
         # Iterate through the unsorted portion of the list
         for j in range(i):
             # Swap elements if the current element is greater than the next
-            if my_list[j] > my_list[i]:
-                my_list[j], my_list[i] = my_list[i], my_list[j]
+            if my_list[j] > my_list[j + 1]:
+                my_list[j], my_list[j + 1] = my_list[j + 1], my_list[j]
     return my_list
 
 
@@ -72,3 +72,51 @@ def insertion_sort(my_list: list) -> list:
     #         my_list[j], my_list[j + 1] = my_list[j + 1], my_list[j]
     #         j -= 1
     # return my_list
+
+
+def main():
+    """
+    Main function to test bubble_sort, selection_sort, and insertion_sort with various test cases.
+    """
+    # Test cases
+    test_cases = {
+        "Empty list": [],  # Empty list
+        "Single element": [1],  # Single element
+        "Already sorted": [1, 2, 3, 4, 5],  # Already sorted
+        "Reverse sorted": [5, 4, 3, 2, 1],  # Reverse sorted
+        # Random unsorted list
+        "Random unsorted list": [3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5],
+        # Mixed positive and negative numbers
+        "Mixed positive and negative numbers": [10, -1, 3, 0, 5, 2, 7, -3],
+    }
+
+    # Testing bubble_sort
+    print("\n\n=========={ Testing bubble_sort }==========\n\n")
+    for case, _list in test_cases.items():
+        print(f"* {case}:\n")
+        print(f"  . Original: {_list}")
+        sorted_list = bubble_sort(_list.copy())
+        print(f"  . Sorted:   {sorted_list}")
+        print("-" * 40)
+
+    # Testing selection_sort
+    print("\n\n=========={ Testing selection_sort }==========\n\n")
+    for case, _list in test_cases.items():
+        print(f"* {case}:\n")
+        print(f"  . Original: {_list}")
+        sorted_list = selection_sort(_list.copy())
+        print(f"  . Sorted:   {sorted_list}")
+        print("-" * 40)
+
+    # Testing insertion_sort
+    print("\n\n=========={ Testing insertion_sort }==========\n\n")
+    for case, _list in test_cases.items():
+        print(f"* {case}:\n")
+        print(f"  . Original: {_list}")
+        sorted_list = insertion_sort(_list.copy())
+        print(f"  . Sorted:   {sorted_list}")
+        print("-" * 40)
+
+
+if __name__ == "__main__":
+    main()

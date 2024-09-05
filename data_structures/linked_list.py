@@ -58,7 +58,7 @@ class LinkedList(Generic[ItemType]):
         Returns:
             str: The string representation of the linked list.
         """
-        display = "\n\n*  "
+        display = "\n*  "
         temp = self.head
         while temp:
             display += f"{temp} --> "
@@ -94,6 +94,37 @@ class LinkedList(Generic[ItemType]):
         """
         self.head = self.tail = None
         self.length = 0
+
+    def from_list(self, items: list[ItemType]) -> None:
+        """
+        Initialize the linked list from a Python list.
+
+        Args:
+            items (list[ItemType]): The list of values to convert into a linked list.
+        """
+        # Reset the list before creating from the list
+        self.head = None
+        self.tail = None
+        self.length = 0
+
+        for item in items:
+            self.append(item)
+
+    def to_list(self) -> list[ItemType]:
+        """
+        Convert the linked list to a Python list.
+
+        Returns:
+            list[ItemType]: A list of values from the linked list.
+        """
+        items = []  # Initialize an empty list
+        current = self.head
+        # Iterates through the linked list starting from self.head
+        while current:
+            # Append the value of each node to the items list
+            items.append(current.value)
+            current = current.next
+        return items  # Return the items list
 
     def append(self, value: ItemType) -> bool:
         """
@@ -283,3 +314,81 @@ class LinkedList(Generic[ItemType]):
             # Move pointers one position ahead
             before = current
             current = after
+
+def main() -> None:
+    # Create a new linked list
+    linked_list = LinkedList[int]()
+    
+    print("==> Initial empty linked list:")
+    linked_list.display()
+    print("-" * 40)
+
+    # Test appending nodes
+    print("==> Appending values 1, 2, 3, 4, 5:")
+    for i in range(1, 6):
+        linked_list.append(i)
+    linked_list.display()
+    print("-" * 40)
+
+    # Test prepending nodes
+    print("==> Prepending values 0, -1, -2:")
+    for i in range(0, -3, -1):
+        linked_list.prepend(i)
+    linked_list.display()
+    print("-" * 40)
+
+    # Test removing nodes
+    print("==> Removing the last node:")
+    linked_list.pop()
+    linked_list.display()
+    print("-" * 40)
+
+    print("==> Removing the first node:")
+    linked_list.pop_first()
+    linked_list.display()
+    print("-" * 40)
+
+    # Test inserting nodes at specific positions
+    print("==> Inserting values 10 at index 0 and 20 at index 3:")
+    linked_list.insert(0, 10)
+    linked_list.insert(3, 20)
+    linked_list.display()
+    print("-" * 40)
+
+    # Test getting and setting values
+    print("==> Getting value at index 2:")
+    node = linked_list.get(2)
+    print(f"\n*  Node at index 2: {node}\n")
+    print("-" * 40)
+
+    print("==> Setting value at index 2 to 99:")
+    linked_list.set_value(2, 99)
+    linked_list.display()
+    print("-" * 40)
+
+    # Test removing nodes by index
+    print("==> Removing node at index 1:")
+    linked_list.remove(1)
+    linked_list.display()
+    print("-" * 40)
+
+    # Test reversing the linked list
+    print("==> Reversing the linked list:")
+    linked_list.reverse()
+    linked_list.display()
+    print("-" * 40)
+
+    # Test converting to a Python list
+    print("==> Converting linked list to a Python list:")
+    python_list = linked_list.to_list()
+    print("\n* ", python_list, "\n")
+    print("-" * 40)
+
+    # Test clearing the linked list
+    print("==> Clearing the linked list:")
+    linked_list.clear()
+    linked_list.display()
+    print("-" * 40)
+
+if __name__ == "__main__":
+    main()
