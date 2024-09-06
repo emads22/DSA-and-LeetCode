@@ -9,8 +9,8 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from typing import Optional
 from data_structures import Node_LL, LinkedList
+from typing import Optional
 
 
 class Solution:
@@ -281,3 +281,195 @@ class Solution:
         else:
             # If start_index is 0, update the head of the list.
             self.linked_list.head = dummy.next
+
+
+def main():
+    # Initialize a Solution object
+    solution = Solution()
+
+    # Test cases for each method
+
+    # Test find_middle_node()
+    print("\n==> Testing find_middle_node()...\n")
+    test_cases = {
+        # Case 1: Odd number of nodes
+        "Odd number of nodes": [1, 2, 3, 4, 5],
+        # Case 2: Even number of nodes
+        "Even number of nodes": [1, 2, 3, 4, 5, 6],
+        # Case 3: Single node
+        "Single node": [1],
+        # Case 4: Empty list
+        "Empty list": []
+    }
+
+    for case, _list in test_cases.items():
+        # Reset linked list before each test
+        solution.linked_list.clear()  # Assuming clear method exists in LinkedList
+        # Assuming append is defined in your LinkedList class
+        solution.linked_list.from_list(_list)
+
+        middle_node = solution.find_middle_node()
+        print(f"  . {case}: {_list} --> Middle node: {middle_node}")
+
+    print("-" * 80)
+
+    # Test has_loop()
+    print("\n==> Testing has_loop()...\n")
+    test_cases = {
+        # Case 1: No loop
+        "No loop": [1, 2, 3, 4, 5],
+        # Case 2: Loop exists
+        # Last node points to node with value 3
+        "Loop exists": ([1, 2, 3, 4, 5], 3)
+    }
+
+    for case, _list in test_cases.items():
+        # Check if it's a tuple (loop case)
+        if isinstance(_list, tuple):
+            list_values = _list[0]  # The list of values
+            loop_point = _list[1]   # The position to loop back to
+        else:
+            list_values = _list
+            loop_point = None
+
+        # Fill the linked list with values
+        solution.linked_list.from_list(list_values)
+
+        # If it's a loop case, create the loop
+        if loop_point is not None:
+            loop_node = solution.linked_list.get_node(
+                loop_point)  # Assuming get_node exists
+            # Create the loop by pointing the last node's next to loop_node
+            solution.linked_list.tail.next = loop_node
+
+        # Check if a loop is detected
+        has_loop = solution.has_loop()
+        print(f"  . {case}: {_list} --> Loop detected: {has_loop}")
+
+    print("-" * 80)
+
+    # Test find_kth_from_end()
+    print("\n==> Testing find_kth_from_end()...\n")
+    test_cases = {
+        # Case 1: K is valid
+        "K is valid": ([1, 2, 3, 4, 5], 2),  # Find 2nd node from the end
+        # Case 2: K is out of bounds
+        "K is out of bounds": ([1, 2, 3, 4, 5], 6),
+        # Case 3: K is 0 or negative
+        "K is out of bounds": ([1, 2, 3, 4, 5], 0)
+    }
+
+    for case, tupl in test_cases.items():
+        solution.linked_list.clear()
+
+        _list, k = tupl
+        solution.linked_list.from_list(_list)
+
+        kth_node = solution.find_kth_from_end(solution.linked_list, k)
+        print(f"  . {case}: {_list}, k={k} --> K-th from end: {kth_node}")
+
+    print("-" * 80)
+
+    # Test partition_list()
+    print("\n==> Testing partition_list()...\n")
+    test_cases = {
+        # Case 1: Partition with x in the middle
+        "Partition with x in the middle": ([1, 4, 3, 2, 5], 3),
+        # Case 2: Partition with all values < x
+        "Partition with all values < x": ([1, 2, 2], 5),
+        # Case 3: Partition with all values >= x
+        "Partition with all values >= x": ([5, 6, 7], 5),
+        # Case 4: Empty list
+        "Empty list": ([], 3),
+        # Case 5: Single element less than x
+        "Single element less than x": ([1], 3),
+        # Case 6: Single element greater than or equal to x
+        "Single element greater than or equal to x": ([5], 3)
+    }
+
+    for case, tupl in test_cases.items():
+        solution.linked_list.clear()
+
+        _list, x = tupl
+        solution.linked_list.from_list(_list)
+
+        solution.partition_list(x)
+        # Assuming to_list method exists
+        print(f"  . {case}: {_list}, x={
+              x} --> Partitioned list: {solution.linked_list.to_list()}")
+
+    print("-" * 80)
+
+    # Test remove_duplicates()
+    print("\n==> Testing remove_duplicates()...\n")
+    test_cases = {
+        # Case 1: No duplicates
+        "No duplicates": [1, 2, 3, 4, 5],
+        # Case 2: Some duplicates
+        "Some duplicates": [1, 2, 2, 3, 4, 4, 5],
+        # Case 3: All duplicates
+        "All duplicates": [1, 1, 1, 1]
+    }
+
+    for case, _list in test_cases.items():
+        solution.linked_list.clear()
+
+        solution.linked_list.from_list(_list)
+
+        solution.remove_duplicates()
+        print(f"  . {case}: {
+              _list} --> Duplicates removed: {solution.linked_list.to_list()}")
+
+    print("-" * 80)
+
+    # Test binary_to_decimal()
+    print("\n==> Testing binary_to_decimal()...\n")
+    test_cases = {
+        # Case 1: Binary number is valid
+        "Binary number is valid": [1, 0, 1, 1],  # Binary 1011 -> Decimal 11
+        # Case 2: Empty list
+        "Empty list": []
+    }
+
+    for case, _list in test_cases.items():
+        solution.linked_list.clear()
+        solution.linked_list.from_list(_list)
+
+        decimal_value = solution.binary_to_decimal()
+        print(f"  . {case}: {_list} --> Decimal value: {decimal_value}")
+
+    print("-" * 80)
+
+    # Test reverse_between()
+    print("\n==> Testing reverse_between()...\n")
+    test_cases = {
+        # Case 1: Reverse a portion of the list
+        # Reverse from index 2 to 4 -> [1, 4, 3, 2, 5]
+        "Reverse a portion of the list": ([1, 2, 3, 4, 5], 2, 4),
+        # Case 2: Reverse the entire list
+        # Reverse from index 0 to 4 -> [5, 4, 3, 2, 1]
+        "Reverse the entire list": ([1, 2, 3, 4, 5], 0, 4),
+        # Case 3: left equals right (no change)
+        # Reverse from index 3 to 3 -> [1, 2, 3, 4, 5]
+        "left equals right (no change)": ([1, 2, 3, 4, 5], 3, 3),
+        # # Case 4: Out of bounds
+        # "Out of bounds": ([1, 2, 3, 4, 5], 0, 6),  # Invalid range, should handle error or do nothing
+        # Case 4: Single node list
+        "Single node list": ([1], 0, 0)  # Reverse on a single element -> [1]
+    }
+
+    for case, tupl in test_cases.items():
+        solution.linked_list.clear()
+
+        _list, start_index, end_index = tupl
+        solution.linked_list.from_list(_list)
+
+        solution.reverse_between(start_index, end_index)
+        print(f"  . {case}: {_list}, Reversed between {start_index} and {
+              end_index} --> {solution.linked_list.to_list()}")
+
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()

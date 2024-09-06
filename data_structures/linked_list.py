@@ -210,7 +210,7 @@ class LinkedList(Generic[ItemType]):
         self.length -= 1
         return node_to_pop
 
-    def get(self, index: int) -> Optional[Node_LL[ItemType]]:
+    def get_node(self, index: int) -> Optional[Node_LL[ItemType]]:
         """
         Retrieve the node at a specific index in the linked list.
 
@@ -238,7 +238,7 @@ class LinkedList(Generic[ItemType]):
         Returns:
             bool: True if the node value was successfully updated, False otherwise.
         """
-        node_to_set = self.get(index)
+        node_to_set = self.get_node(index)
         if node_to_set:
             node_to_set.value = value
             return True
@@ -262,7 +262,7 @@ class LinkedList(Generic[ItemType]):
         if index == self.length:
             return self.append(value)
         new_node = Node_LL(value)
-        node_before = self.get(index - 1)
+        node_before = self.get_node(index - 1)
         new_node.next = node_before.next
         node_before.next = new_node
         self.length += 1
@@ -284,7 +284,7 @@ class LinkedList(Generic[ItemType]):
             return self.pop_first()
         if index == self.length - 1:
             return self.pop()
-        node_before = self.get(index - 1)
+        node_before = self.get_node(index - 1)
         node_to_remove = node_before.next
         node_before.next = node_to_remove.next
         node_to_remove.next = None
@@ -321,74 +321,74 @@ def main() -> None:
     
     print("==> Initial empty linked list:")
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test appending nodes
     print("==> Appending values 1, 2, 3, 4, 5:")
     for i in range(1, 6):
         linked_list.append(i)
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test prepending nodes
     print("==> Prepending values 0, -1, -2:")
     for i in range(0, -3, -1):
         linked_list.prepend(i)
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test removing nodes
     print("==> Removing the last node:")
     linked_list.pop()
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     print("==> Removing the first node:")
     linked_list.pop_first()
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test inserting nodes at specific positions
     print("==> Inserting values 10 at index 0 and 20 at index 3:")
     linked_list.insert(0, 10)
     linked_list.insert(3, 20)
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test getting and setting values
     print("==> Getting value at index 2:")
-    node = linked_list.get(2)
+    node = linked_list.get_node(2)
     print(f"\n*  Node at index 2: {node}\n")
-    print("-" * 40)
+    print("-" * 80)
 
     print("==> Setting value at index 2 to 99:")
     linked_list.set_value(2, 99)
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test removing nodes by index
     print("==> Removing node at index 1:")
     linked_list.remove(1)
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test reversing the linked list
     print("==> Reversing the linked list:")
     linked_list.reverse()
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
     # Test converting to a Python list
     print("==> Converting linked list to a Python list:")
     python_list = linked_list.to_list()
     print("\n* ", python_list, "\n")
-    print("-" * 40)
+    print("-" * 80)
 
     # Test clearing the linked list
     print("==> Clearing the linked list:")
     linked_list.clear()
     linked_list.display()
-    print("-" * 40)
+    print("-" * 80)
 
 if __name__ == "__main__":
     main()
