@@ -14,7 +14,7 @@ from data_structures import LinkedList
 
 class Solution:
     """
-    A class that provides solutions for operations on a linked list.
+    A class that provides solutions for basic sorts operations on a linked list.
 
     Attributes:
         linked_list (LinkedList[int]): The linked list to perform operations on.
