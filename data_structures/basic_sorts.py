@@ -1,13 +1,18 @@
+from typing import TypeVar
 
-def bubble_sort(my_list: list) -> list:
+# Define a generic type variable that can be used to specify the type of list elements
+ItemType = TypeVar('ItemType')
+
+
+def bubble_sort(my_list: list[ItemType]) -> list[ItemType]:
     """
     Sorts a list in ascending order using the bubble sort algorithm.
 
     Args:
-        my_list (list): The list of elements to be sorted.
+        my_list (list[ItemType]): The list of elements to be sorted.
 
     Returns:
-        list: The sorted list in ascending order.
+        list[ItemType]: The sorted list in ascending order.
     """
     # Iterate from the last element down to the second element
     for i in range(len(my_list) - 1, 0, -1):
@@ -19,15 +24,15 @@ def bubble_sort(my_list: list) -> list:
     return my_list
 
 
-def selection_sort(my_list: list) -> list:
+def selection_sort(my_list: list[ItemType]) -> list[ItemType]:
     """
     Sorts a list in ascending order using the selection sort algorithm.
 
     Args:
-        my_list (list): The list of elements to be sorted.
+        my_list (list[ItemType]): The list of elements to be sorted.
 
     Returns:
-        list: The sorted list in ascending order.
+        list[ItemType]: The sorted list in ascending order.
     """
     # Iterate over the list, leaving the last element since it will be sorted automatically
     for i in range(len(my_list) - 1):
@@ -43,15 +48,15 @@ def selection_sort(my_list: list) -> list:
     return my_list
 
 
-def insertion_sort(my_list: list) -> list:
+def insertion_sort(my_list: list[ItemType]) -> list[ItemType]:
     """
     Sorts a list in ascending order using the insertion sort algorithm.
 
     Args:
-        my_list (list): The list of elements to be sorted.
+        my_list (list[ItemType]): The list of elements to be sorted.
 
     Returns:
-        list: The sorted list in ascending order.
+        list[ItemType]: The sorted list in ascending order.
     """
     # METHOD 1: Using a forward comparison
     # Iterate over the list starting from the second element

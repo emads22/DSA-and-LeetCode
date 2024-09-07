@@ -249,8 +249,8 @@ class Solution:
         Returns:
             None: The linked list is modified in place.
         """
-        # If the linked list is empty or has only one node, nothing to reverse.
-        if self.linked_list.length < 2:
+        # If the linked list is empty or has only one node, or out of bounds indexes, nothing to reverse.
+        if self.linked_list.length < 2 or start_index < 0 or end_index >= self.linked_list.length:
             return
         # Dummy node to simplify the reversal process.
         dummy = Node_LL(0)
@@ -452,9 +452,9 @@ def main():
         # Case 3: left equals right (no change)
         # Reverse from index 3 to 3 -> [1, 2, 3, 4, 5]
         "left equals right (no change)": ([1, 2, 3, 4, 5], 3, 3),
-        # # Case 4: Out of bounds
-        # "Out of bounds": ([1, 2, 3, 4, 5], 0, 6),  # Invalid range, should handle error or do nothing
-        # Case 4: Single node list
+        # Case 4: Out of bounds
+        "Out of bounds": ([1, 2, 3, 4, 5], 0, 6),  # Invalid range, should handle error or do nothing
+        # Case 5: Single node list
         "Single node list": ([1], 0, 0)  # Reverse on a single element -> [1]
     }
 
