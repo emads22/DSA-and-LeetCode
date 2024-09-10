@@ -93,7 +93,40 @@ The function modifies the original list nums in-place, moving unique elements to
 
 -----------------------------------------------------------------------------------------
 
-## 5. List: Rotate (**Interview Question**)
+
+
+## 5. List: Max Profit (**Interview Question**)
+
+### You are given a list of integers representing stock prices for a certain company over a period of time, where each element in the list corresponds to the stock price for a specific day. You are allowed to buy one share of the stock on one day and sell it on a later day.
+
+### Task:
+Write a function called `max_profit` that takes the list of stock prices as input and returns the maximum profit you can make by buying and selling at the right time.
+
+- Note that you must buy the stock before selling it, and you are allowed to make only one transaction (buy once and sell once).
+
+### Constraints:
+- Each element of the input list is a positive integer representing the stock price for a specific day.
+
+### Example:
+```python
+def max_profit(prices):
+    # Implementation goes here
+    pass
+
+prices = [7, 1, 5, 3, 6, 4]    # Input
+profit = max_profit(prices)    # Function Call
+profit = 5                     # Output
+```
+
+### Explanation:
+The maximum profit can be achieved by buying the stock on day 2 (price 1) and selling it on day 5 (price 6), resulting in a profit of 6 - 1 = 5.
+
+-----------------------------------------------------------------------------------------
+
+
+
+
+## 6. List: Rotate (**Interview Question**)
 
 ### Given a list of `n` integers and a non-negative integer `k`. Write a function called `rotate` that takes the list of integers and an integer `k` as input and rotates the list to the right by `k` steps.
 
@@ -146,32 +179,29 @@ The list has been rotated to the right by 3 steps:
 
 
 
-## 5.  (**Interview Question**)
+## 7. List: Max Sub Array (**Interview Question**)
 
-### 
+### Given an array of integers `nums`, write a function `max_subarray(nums)` that finds the contiguous subarray (containing at least one number) with the largest sum and returns its sum.
 
------------------------------------------------------------------------------------------
+**Remember to also account for an array with 0 items.**
 
+#### Function Signature:
+```python
+def max_subarray(nums):
+```
+#### Input:
+- A list of integers nums.
 
+#### Output:
+- An integer representing the sum of the contiguous subarray with the largest sum.
 
-## 6.  (**Interview Question**)
+#### Example:
+```python
+max_subarray([-2, 1, -3, 4, -1, 2, 1, -5, 4])   # Output: 6
+```
 
-### 
-
------------------------------------------------------------------------------------------
-
-
-
-## 7.  (**Interview Question**)
-
-### 
-
------------------------------------------------------------------------------------------
-
-
-
-## 8.  (**Interview Question**)
-
-### 
+#### Explanation: 
+- The contiguous subarray [4, -1, 2, 1] has the largest sum, which is 6.
 
 -----------------------------------------------------------------------------------------
+
