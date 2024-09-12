@@ -7,8 +7,8 @@ main_project_path = Path(__file__).resolve().parent.parent.parent
 # Add the main_project directory to sys.path
 sys.path.append(str(main_project_path))
 
-from data_structures import Node_DLL, DoublyLinkedList
-from typing import Optional
+
+from data_structures import DoublyLinkedList
 
 
 class Solution:
@@ -172,3 +172,95 @@ class Solution:
             second.next = first
             # Move `first` to the next pair.
             first = first.next
+
+
+def main():
+    # Initialize the Solution instance
+    solution = Solution()
+
+    # Define test cases for each method
+    test_cases = {
+        "swap_first_last": [
+            ([1, 2, 3, 4, 5], "Odd number of elements"),
+            ([10, 20, 30, 40], "Even number of elements"),
+            ([1], "Single element list"),
+            ([], "Empty list")
+        ],
+        "reverse": [
+            ([1, 2, 3, 4, 5], "Odd number of elements"),
+            ([10, 20, 30, 40], "Even number of elements"),
+            ([7, 14, 21], "Odd number of elements"),
+            ([], "Empty list"),
+            ([1], "Single element list")
+        ],
+        "is_palindrome": [
+            ([1, 2, 3, 2, 1], "Odd number of elements"),
+            ([1, 2, 2, 1], "Even number of elements"),
+            ([1, 2, 3, 4], "Not a palindrome"),
+            ([], "Empty list"),
+            ([1], "Single element list")
+        ],
+        "swap_pairs": [
+            ([1, 2, 3, 4, 5], "Odd number of elements"),
+            ([10, 20, 30, 40], "Even number of elements"),
+            ([7, 14, 21], "Odd number of elements"),
+            ([], "Empty list"),
+            ([1], "Single element list")
+        ]
+    }
+
+    # Test swap_first_last method
+    print("\n==> Test swap_first_last():\n")
+    for values, description in test_cases["swap_first_last"]:
+        # Reset linked list before each test
+        solution.doubly_linked_list.clear()
+        # Populate the linked list with values
+        solution.doubly_linked_list.from_list(values)
+        # Perform swap_first_last and display the result
+        solution.swap_first_last()
+        print(f"\t. {description}: {
+              values} --> {solution.doubly_linked_list.to_list()}")
+    print("-" * 80)
+
+    # Test reverse method
+    print("\n==> Test reverse():\n")
+    for values, description in test_cases["reverse"]:
+        # Reset linked list before each test
+        solution.doubly_linked_list.clear()
+        # Populate the doubly linked list with values
+        solution.doubly_linked_list.from_list(values)
+        # Perform reverse and display the result
+        solution.reverse()
+        print(f"\t. {description}: {
+              values} --> {solution.doubly_linked_list.to_list()}")
+    print("-" * 80)
+
+    # Test is_palindrome method
+    print("\n==> Test is_palindrome():\n")
+    for values, description in test_cases["is_palindrome"]:
+        # Reset linked list before each test
+        solution.doubly_linked_list.clear()
+        # Populate the doubly linked list with values
+        solution.doubly_linked_list.from_list(values)
+        # Perform is_palindrome and display the result
+        is_palindrome = solution.is_palindrome()
+        result = "is a" if is_palindrome else "is not a"
+        print(f"\t. {description}: {values} --> {result} palindrome.")
+    print("-" * 80)
+
+    # Test swap_pairs method
+    print("\n==> Test swap_pairs():\n")
+    for values, description in test_cases["swap_pairs"]:
+        # Reset linked list before each test
+        solution.doubly_linked_list.clear()
+        # Populate the doubly linked list with values
+        solution.doubly_linked_list.from_list(values)
+        # Perform swap_pairs and display the result
+        solution.swap_pairs()
+        print(f"\t. {description}: {
+              values} --> {solution.doubly_linked_list.to_list()}")
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()

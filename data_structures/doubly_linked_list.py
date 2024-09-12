@@ -61,7 +61,7 @@ class DoublyLinkedList(Generic[ItemType]):
             str: The string representation of the doubly linked list.
         """
         first_link = "None <-- " if self.length > 0 else ""
-        display = f"\n\n*  {first_link}"
+        display = f"\n*  {first_link}"
         temp = self.head
         while temp:
             link = "<-->" if temp.next else "-->"
@@ -266,3 +266,109 @@ class DoublyLinkedList(Generic[ItemType]):
         node_to_pop.prev = node_to_pop.next = None
         self.length -= 1
         return node_to_pop
+
+    def from_list(self, values: list[ItemType]) -> None:
+        """
+        Populate the doubly linked list with values from a Python list.
+
+        Args:
+            values (list[ItemType]): The list of values to populate the doubly linked list.
+        """
+        self.clear()  # Clears the existing list
+        for value in values:
+            self.append(value)
+
+    def to_list(self) -> list[ItemType]:
+        """
+        Convert the doubly linked list to a Python list.
+
+        Returns:
+            list[ItemType]: A list containing all the values from the doubly linked list.
+        """
+        values = []
+        temp = self.head
+        while temp:
+            values.append(temp.value)
+            temp = temp.next
+        return values
+
+
+def main():
+    # Create a new doubly linked list
+    dll = DoublyLinkedList[int]()
+
+    # Test the append method
+    print("\n==> Appending values 1, 2, and 3:")
+    dll.append(1)
+    dll.append(2)
+    dll.append(3)
+    dll.display()
+    print("-" * 80)
+
+    # Test the prepend method
+    print("\n==> Prepending values 0 and -1:")
+    dll.prepend(0)
+    dll.prepend(-1)
+    dll.display()
+    print("-" * 80)
+
+    # Test the pop method
+    print("\n==> Popping the last element:")
+    dll.pop()
+    dll.display()
+    print("-" * 80)
+
+    # Test the pop_first method
+    print("\n==> Popping the first element:")
+    dll.pop_first()
+    dll.display()
+    print("-" * 80)
+
+    # Test the get method
+    print("\n==> Getting elements at index 1 and 2:")
+    print(f"\n\t. Element at index 1: {dll.get(1)}")
+    print(f"\t. Element at index 2: {dll.get(2)}\n")
+    print("-" * 80)
+
+    # Test the set_value method
+    print("\n==> Setting value of the element at index 1 to 10:")
+    dll.set_value(1, 10)
+    dll.display()
+    print("-" * 80)
+
+    # Test the insert method
+    print("\n==> Inserting value 5 at index 1:")
+    dll.insert(1, 5)
+    dll.display()
+    print("-" * 80)
+
+    # Test the remove method
+    print("\n==> Removing element at index 2:")
+    dll.remove(2)
+    dll.display()
+    print("-" * 80)
+
+    # Test the clear method
+    print("\n==> Clearing the list:")
+    dll.clear()
+    dll.display()
+    print("-" * 80)
+
+    # Test the from_list method
+    print("\n==> Creating list from [1, 2, 3, 4, 5]:")
+    dll.from_list([1, 2, 3, 4, 5])
+    dll.display()
+    print("-" * 80)
+
+    # Test the to_list method
+    print("\n==> Converting the doubly linked list to a Python list:")
+    python_list = dll.to_list()
+    print(f"\n\t. Python list: {python_list}\n")
+    print("-" * 80)
+
+    # Clear the doubly linked list
+    dll.clear()
+
+
+if __name__ == "__main__":
+    main()

@@ -309,7 +309,7 @@ def main():
         solution.linked_list.from_list(_list)
 
         middle_node = solution.find_middle_node()
-        print(f"  . {case}: {_list} --> Middle node: {middle_node}")
+        print(f"\t. {case}: {_list} --> Middle node: {middle_node}")
 
     print("-" * 80)
 
@@ -344,7 +344,7 @@ def main():
 
         # Check if a loop is detected
         has_loop = solution.has_loop()
-        print(f"  . {case}: {_list} --> Loop detected: {has_loop}")
+        print(f"\t. {case}: {_list} --> Loop detected: {has_loop}")
 
     print("-" * 80)
 
@@ -366,7 +366,7 @@ def main():
         solution.linked_list.from_list(_list)
 
         kth_node = solution.find_kth_from_end(solution.linked_list, k)
-        print(f"  . {case}: {_list}, k={k} --> K-th from end: {kth_node}")
+        print(f"\t. {case}: {_list}, k={k} --> K-th from end: {kth_node}")
 
     print("-" * 80)
 
@@ -395,7 +395,7 @@ def main():
 
         solution.partition_list(x)
         # Assuming to_list method exists
-        print(f"  . {case}: {_list}, x={
+        print(f"\t. {case}: {_list}, x={
               x} --> Partitioned list: {solution.linked_list.to_list()}")
 
     print("-" * 80)
@@ -417,7 +417,7 @@ def main():
         solution.linked_list.from_list(_list)
 
         solution.remove_duplicates()
-        print(f"  . {case}: {
+        print(f"\t. {case}: {
               _list} --> Duplicates removed: {solution.linked_list.to_list()}")
 
     print("-" * 80)
@@ -436,7 +436,7 @@ def main():
         solution.linked_list.from_list(_list)
 
         decimal_value = solution.binary_to_decimal()
-        print(f"  . {case}: {_list} --> Decimal value: {decimal_value}")
+        print(f"\t. {case}: {_list} --> Decimal value: {decimal_value}")
 
     print("-" * 80)
 
@@ -465,7 +465,7 @@ def main():
         solution.linked_list.from_list(_list)
 
         solution.reverse_between(start_index, end_index)
-        print(f"  . {case}: {_list}, Reversed between {start_index} and {
+        print(f"\t. {case}: {_list}, Reversed between {start_index} and {
               end_index} --> {solution.linked_list.to_list()}")
 
     print("-" * 80)
