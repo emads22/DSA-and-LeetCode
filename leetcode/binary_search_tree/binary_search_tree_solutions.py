@@ -9,8 +9,8 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from data_structures import Node_BST, BinarySearchTree
 from typing import Optional
+from data_structures import Node_BST, BinarySearchTree
 
 
 class Solution:
@@ -269,3 +269,88 @@ class Solution:
 
         # Call the recursive helper function starting from the root node of the BST.
         return _kth_smallest_element(self.bst.root, k)
+
+
+def main():
+    # Instantiate the Solution class
+    solution = Solution()
+
+    # Test cases for sorted_list_to_bst
+    print("\n==> Testing sorted_list_to_bst:\n")
+    sorted_lists = {
+        "Edge case: empty list": [],                   # Edge case: empty list
+        # Edge case: single element
+        "Edge case: single element": [1],
+        # Simple case: three elements
+        "Simple case: three elements": [1, 2, 3],
+        # Simple case: five elements
+        "Simple case: five elements": [1, 2, 3, 4, 5],
+        # Case with seven elements
+        "Case with seven elements": [1, 2, 3, 4, 5, 6, 7]
+    }
+
+    for case, sorted_list in sorted_lists.items():
+        solution.bst.clear()
+        solution.sorted_list_to_bst(sorted_list)
+        print(f"\t. {case} {sorted_list} --> {solution.bst.DFS_in_order()}")
+    print()
+    print("-" * 80)
+
+    print("\n==> Testing invert:\n")
+    # Reuse some test cases for inverting the BST
+    for case, sorted_list in sorted_lists.items():
+        solution.bst.clear()
+        print(f"\t. {case} {sorted_list}:")
+        solution.sorted_list_to_bst(sorted_list)
+        print(
+            f"\t\t. Original BST In-order traversal: {solution.bst.DFS_in_order()}")
+        solution.invert()
+        print(
+            f"\t\t. Inverted BST In-order traversal: {solution.bst.DFS_in_order()}\n")
+    print("-" * 80)
+
+    print("\n==> Testing is_valid_bst:\n")
+    valid_bsts = {
+        "Edge case: empty tree": [],                   # Edge case: empty tree
+        # Edge case: single element
+        "Edge case: single element": [1],
+        # Simple case: three elements forming a valid BST
+        "Simple case: three elements forming a valid BST": [1, 2, 3],
+        # Simple case: three elements forming a valid BST after inversion
+        "Simple case: three elements forming a valid BST after inversion": [3, 2, 1]
+    }
+
+    for case, valid_bst in valid_bsts.items():
+        solution.bst.clear()
+        print(f"\t. {case} {valid_bst}:")
+        solution.sorted_list_to_bst(valid_bst)
+        print(f"\t\t. BST In-order traversal: {solution.bst.DFS_in_order()}")
+        print(f"\t\t. Is valid BST: {solution.is_valid_bst()}\n")
+    print("-" * 80)
+
+    print("\n==> Testing find_kth_smallest_iterative:")
+    ks = [1, 2, 3, 4]  # Various k values to test
+    for case, sorted_list in sorted_lists.items():
+        solution.bst.clear()
+        print(f"\n\t. {case} {sorted_list}:")
+        solution.sorted_list_to_bst(sorted_list)
+        for k in ks:
+            print(f"\t\t. K={k}, Kth smallest element is: {
+                  solution.find_kth_smallest_iterative(k)}")
+    print()
+    print("-" * 80)
+
+    print("\n==> Testing find_kth_smallest_recursive:")
+    for case, sorted_list in sorted_lists.items():
+        solution.bst.clear()
+        print(f"\n\t. {case} {sorted_list}:")
+        solution.sorted_list_to_bst(sorted_list)
+        for k in ks:
+            print(f"\t\t. K={k}, Kth smallest element is: {
+                  solution.find_kth_smallest_recursive(k)}")
+    print()
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()

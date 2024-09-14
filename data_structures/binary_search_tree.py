@@ -71,7 +71,6 @@ class BinarySearchTree(Generic[ItemType]):
         Print the string representation of the binary search tree.
         """
         display = f"""
-
 *  {self._to_list(self.root)}
 
     . Root: {self.root}
@@ -392,6 +391,8 @@ class BinarySearchTree(Generic[ItemType]):
             Args:
                 current_node (Node_BST[ItemType]): The current node being traversed.
             """
+            if current_node is None:
+                return  # Base case: if current_node is None, do nothing
             # Process the current node's value
             output.append(current_node.value)
             # Traverse the left subtree if it exists
@@ -424,6 +425,8 @@ class BinarySearchTree(Generic[ItemType]):
             Args:
                 current_node (Node_BST[ItemType]): The current node being traversed.
             """
+            if current_node is None:
+                return  # Base case: if current_node is None, do nothing
             # Traverse the left subtree if it exists
             if current_node.left is not None:
                 traverse(current_node.left)
@@ -455,6 +458,8 @@ class BinarySearchTree(Generic[ItemType]):
             Args:
                 current_node (Node_BST[ItemType]): The current node being traversed.
             """
+            if current_node is None:
+                return  # Base case: if current_node is None, do nothing
             # Traverse the left subtree if it exists
             if current_node.left is not None:
                 traverse(current_node.left)
@@ -499,3 +504,235 @@ class BinarySearchTree(Generic[ItemType]):
                 queue.append(current_node.right)
         # Return the list of values obtained from the BFS traversal.
         return output
+
+    def height(self) -> int:
+        """
+        Calculate the height of the binary search tree.
+
+        The height of a binary search tree is defined as the number of edges
+        on the longest path from the root node to a leaf node. An empty tree 
+        is considered to have a height of 0.
+
+        This implementation uses Depth-First Search (DFS) to recursively 
+        determine the height of the left and right subtrees and computes the 
+        maximum height between them. The final height is calculated by adding 1 
+        to account for the edge between the root and its children.
+
+        Returns:
+            int: The height of the tree. Returns 0 for an empty tree.
+        """
+        def _height(node: Optional[Node_BST[ItemType]]) -> int:
+            """
+            Helper function to compute the height of the subtree rooted at `node`.
+
+            Args:
+                node (Optional[Node_BST[ItemType]]): The current node in the tree.
+
+            Returns:
+                int: The height of the subtree rooted at `node`. Returns 0 for an empty subtree.
+            """
+            if node is None:
+                return 0  # Base case: the height of an empty subtree is 0
+            # Recursively find the height of the left and right subtrees
+            left_height = _height(node.left)
+            right_height = _height(node.right)
+            # The height of the current node is the maximum of the heights of its subtrees plus 1
+            return max(left_height, right_height) + 1
+
+        # Start the height calculation from the root of the tree
+        return _height(self.root)
+
+        # if node is None:
+        #     return -1  # Empty tree or end of recursion (leaf node's children)
+
+        # # Recursively calculate the height of the left and right subtrees
+        # left_height = self.height(node.left)
+        # right_height = self.height(node.right)
+
+        # # Return the greater of the two heights plus 1 for the current node
+        # return max(left_height, right_height) + 1
+
+    def depth(self, value: ItemType) -> int:
+        """
+        Find the depth of the node with the specified value in the binary search tree.
+
+        Depth is defined as the number of edges from the root to the node with the given value.
+        If the node with the specified value is not found, return -1.
+
+        This method performs a Depth-First Search (DFS) to locate the node and calculate its depth.
+
+        Args:
+            value (ItemType): The value of the node whose depth is to be found.
+
+        Returns:
+            int: The depth of the node with the specified value, or -1 if the node is not found.
+        """
+        def _depth(node: Optional[Node_BST[ItemType]], value: ItemType, current_depth: int) -> int:
+            """
+            Helper method to perform recursive DFS and find the depth of the node with the specified value.
+
+            Args:
+                node (Optional[Node_BST[ItemType]]): The current node in the recursive search.
+                value (ItemType): The value of the node to find.
+                current_depth (int): The current depth level in the tree.
+
+            Returns:
+                int: The depth of the node with the specified value, or -1 if the node is not found.
+            """
+            # Base case: If the current node is None, the value is not found in this subtree.
+            if node is None:
+                return -1
+            # If the current node contains the value, return the current depth.
+            if node.value == value:
+                return current_depth
+            # Recursively search in the left subtree.
+            left_depth = _depth(node.left, value, current_depth + 1)
+            # If the value is found in the left subtree, return the depth.
+            if left_depth != -1:
+                return left_depth
+            # Recursively search in the right subtree.
+            right_depth = _depth(node.right, value, current_depth + 1)
+            return right_depth
+
+        # Start the search from the root of the tree with an initial depth of 0.
+        return _depth(self.root, value, 0)
+
+    def clear(self) -> None:
+        """
+        Clears the binary search tree by setting the root to None.
+
+        This method effectively removes all nodes from the tree and resets
+        the tree to an empty state. It is useful when you need to reuse the
+        same BST object for different operations or tests without remnants
+        of previous data.
+
+        Example:
+        >>> bst = BST()
+        >>> bst.insert(5)
+        >>> bst.clear()
+        >>> bst.root
+        None
+        """
+        # Set the root of the tree to None, effectively clearing the tree.
+        self.root = None
+
+
+def main():
+    # Create a new binary search tree
+    bst = BinarySearchTree[int]()
+
+    # Test: Insert nodes into the BST
+    print("\n==> Test: Insert nodes into the BST\n")
+    values_to_insert = [50, 30, 70, 20, 40, 60, 80]
+    print("\t. Inserting values:", values_to_insert)
+    for value in values_to_insert:
+        bst.insert(value)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Search for existing and non-existing values
+    print("\n==> Test: Search for existing and non-existing values\n")
+    search_values = [70, 40, 100]  # 100 is not in the tree
+    for value in search_values:
+        result = bst.contains(value)
+        print(f"\t. Contains {value}: {result}")
+    print()
+    print("-" * 80)
+
+    # Test: Recursively search for existing and non-existing values
+    print("\n==> Test: Recursively search for existing and non-existing values\n")
+    for value in search_values:
+        result = bst.r_contains(value)
+        print(f"\t. Recursively contains {value}: {result}")
+    print()
+    print("-" * 80)
+
+    # Test: Delete nodes with no children (leaf nodes)
+    print("\n==> Test: Delete leaf node 20:")
+    bst.delete(20)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Delete nodes with one child
+    print("\n==> Test: Delete node 30 (has one child):")
+    bst.delete(30)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Delete nodes with two children
+    print("\n==> Test: Delete node 50 (has two children):")
+    bst.delete(50)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Insert recursively
+    print("\n==> Test: Insert 25 recursively:")
+    bst.r_insert(25)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Recursive delete
+    # Re-insert nodes to prepare for recursive delete tests
+    values_to_reinsert = [50, 30, 70, 20, 40, 60, 80]
+    print(
+        f"\n==> Re-insert node values {values_to_reinsert} for recursive delete tests")
+    for value in values_to_reinsert:
+        bst.r_insert(value)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Delete leaf node 20 using recursive delete
+    print("\n==> Test: Recursive delete of leaf node 20:")
+    bst.r_delete(20)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Delete node with one child (30) using recursive delete
+    print("\n==> Test: Recursive delete of node 30 (has one child):")
+    bst.r_delete(30)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Delete node with two children (50) using recursive delete
+    print("\n==> Test: Recursive delete of node 50 (has two children):")
+    bst.r_delete(50)
+    bst.display()
+    print("-" * 80)
+
+    # Test: Traversal methods
+    print("\n==> Test: Traversal methods:")
+    in_order = bst.DFS_in_order()
+    # In-order traversal
+    print(f"\n\t. In-order traversal:\t{in_order}\n")
+    pre_order = bst.DFS_pre_order()
+    # Pre-order traversal
+    print(f"\t. Pre-order traversal:\t{pre_order}\n")
+    # Post-order traversal
+    post_order = bst.DFS_post_order()
+    print(f"\t. Post-order traversal:\t{post_order}\n")
+    print("-" * 80)
+
+    # Test: Tree height
+    print("\n==> Test: Tree height")
+    height = bst.height()
+    print(f"\n\t. Height of the tree: {height}\n")
+    print("-" * 80)
+
+    # Test: Depth of nodes
+    print("\n==> Test: Depth of nodes\n")
+    depth_values = [25, 40, 60, 100]  # 100 is not in the tree
+    for value in depth_values:
+        depth_result = bst.depth(value)
+        print(f"\t. Depth of node {value}: {depth_result}")
+    print()
+    print("-" * 80)
+
+    # Test: Clear the BST
+    print("\n==> Test: Clear the BST")
+    bst.clear()
+    bst.display()
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()

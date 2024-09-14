@@ -26,12 +26,12 @@ class Graph(Generic[ItemType]):
         Returns:
             str: The string representation of the graph.
         """
-        display = "\n\n*  "
+        display = "\n*  "
         if not self.adj_list:
             display += "\n None"
         for vertex, adjacents in self.adj_list.items():
             display += f"\n . '{vertex}' | {adjacents}"
-        display += "\n\n"
+        display += "\n"
         return display
 
     def display(self) -> None:
@@ -123,3 +123,70 @@ class Graph(Generic[ItemType]):
                 # Edge does not exist
                 pass
         return False
+
+
+def main():
+    # Create a new graph
+    graph = Graph[str]()
+
+    # Display the initial graph (should be empty)
+    print("Initial graph:")
+    graph.display()
+    print("-" * 60)
+
+    # Add vertices
+    print("\n==> Test: add_vertex()")
+    print("\n\t- Adding vertices 'A', 'B', 'C':\n")
+    print(f"\t\t. Added 'A': {graph.add_vertex('A')}")
+    print(f"\t\t. Added 'B': {graph.add_vertex('B')}")
+    print(f"\t\t. Added 'C': {graph.add_vertex('C')}")
+
+    # Display the graph
+    graph.display()
+    print("-" * 60)
+
+    # Add edges
+    print("\n==> Test: add_edge()")
+    print("\n\t- Adding edges ('A', 'B') and ('B', 'C'):\n")
+    print(f"\t\t. Added edge ('A', 'B'): {graph.add_edge('A', 'B')}")
+    print(f"\t\t. Added edge ('B', 'C'): {graph.add_edge('B', 'C')}")
+
+    # Display the graph
+    graph.display()
+    print("-" * 60)
+
+    # Remove an edge
+    print("\n==> Test: remove_edge()")
+    print("\n\t- Removing edge ('A', 'B'):\n")
+    print(f"\t\t. Removed edge ('A', 'B'): {graph.remove_edge('A', 'B')}")
+
+    # Display the graph
+    graph.display()
+    print("-" * 60)
+
+    # Remove a vertex
+    print("\n==> Test: remove_vertex()")
+    print("\n\t- Removing vertex 'B':\n")
+    print(f"\t\t. Removed 'B': {graph.remove_vertex('B')}")
+
+    # Display the graph
+    graph.display()
+    print("-" * 60)
+
+    # Check if the graph is empty
+    print("\n==> Test: empty()")
+    print(f"\n\t. Is the graph empty? {graph.empty()}\n")
+    print("-" * 60)
+
+    # Attempt to add a vertex that already exists
+    print("\n==> Test: add_vertex()")
+    print("\n\t. Adding vertex 'A' again:\n")
+    print(f"\t\t. Added 'A': {graph.add_vertex('A')}")
+
+    # Display the graph
+    graph.display()
+    print("-" * 60)
+
+
+if __name__ == "__main__":
+    main()
