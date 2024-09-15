@@ -323,3 +323,115 @@ class Solution:
         # - The outer loop runs O(n) times, once for each element.
         # - The if-condition ensures the while loop only runs for the start of sequences, preventing redundant work.
         # - This results in an overall time complexity of O(n), as each element is processed only once.
+
+
+def main():
+    # Instantiate the Solution class
+    sol = Solution()
+
+    # Test 1: item_in_common
+    print("\n==> Test: item_in_common()\n")
+    list1 = [1, 2, 3, 4]
+    list2 = [5, 6, 7, 8]
+    print(f"\t. List1: {list1},  List2: {list2}")
+    # Expected: False
+    print(f"\t. Result: {sol.item_in_common(list1, list2)}\n")
+
+    list3 = [1, 2, 3, 4]
+    list4 = [4, 5, 6, 7]
+    print(f"\t. List1: {list3},  List2: {list4}")
+    print(f"\t. Result: {sol.item_in_common(
+        list3, list4)}\n")  # Expected: True
+    print("-" * 80)
+
+    # Test 2: find_duplicates
+    print("\n==> Test: find_duplicates()\n")
+    nums1 = [1, 2, 3, 4, 2, 5, 6, 1]
+    print(f"\t. Nums: {nums1}")
+    print(f"\t. Result: {sol.find_duplicates(nums1)}\n")  # Expected: [1, 2]
+
+    nums2 = [1, 2, 3, 4, 5, 6]
+    print(f"\t. Nums: {nums2}")
+    print(f"\t. Result: {sol.find_duplicates(nums2)}\n")  # Expected: []
+    print("-" * 80)
+
+    # Test 3: first_non_repeating_char
+    print("\n==> Test: first_non_repeating_char()\n")
+    string1 = "swiss"
+    print(f"\t. String: {string1}")
+    # Expected: 'w'
+    print(f"\t. Result: {sol.first_non_repeating_char(string1)}\n")
+
+    string2 = "aabbcc"
+    print(f"\t. String: {string1}")
+    # Expected: None
+    print(f"\t. Result: {sol.first_non_repeating_char(string2)}\n")
+    print("-" * 80)
+
+    # Test 4: group_anagrams
+    print("\n==> Test: group_anagrams()\n")
+    strings1 = ["bat", "tab", "eat", "tea", "tan", "nat"]
+    print(f"\t. Strings: {strings1}")
+    # Expected: [['bat', 'tab'], ['eat', 'tea'], ['tan', 'nat']]
+    print(f"\t. Result: {sol.group_anagrams(strings1)}\n")
+
+    strings2 = ["listen", "silent", "enlist", "hello"]
+    print(f"\t. Strings: {strings2}")
+    # Expected: [['listen', 'silent', 'enlist'], ['hello']]
+    print(f"\t. Result: {sol.group_anagrams(strings2)}\n")
+    print("-" * 80)
+
+    # Test 5: two_sum
+    print("\n==> Test: two_sum()\n")
+    nums1 = [2, 7, 11, 15]
+    target1 = 9
+    print(f"\t. Nums: {nums1},  Target: {target1}")
+    print(f"\t. Result: {sol.two_sum(nums1, target1)}\n")  # Expected: [0, 1]
+
+    nums2 = [3, 2, 4]
+    target2 = 6
+    print(f"\t. Nums: {nums2},  Target: {target2}")
+    print(f"\t. Result: {sol.two_sum(nums2, target2)}\n")  # Expected: [1, 2]
+    print("-" * 80)
+
+    # Test 6: subarray_sum
+    print("\n==> Test: subarray_sum()\n")
+    nums1 = [1, 2, 3, 4, 5]
+    target1 = 9
+    print(f"\t. Nums: {nums1},  Target: {target1}")
+    # Expected: [2, 4]
+    print(f"\t. Result: {sol.subarray_sum(nums1, target1)}\n")
+
+    nums2 = [1, 2, 3]
+    target2 = 6
+    print(f"\t. Nums: {nums2},  Target: {target2}")
+    # Expected: [0, 2]
+    print(f"\t. Result: {sol.subarray_sum(nums2, target2)}\n")
+    print("-" * 80)
+
+    # Test 7: remove_duplicates
+    print("\n==> Test: remove_duplicates()\n")
+    nums1 = [1, 2, 2, 3, 4, 4, 5]
+    print(f"\t. Nums: {nums1}")
+    # Expected: [1, 2, 3, 4, 5]
+    print(f"\t. Result: {sol.remove_duplicates(nums1)}\n")
+
+    nums2 = [1, 1, 1, 1]
+    print(f"\t. Nums: {nums2}")
+    print(f"\t. Result: {sol.remove_duplicates(nums2)}\n")  # Expected: [1]
+    print("-" * 80)
+
+    # Test 8: has_unique_chars
+    print("\n==> Test: has_unique_chars()\n")
+    string1 = "abcde"
+    print(f"\t. String: {string1}")
+    print(f"\t. Result: {sol.has_unique_chars(string1)}\n")  # Expected: True
+
+    string2 = "hello"
+    print(f"\t. String: {string2}")
+    print(f"\t. Result: {sol.has_unique_chars(string2)}\n")  # Expected: False
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()

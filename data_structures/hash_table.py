@@ -1,4 +1,5 @@
 from typing import TypeVar, Generic, Optional
+from pprint import pprint
 
 
 # Define a generic type for the items in the hash table
@@ -32,7 +33,7 @@ class HashTable(Generic[ItemType]):
         Returns:
             str: The formatted string representing the hash table.
         """
-        display = "________\n"
+        display = "________\n\n"
         for idx, value in enumerate(self.data_map):
             display += f"{idx} | {value}\n"
         if self.size == 0:
@@ -92,17 +93,27 @@ class HashTable(Generic[ItemType]):
 
     def set_item(self, key: ItemType, value: ItemType) -> None:
         """
-        Insert a key-value pair into the hash table.
+        Insert or update a key-value pair in the hash table.
+
+        This method handles collisions using separate chaining. If the key already
+        exists, its value is updated. Otherwise, a new key-value pair is added.
 
         Args:
-            key (ItemType): The key to insert.
+            key (ItemType): The key to insert or update.
             value (ItemType): The value associated with the key.
         """
-        index = self.__hash__(key)  # Compute the hash index for the key
+        # Compute the hash index for the given key
+        index = self.__hash__(key)
+        # If the slot at the computed index is empty (None), initialize it with an empty list
         if self.data_map[index] is None:
-            # Initialize a list at the index if it's empty
             self.data_map[index] = []
-        # Append the key-value pair to the list at the index
+        # Check if the key already exists in the chain (list) at this index
+        for pair in self.data_map[index]:
+            if pair[0] == key:
+                # If the key exists, update its value and return
+                pair[1] = value
+                return
+        # If the key is not found, append the new key-value pair to the list at this index
         self.data_map[index].append([key, value])
 
     def get_item(self, key: ItemType) -> Optional[ItemType]:
@@ -132,3 +143,53 @@ class HashTable(Generic[ItemType]):
         #         if self.data_map[index][i][0] == key:
         #             return self.data_map[index][i][1]  # Return the value if the key matches
         # return None  # Return None if the key is not found
+
+
+def main():
+    # Create a hash table with a specified size
+    size = 5
+    print(f"\n==> Test: Create a hash table of size {size}\n")
+    hash_table = HashTable(size=size)
+    hash_table.display()
+    print("-" * 80)
+
+    # Adding items to hash table
+    print(f"\n==> Test: Add the following items to the hash table\n")
+    items = [("apple", 1), ("banana", 2), ("orange", 3),
+             ("grape", 4), (10, "ten"), (25, "twenty-five")]
+    for pair in items:
+        print(f"\t. {pair}")
+    print()
+    for pair in items:
+        # Set key-value pairs
+        hash_table.set_item(pair[0], pair[1])
+    # Display the current state of the hash table
+    hash_table.display()
+    print("-" * 80)
+
+    # Retrieve items
+    print("\n==> Test: Retrieve items from the hash table\n")
+    for element, _ in items:
+        print(f"\t. Value for '{element}':\t", hash_table.get_item(element))
+    print("\t. Value for a non-existing key 'pear':\t",
+          hash_table.get_item("pear"))  # Expected: None
+    print()
+    print("-" * 80)
+
+    # Test key-value updating (duplicate key handling)
+    print("\n==> Test: Update the value of 'banana' to 5\n")
+    print("\t. Hash table before updating 'banana':\n")
+    hash_table.display()
+
+    hash_table.set_item("banana", 5)
+    # Final display of the hash table state
+    print("\t. Hash table after updating 'banana':\n")
+    hash_table.display()
+
+    print("\t. Value for 'banana' after update:",
+          hash_table.get_item("banana"), "\n")  # Expected: 5
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()
