@@ -58,7 +58,7 @@ class Queue(Generic[ItemType]):
         Returns:
             str: The string representation of the queue.
         """
-        display = "\n\n*         <-- IN"
+        display = "\n*         <-- IN"
         runner = ""
         temp = self.first
         while temp:
@@ -66,9 +66,9 @@ class Queue(Generic[ItemType]):
             temp = temp.next
         else:
             if runner == "":
-                runner = "\n  |     |"
+                runner = "\n  |      |"
         display += runner + f"""
-  |     |
+  |      |
           --> OUT
 
 
@@ -142,3 +142,118 @@ class Queue(Generic[ItemType]):
         # Decrement the length of the queue as a node has been removed.
         self.length -= 1
         return node_to_dequeue
+
+    # Forward reference using a string
+    def __iter__(self) -> 'Queue[ItemType]':
+        """
+        Initialize the iterator for the queue.
+
+        Returns:
+            Queue[ItemType]: The queue itself, as it will be iterated node by node.
+        """
+        self._current = self.first  # Set the current node to the first node in the queue
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next value in the queue during iteration.
+
+        Returns:
+            ItemType: The value of the current node in the iteration.
+
+        Raises:
+            StopIteration: When there are no more nodes to iterate over.
+        """
+        if self._current is None:
+            raise StopIteration  # No more nodes to iterate, stop the iteration
+        current_value = self._current.value  # Store the current node's value
+        self._current = self._current.next  # Move to the next node in the queue
+        return current_value  # Return the stored value
+
+
+def main():
+    # Create a queue of integers
+    q = Queue[int]()
+
+    # Test enqueue operation
+    print("\n==> Test: enqueue operation\n")
+    print("\n______ Enqueueing elements: 10, 20, 30 ______")
+    q.enqueue(10)
+    q.enqueue(20)
+    q.enqueue(30)
+    q.display()
+    print("-" * 80)
+
+    # Test dequeue operation
+    print("\n==> Test: dequeue operation")
+    dequeued = q.dequeue()
+    print(f"\n\t. Dequeued value: {dequeued}")
+    q.display()
+    print("-" * 80)
+
+    # Test empty check
+    print("\n==> Test: empty check")
+    print(f"\n\t. Is the queue empty? {q.empty()}\n")
+    print("-" * 80)
+
+    # Test clear operation
+    print("\n==> Test: clear operation")
+    q.clear()
+    q.display()
+    print("-" * 80)
+
+    # Test enqueue after clear
+    print("\n==> Test: enqueue after clear\n")
+    print("\n______ Enqueueing elements: 40, 50 ______")
+    q.enqueue(40)
+    q.enqueue(50)
+    q.display()
+    print("-" * 80)
+
+    # Test empty check after enqueue
+    print("\n==> Test: empty check after enqueue")
+    print(f"\n\t. Is the queue empty? {q.empty()}\n")
+    print("-" * 80)
+
+    # Test dequeue after re-enqueue
+    print("\n==> Test: dequeue after re-enqueue\n")
+    while not q.empty():
+        dequeued = q.dequeue()
+        print(f"\n______ Dequeued value: {dequeued} ______")
+        q.display()
+    print("-" * 80)
+
+    # Test empty check after dequeuing all elements
+    print("\n==> Test: empty check after dequeuing all elements")
+    print(f"\n\t. Is the queue empty? {q.empty()}\n")
+    print("-" * 80)
+
+    # Test iteration
+    print("\n==> Test: iteration\n")
+    print("\n1-\tEnqueue elements: 60, 70, 80")
+    q.enqueue(60)
+    q.enqueue(70)
+    q.enqueue(80)
+    q.display()
+
+    print("2-\tIterate over queue elements:\n")
+    for item in q:
+        print(f"\t. Item: {item}")
+
+    # Clear the queue and attempt to iterate over it
+    print("\n3-\tClear the queue:")
+    q.clear()
+    q.display()
+    print("4-\tAttempt to iterate over an empty queue:\n")
+    if q.empty():
+        print("\t. None")
+    else:
+        for item in q:
+            # This block should not output anything as the queue is empty
+            print(f"\t. Item: {item}")
+
+    print("\n", "-" * 80)
+
+
+if __name__ == "__main__":
+    main()

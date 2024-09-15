@@ -28,7 +28,7 @@ class Stack(Generic[ItemType]):
         """
         Return a string representation of the stack.
         """
-        display = "\n\n*         <-- IN\n          --> OUT"
+        display = "\n*         <-- IN\n          --> OUT"
         runner = ""
         for element in self.stack_list:
             runner = f"\n  | {element} |" + runner
@@ -38,7 +38,7 @@ class Stack(Generic[ItemType]):
         display += runner + f"""
   |___|
 
-  . Top: {self.peak()}
+  . Top: {self.peek()}
   . Height: {self.size()}
 """
         return display
@@ -52,7 +52,7 @@ class Stack(Generic[ItemType]):
     def size(self):
         return len(self.stack_list)
 
-    def peak(self):
+    def peek(self):
         """
         Return the top element of the stack without removing it.
         """
@@ -135,6 +135,68 @@ class Solution:
         reverse = ""  # Store reversed string
         for char in string:
             stack.push(char)  # Push each character onto the stack
-        while stack.peak():
+        while stack.peek():
             reverse += stack.pop()  # Pop characters to form the reversed string
         return reverse  # Return the reversed string
+
+
+def main() -> None:
+    """
+    Test each method of the Solution class with various cases.
+    """
+    solution = Solution()
+
+    # Test stack_as_list method
+    print("\n==> Test: stack_as_list method:")
+    stack_list = solution.stack_as_list()
+    stack_list.push(1)
+    stack_list.push(2)
+    stack_list.push(3)
+    print("\n______ Stack after pushing 1, 2, 3 ______")
+    stack_list.display()
+    print("-" * 80)
+
+    # Pop from the stack
+    print("\n==> Test: Pop from the stack\n")
+    while not stack_list.empty():
+        print(f"\t\t. Popped value: {stack_list.pop()}")
+    print(f"\n\t. Is stack empty? {stack_list.empty()}\n")
+    print("-" * 80)
+
+    # Test is_balanced_parentheses method
+    print("\n==> Test: is_balanced_parentheses method\n")
+    test_cases = [
+        ("()", True),
+        ("(())", True),
+        ("(()", False),
+        ("())", False),
+        ("", True),
+        ("()()", True)
+    ]
+    for parentheses, expected in test_cases:
+        result = solution.is_balanced_parentheses(parentheses)
+        parentheses = parentheses if parentheses else "\t"
+        print(f"\t\t. Parentheses: {parentheses}\t|\tExpected: {
+              expected}\t|\tResult: {result}")
+    print("\n", "-" * 80)
+
+    # Test reverse_string method
+    print("\n==> Test: reverse_string method\n")
+    strings_to_reverse = [
+        ("hello", "olleh"),
+        ("world", "dlrow"),
+        ("", ""),
+        ("abcd", "dcba"),
+        ("racecar", "racecar")  # Palindrome
+    ]
+    for string, expected in strings_to_reverse:
+        result = solution.reverse_string(string)
+        string = string if string else "\t"
+        expected = expected if expected else "\t"
+        print(f"\t\t. Original:\t{string}\t|\tExpected:\t{
+              expected}\t|\tReversed:\t{result}")
+    print("\n", "-" * 80)
+
+
+if __name__ == "__main__":
+    main()

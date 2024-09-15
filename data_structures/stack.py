@@ -56,7 +56,7 @@ class Stack(Generic[ItemType]):
         Returns:
             str: The string representation of the stack.
         """
-        display = "\n\n*         <-- IN\n          --> OUT"
+        display = "\n*         <-- IN\n          --> OUT"
         runner = ""
         temp = self.top
         while temp:
@@ -133,3 +133,65 @@ class Stack(Generic[ItemType]):
         # Decrement the height of the stack as a node has been removed.
         self.height -= 1
         return node_to_pop
+
+    def peek(self) -> Optional[ItemType]:
+        """
+        Peek at the top value of the stack without removing it.
+
+        Returns:
+            Optional[ItemType]: The value at the top of the stack, or None if the stack is empty.
+        """
+        if self.empty():
+            return None
+        return self.top.value
+
+
+def main() -> None:
+    """
+    Test the Stack class by performing various operations.
+    """
+    # Create a new stack
+    stack = Stack[int]()
+    print("\n==> New stack created.")
+
+    # Display the empty stack
+    stack.display()
+    print("-" * 80)
+
+    # Push elements onto the stack
+    print("\n==> Test: Push elements onto the stack...\n")
+    for i in range(1, 6):
+        print(f"______ Pushing {i} onto the stack ______")
+        stack.push(i)
+        stack.display()
+    print("-" * 80)
+
+    # Peek the top element
+    print("\n==> Test: Peek the top element...")
+    top_element = stack.peek()
+    print(f"\n\t. Peeking top element: {top_element}\n")
+    print("-" * 80)
+
+    # Pop elements from the stack
+    print("\n==> Test: Pop elements from the stack...\n")
+    while not stack.empty():
+        popped = stack.pop()
+        print(f"______ Popped: {popped} ______")
+        stack.display()
+    print("-" * 80)
+
+    # Clear the stack
+    print("\n==> Test: Clear the stack...")
+    stack.clear()
+    stack.display()
+    print("-" * 80)
+
+    # Attempt to pop from the empty stack
+    print("\n==> Test: Attempt to pop from the empty stack...")
+    popped = stack.pop()
+    print(f"\n\t. Attempted to pop from empty stack: {popped}\n")
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()

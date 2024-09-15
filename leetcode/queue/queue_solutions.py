@@ -31,7 +31,7 @@ class Queue(Generic[ItemType]):
         """
         Return a string representation of the queue.
         """
-        display = "\n\n*         <-- IN               <-- IN\n          --> OUT              --> OUT"
+        display = "\n*         <-- IN               <-- IN\n          --> OUT              --> OUT"
         runner = ""
         for element in self.stack1:
             runner = f"\n  | {element} |                |   |" + runner
@@ -44,7 +44,7 @@ class Queue(Generic[ItemType]):
   STACK_1              STACK_2
 
 
-  . Top: {self.peak()}
+  . Top: {self.peek()}
   . Height: {self.size()}
 """
         return display
@@ -61,7 +61,7 @@ class Queue(Generic[ItemType]):
         """
         return len(self.stack1)
 
-    def peak(self):
+    def peek(self):
         """
         Return the first element of the queue (top element of stack1) without removing it.
         """
@@ -130,3 +130,30 @@ class Solution:
         Remove and return the front element of the queue.
         """
         return self.queue.dequeue()
+
+
+def main():
+    # Create a Solution instance
+    solution = Solution()
+    print("\n==> New Queue created")
+    solution.queue.display()
+    print("-" * 80)
+
+    # Test: Enqueue Integers
+    print("\n==> Test: Enqueue Integers\n")
+    for n in [1, 2, 3]:
+        print(f"\n______ Enqueue element {n} ______")
+        solution.enqueue_method(n)
+        solution.queue.display()
+    print("-" * 80)
+
+    # Test: Dequeue Integers
+    print("\n==> Test: Dequeue Integers\n")
+    while not solution.queue.empty():
+        print(f"\n______ Dequeued value: {solution.dequeue_method()} ______")
+        solution.queue.display()
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()
