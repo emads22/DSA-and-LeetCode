@@ -23,7 +23,7 @@ class MaxHeap:
         Returns:
             str: The string representation of the max-heap.
         """
-        return f"\n\n*  {self.heap}\n"
+        return f"\n*  {self.heap}\n"
 
     def display(self) -> None:
         """
@@ -163,6 +163,15 @@ class MaxHeap:
         self._sink_down(0)  # Restore heap order by sinking down the new root
         return max_value  # Return the maximum value
 
+    def peek(self) -> Optional[int]:
+        """
+        Get the maximum value (the root) without removing it.
+
+        Returns:
+            Optional[int]: The maximum value in the heap, or None if the heap is empty.
+        """
+        return self.heap[0] if not self.empty() else None
+
 
 class MinHeap:
     """
@@ -186,7 +195,7 @@ class MinHeap:
         Returns:
             str: The string representation of the min-heap.
         """
-        return f"\n\n*  {self.heap}\n"
+        return f"\n*  {self.heap}\n"
 
     def display(self) -> None:
         """
@@ -325,3 +334,97 @@ class MinHeap:
         self.heap[0] = self.heap.pop()
         self._sink_down(0)  # Restore heap order by sinking down the new root
         return min_value  # Return the minimum value
+
+    def peek(self) -> Optional[int]:
+        """
+        Get the minimum value (the root) without removing it.
+
+        Returns:
+            Optional[int]: The minimum value in the heap, or None if the heap is empty.
+        """
+        return self.heap[0] if not self.empty() else None
+
+
+def main():
+    print("\n\n1.\tTest: MaxHeap\n")
+    # Create an instance of MaxHeap
+    print("\n==> Creating an instance of MaxHeap...")
+    heap = MaxHeap()
+    heap.display()
+    print("-" * 40)
+
+    # Insert values into the heap
+    print("\n==> Inserting the values (10, 20, 5, 15, 30) into the heap...")
+    heap.insert(10)
+    heap.insert(20)
+    heap.insert(5)
+    heap.insert(15)
+    heap.insert(30)
+    # Display the heap
+    heap.display()
+    print("-" * 40)
+
+    # Remove the maximum value from the heap
+    print("\n==> Removing the maximum value...\n")
+    max_value = heap.remove()
+    # Display the heap after removal
+    heap.display()
+    # Display removed value
+    print(f"\t. Removed value: {max_value}\n")
+    print("-" * 40)
+
+    # Peek at the maximum value
+    print(f"\n==> Current maximum value (peek): {heap.peek()}\n")
+    print("-" * 40)
+
+    # Check the size of the heap
+    print(f"\n==> Size of the heap: {heap.size()}\n")
+    print("-" * 40)
+
+    # Check if the heap is empty
+    print(f"\n==> Is the heap empty? {'Yes' if heap.empty() else 'No'}\n")
+    print("-" * 80)
+
+    print("\n\n\n\n2.\tTest: MinHeap\n")
+
+    # Create an instance of MinHeap
+    print("\n==> Creating an instance of MinHeap...")
+    heap = MinHeap()
+    heap.display()
+    print("-" * 40)
+
+    # Insert values into the heap
+    print("\n==> Inserting the values (40, 50, 6, 16, 60) into the heap...")
+    heap.insert(40)
+    heap.insert(50)
+    heap.insert(6)
+    heap.insert(16)
+    heap.insert(60)
+    # Display the heap
+    heap.display()
+    print("-" * 40)
+
+    # Remove the minimum value from the heap
+    print("\n==> Removing the minimum value...\n")
+    min_value = heap.remove()
+    # Display the heap after removal
+    heap.display()
+    # Display removed value
+    print(f"\t. Removed value: {min_value}\n")
+    print("-" * 40)
+
+    # Peek at the minimum value
+    print(f"\n==> Current minimum value (peek): {heap.peek()}\n")
+    print("-" * 40)
+
+    # Check the size of the heap
+    print(f"\n==> Size of the heap: {heap.size()}\n")
+    print("-" * 40)
+
+    # Check if the heap is empty
+    print(f"\n==> Is the heap empty? {'Yes' if heap.empty() else 'No'}\n")
+    print("-" * 80)
+
+
+if __name__ == "__main__":
+    main()
