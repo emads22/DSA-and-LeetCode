@@ -3,8 +3,6 @@
 ## Overview
 DSA and LeetCode Solutions in Python is a personal repository that includes my implementations of various data structures and algorithms (DSA) in Python, along with solutions to LeetCode problems. It aims to provide a clear understanding of DSA concepts and practical implementations to help users prepare for technical interviews and improve their problem-solving skills.
 
-**Note:** This repository is inspired by the teachings of `Scott Barrett`. You can explore more of his work and insights [here](https://www.scottbarrett.com).
-
 ## Features
 - **Data Structures**: Implementations of common data structures such as linked lists, stacks, queues, trees, graphs, and more.
 - **Algorithms**: Detailed implementations of algorithms including sorting, searching, dynamic programming, and others.
