@@ -44,7 +44,40 @@ A list of integers representing the numbers in the input array `nums` that appea
 
 
 
-## 3. First Non-Repeating Character (**Interview Question**)
+## 3. Contains Duplicate (**Interview Question**)
+
+### Implement the `contains_duplicate` function in Python that takes an integer array `nums` as input and returns `true` if any value appears at least twice in the array, and `false` if every element is distinct.
+
+#### Requirements:
+- The function should efficiently check for duplicates in the array.
+- The function should handle large arrays with up to 100,000 elements.
+- The function should work with integer values ranging from -10^9 to 10^9.
+
+**Input:**  
+A list of integers `nums`.
+
+**Output:**  
+- `True` if any value appears at least twice in the array.
+- `False` if every element is distinct.
+
+**Examples:**
+
+- Input: `nums = [1, 2, 3, 1]`  
+  Output: `True`  
+  Explanation: The element 1 occurs at the indices 0 and 3.
+  
+- Input: `nums = [1, 2, 3, 4]`  
+  Output: `False`  
+  Explanation: All elements are distinct.
+  
+- Input: `nums = [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]`  
+  Output: `True`  
+
+-----------------------------------------------------------------------------------------
+
+
+
+## 4. First Non-Repeating Character (**Interview Question**)
 
 ### Given a string of lowercase letters, write a function called `first_non_repeating_char(string)` that finds the first non-repeating character in the given string using a hash table (dictionary). If there is no non-repeating character in the string, the function should return `None`.
 
@@ -57,7 +90,35 @@ A list of integers representing the numbers in the input array `nums` that appea
 
 
 
-## 4. Group Anagrams (**Interview Question**)
+## 5. First Recurring (**Interview Question**)
+
+### Given an array of integers `nums`, implement a function `first_recurring()` to find the first recurring (duplicate) number in the array.
+
+**Input:**  
+A list of integers `nums`.
+
+**Output:**  
+The first integer in the input array `nums` that appears more than once. If no duplicates are found in the input array, return `None`.
+
+**Examples:**
+
+- Input: `nums = [2, 5, 1, 2, 3, 5, 1, 2, 4]`  
+  Output: `2`  
+  Explanation: The number 2 is the first duplicate in the input array.
+  
+- Input: `nums = [2, 1, 1, 2, 3, 5, 1, 2, 4]`  
+  Output: `1`  
+  Explanation: The number 1 is the first duplicate in the input array.
+  
+- Input: `nums = [2, 3, 4, 5]`  
+  Output: `None`  
+  Explanation: There are no duplicates in the input array, so the function returns `None`.
+
+-----------------------------------------------------------------------------------------
+
+
+
+## 6. Group Anagrams (**Interview Question**)
 
 ### Given an array of strings, where each string may contain only lowercase English letters. Write a function `group_anagrams(strings)` that groups the anagrams in the array together using a hash table (dictionary). The function should return a list of lists, where each inner list contains a group of anagrams.
 
@@ -71,7 +132,7 @@ You need to implement the `group_anagrams(strings)` function and return a list o
 
 
 
-## 5. Two Sum (**Interview Question**)
+## 7. Two Sum (**Interview Question**)
 
 ### Given an array of integers `nums` and a target integer `target`, implement the function `two_sum()` that finds the indices of two numbers in the array that add up to the target.
 
@@ -116,7 +177,7 @@ The main challenge here is to implement this function in one pass through the ar
 
 
 
-## 6. Subarray Sum (**Interview Question**)  
+## 8. Subarray Sum (**Interview Question**)  
 
 ### Given an array of integers `nums` and a target integer `target`, write a Python function called `subarray_sum` that finds the indices of a contiguous subarray in `nums` that add up to the target sum using a hash table (dictionary).
 
@@ -139,7 +200,7 @@ Note that there may be multiple subarrays that add up to the target sum, but you
 
 
 
-## 7. Set: Remove Duplicates (**Interview Question**) 
+## 9. Set: Remove Duplicates (**Interview Question**) 
 
 ### Given a list `my_list` with some duplicate values. Implement a Python program that removes all the duplicates from the list using a set and then prints the updated list.
 
@@ -163,7 +224,7 @@ The order of the elements in the updated list may be different from the original
 
 
 
-## 8. Set: Has Unique Chars (**Interview Question**) 
+## 10. Set: Has Unique Chars (**Interview Question**) 
 
 ### Write a function called `has_unique_chars` that takes a string as input and returns `True` if all the characters in the string are unique, and `False` otherwise.
 
@@ -176,7 +237,7 @@ The order of the elements in the updated list may be different from the original
 
 
 
-## 9. Set: Find Pairs (**Interview Question**)  
+## 11. Set: Find Pairs (**Interview Question**)  
 
 ### Write a function called `find_pairs` that takes in three arguments: `arr1`, `arr2`, and `target` (two lists of integers, and a target integer value), and returns a list of all pairs of numbers (one from `arr1` and one from `arr2`) whose sum equals the target. Assume that each array does not contain duplicate values.
 
@@ -230,7 +291,7 @@ Your function should return a list of tuples, where each tuple contains two inte
 
 
 
-## 10. Set: Longest Consecutive Sequence (**Interview Question**)
+## 12. Set: Longest Consecutive Sequence (**Interview Question**)
 
 ### Given an unsorted array of integers, write a function that finds the length of the `longest_consecutive_sequence` (i.e., a sequence of integers in which each element is one greater than the previous element).
 

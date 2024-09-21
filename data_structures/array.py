@@ -34,23 +34,24 @@ class StaticArray(Generic[ItemType]):
 
     def __str__(self) -> str:
         """
-        Return a readable string representation of the array, suitable for end-users.
+        Return a string representation of the StaticArray.
 
         Returns:
-            str: A user-friendly string representation of the array.
+        - str: A string representation of the internal data of the StaticArray.
         """
-        return f"""
+        return str(self.data)
+    
+    def display(self) -> None:
+        """
+        Display the contents of the StaticArray.
+        """
+        display = f"""
 *  {self.data}
 
 \t. Length: {self.length}
 \t. Size: {self.size}
 """
-
-    def display(self) -> None:
-        """
-        Print the string representation of the array using __str__.
-        """
-        print(str(self))
+        print(display)
 
     def empty(self) -> bool:
         """
@@ -252,6 +253,26 @@ class StaticArray(Generic[ItemType]):
         # Reverse only the filled portion of the array
         self.data[:self.length] = self.data[:self.length][::-1]
 
+    def __iter__(self) -> 'DynamicArray[ItemType]':
+        """
+        Initialize the iterator and return the dynamic array itself.
+        """
+        self._idx = 0
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next item in the array during iteration.
+
+        Raises:
+            StopIteration: When the iteration reaches the end of the array.
+        """
+        if self._idx == self.length:
+            raise StopIteration
+        current = self.data[self._idx]
+        self._idx += 1
+        return current
+
 
 class DynamicArray(Generic[ItemType]):
     """
@@ -275,16 +296,20 @@ class DynamicArray(Generic[ItemType]):
 
     def __str__(self) -> str:
         """
-        Return a readable string representation of the array, suitable for end-users.
-        """
-        return f"""\n*  {self.data}\t\t. Length: {self.length}
-"""
+        Return a string representation of the DynamicArray.
 
+        Returns:
+        - str: A string representation of the internal data of the DynamicArray.
+        """
+        return str(self.data)
+    
     def display(self) -> None:
         """
-        Print the string representation of the array using __str__.
+        Display the contents of the DynamicArray.
         """
-        print(str(self))
+        display = f"""\n*  {self.data}\t\t. Length: {self.length}
+"""
+        print(display)
 
     def empty(self) -> bool:
         """
@@ -459,10 +484,32 @@ class DynamicArray(Generic[ItemType]):
             return
         self.data[:] = self.data[::-1]
 
+    def __iter__(self) -> 'DynamicArray[ItemType]':
+        """
+        Initialize the iterator and return the dynamic array itself.
+        """
+        self._idx = 0
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next item in the array during iteration.
+
+        Raises:
+            StopIteration: When the iteration reaches the end of the array.
+        """
+        if self._idx == self.length:
+            raise StopIteration
+        current = self.data[self._idx]
+        self._idx += 1
+        return current
+
+
+
 
 def main():
 
-    # # Uncomment to test STATIC ARRAY
+    # Uncomment to test STATIC ARRAY
     # array = StaticArray[int](6)  # Create an instance of the Array
 
     # Uncomment to test DYNAMIC ARRAY
@@ -480,6 +527,13 @@ def main():
     array.append(30)
     array.display()
     print("-" * 80)
+
+    # Testing iteration
+    print("\n==> Testing iteration:")
+    print("\n\t- Iterating through the array:\n")
+    for item in array:
+        print(f"\t\t. {item}")
+    print("\n", "-" * 80)
 
     # Testing prepend
     print("\n==> Testing prepend():")
@@ -554,6 +608,9 @@ def main():
     print("\n\t- Array after clearing:")
     array.display()
     print("-" * 80)
+
+    
+
 
 
 if __name__ == "__main__":

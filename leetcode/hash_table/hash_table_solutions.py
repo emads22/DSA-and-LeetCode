@@ -75,6 +75,40 @@ class Solution:
         # # Convert set of duplicates back to a list, O(n)
         # return list(duplicates)
 
+    def contains_duplicate(self, nums: list[int]) -> bool:
+        """
+        Check if the list contains any duplicate values.
+
+        Args:
+            nums (list[int]): The list of integers to check for duplicates.
+
+        Returns:
+            bool: True if there are duplicates, False otherwise.
+        """
+        # METHOD 1: Using a dictionary to count occurrences
+        ht = {}
+        for num in nums:
+            # Update the count of the current number in the dictionary
+            ht[num] = ht.get(num, 0) + 1
+            # If the count of the current number exceeds 1, a duplicate is found
+            if ht[num] > 1:
+                return True
+        return False
+
+        # Time Complexity: O(n) - traverse the list once.
+        # Space Complexity: O(n) - due to storing up to n unique elements in the dictionary.
+
+        # # METHOD 2: Using a set to track seen elements
+        # seen = set()
+        # for num in nums:
+        #     if num in seen:
+        #         return True
+        #     seen.add(num)
+        # return False
+
+        # # Time Complexity: O(n) - traverse the list once.
+        # # Space Complexity: O(n) - due to storing up to n unique elements in the set.
+
     def first_non_repeating_char(self, string: str) -> Optional[str]:
         """
         Finds the first non-repeating character in a string.
@@ -108,6 +142,29 @@ class Solution:
         #     if ht[char] == 1:
         #         return char  # Return the first non-repeating character
         # return None  # All characters repeat
+
+    def first_recurring(self, nums: list[int]) -> Optional[int]:
+        """
+        Find the first recurring number in a list of integers.
+
+        Args:
+            nums (list[int]): A list of integers to search for duplicates.
+
+        Returns:
+            Optional[int]: The first integer that appears more than once in the list.
+                            If no duplicates are found, returns None.
+        """
+        seen_numbers = {}  # Dictionary to keep track of seen numbers
+        # Iterate through each number in the list
+        for num in nums:
+            # Check if the number has already been seen
+            if num in seen_numbers:
+                return num  # Return the first recurring number
+            seen_numbers[num] = True  # Mark the number as seen
+        return None  # Return None if no duplicates are found
+
+        # Time Complexity: O(n) - where n is the number of elements in the input list.
+        # Space Complexity: O(n) - since we are using a dictionary to store seen numbers.
 
     def group_anagrams(self, strings: list[str]) -> list:
         """
@@ -329,7 +386,7 @@ def main():
     # Instantiate the Solution class
     sol = Solution()
 
-    # Test 1: item_in_common
+    # Test: item_in_common
     print("\n==> Test: item_in_common()\n")
     list1 = [1, 2, 3, 4]
     list2 = [5, 6, 7, 8]
@@ -344,7 +401,7 @@ def main():
         list3, list4)}\n")  # Expected: True
     print("-" * 80)
 
-    # Test 2: find_duplicates
+    # Test: find_duplicates
     print("\n==> Test: find_duplicates()\n")
     nums1 = [1, 2, 3, 4, 2, 5, 6, 1]
     print(f"\t. Nums: {nums1}")
@@ -355,7 +412,18 @@ def main():
     print(f"\t. Result: {sol.find_duplicates(nums2)}\n")  # Expected: []
     print("-" * 80)
 
-    # Test 3: first_non_repeating_char
+    # Test: contains_duplicate
+    print("\n==> Test: contains_duplicate()\n")
+    nums1 = [1, 2, 3, 4, 2, 5, 6, 1]
+    print(f"\t. Nums: {nums1}")
+    print(f"\t. Result: {sol.contains_duplicate(nums1)}\n")  # Expected: True
+
+    nums2 = [1, 2, 3, 4, 5, 6]
+    print(f"\t. Nums: {nums2}")
+    print(f"\t. Result: {sol.contains_duplicate(nums2)}\n")  # Expected: False
+    print("-" * 80)
+
+    # Test: first_non_repeating_char
     print("\n==> Test: first_non_repeating_char()\n")
     string1 = "swiss"
     print(f"\t. String: {string1}")
@@ -363,12 +431,23 @@ def main():
     print(f"\t. Result: {sol.first_non_repeating_char(string1)}\n")
 
     string2 = "aabbcc"
-    print(f"\t. String: {string1}")
+    print(f"\t. String: {string2}")
     # Expected: None
     print(f"\t. Result: {sol.first_non_repeating_char(string2)}\n")
     print("-" * 80)
 
-    # Test 4: group_anagrams
+    # Test: first_recurring
+    print("\n==> Test: first_recurring()\n")
+    nums1 = [2, 5, 1, 2, 3, 5, 1, 2, 4]
+    print(f"\t. Nums: {nums1}")
+    print(f"\t. Result: {sol.first_recurring(nums1)}\n")
+
+    nums2 = [2, 3, 4, 5]
+    print(f"\t. Nums: {nums2}")
+    print(f"\t. Result: {sol.first_recurring(nums2)}\n")
+    print("-" * 80)
+
+    # Test: group_anagrams
     print("\n==> Test: group_anagrams()\n")
     strings1 = ["bat", "tab", "eat", "tea", "tan", "nat"]
     print(f"\t. Strings: {strings1}")
@@ -381,7 +460,7 @@ def main():
     print(f"\t. Result: {sol.group_anagrams(strings2)}\n")
     print("-" * 80)
 
-    # Test 5: two_sum
+    # Test: two_sum
     print("\n==> Test: two_sum()\n")
     nums1 = [2, 7, 11, 15]
     target1 = 9
@@ -394,7 +473,7 @@ def main():
     print(f"\t. Result: {sol.two_sum(nums2, target2)}\n")  # Expected: [1, 2]
     print("-" * 80)
 
-    # Test 6: subarray_sum
+    # Test: subarray_sum
     print("\n==> Test: subarray_sum()\n")
     nums1 = [1, 2, 3, 4, 5]
     target1 = 9
@@ -409,7 +488,7 @@ def main():
     print(f"\t. Result: {sol.subarray_sum(nums2, target2)}\n")
     print("-" * 80)
 
-    # Test 7: remove_duplicates
+    # Test: remove_duplicates
     print("\n==> Test: remove_duplicates()\n")
     nums1 = [1, 2, 2, 3, 4, 4, 5]
     print(f"\t. Nums: {nums1}")
@@ -421,7 +500,7 @@ def main():
     print(f"\t. Result: {sol.remove_duplicates(nums2)}\n")  # Expected: [1]
     print("-" * 80)
 
-    # Test 8: has_unique_chars
+    # Test: has_unique_chars
     print("\n==> Test: has_unique_chars()\n")
     string1 = "abcde"
     print(f"\t. String: {string1}")
@@ -430,6 +509,36 @@ def main():
     string2 = "hello"
     print(f"\t. String: {string2}")
     print(f"\t. Result: {sol.has_unique_chars(string2)}\n")  # Expected: False
+    print("-" * 80)
+
+    # Test: longest_consecutive_sequence
+    print("\n==> Test: longest_consecutive_sequence()\n")
+    nums1 = [100, 4, 200, 1, 3, 2]
+    print(f"\t. Nums: {nums1}")
+    # Expected: 4
+    print(f"\t. Result: {sol.longest_consecutive_sequence(nums1)}\n")
+
+    nums2 = [1, 2, 0, 3, 5, 6]
+    print(f"\t. Nums: {nums2}")
+    # Expected: 4
+    print(f"\t. Result: {sol.longest_consecutive_sequence(nums2)}\n")
+    print("-" * 80)
+
+    # Test: find_pairs
+    print("\n==> Test: find_pairs()\n")
+    nums1 = [1, 2, 3, 4, 5]
+    nums2 = [6, 7, 8, 9, 10]
+    target1 = 10
+    print(f"\t. Nums1: {nums1},  Nums2: {nums2},  Target: {target1}")
+    # Expected:  [(1, 9), (2, 8), (3, 7), (4, 6)]
+    print(f"\t. Result: {sol.find_pairs(nums1, nums2, target1)}\n")
+
+    nums3 = [3, 6, 9, 12]
+    nums4 = [1, 4, 8, 7]
+    target2 = 9
+    print(f"\t. Nums1: {nums3},  Nums2: {nums4},  Target: {target2}")
+    # Expected: []
+    print(f"\t. Result: {sol.find_pairs(nums3, nums4, target2)}\n")
     print("-" * 80)
 
 

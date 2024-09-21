@@ -28,7 +28,17 @@ class HashTable(Generic[ItemType]):
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the hash table.
+        Return a string representation of the hash table for debugging.
+
+        Returns:
+            str: A string representing the hash table's current state, 
+                 including the data map and its size.
+        """
+        return f"HashTable(data_map = {self.data_map}, size = {self.size})"
+
+    def __str__(self) -> str:
+        """
+        Return a formatted string representation of the hash table.
 
         Returns:
             str: The formatted string representing the hash table.
@@ -91,32 +101,7 @@ class HashTable(Generic[ItemType]):
         # Return the computed hash value
         return hash_value
 
-    def set_item(self, key: ItemType, value: ItemType) -> None:
-        """
-        Insert or update a key-value pair in the hash table.
-
-        This method handles collisions using separate chaining. If the key already
-        exists, its value is updated. Otherwise, a new key-value pair is added.
-
-        Args:
-            key (ItemType): The key to insert or update.
-            value (ItemType): The value associated with the key.
-        """
-        # Compute the hash index for the given key
-        index = self.__hash__(key)
-        # If the slot at the computed index is empty (None), initialize it with an empty list
-        if self.data_map[index] is None:
-            self.data_map[index] = []
-        # Check if the key already exists in the chain (list) at this index
-        for pair in self.data_map[index]:
-            if pair[0] == key:
-                # If the key exists, update its value and return
-                pair[1] = value
-                return
-        # If the key is not found, append the new key-value pair to the list at this index
-        self.data_map[index].append([key, value])
-
-    def get_item(self, key: ItemType) -> Optional[ItemType]:
+    def get_(self, key: ItemType) -> Optional[ItemType]:
         """
         Retrieve a value from the hash table based on its key.
 
@@ -144,6 +129,67 @@ class HashTable(Generic[ItemType]):
         #             return self.data_map[index][i][1]  # Return the value if the key matches
         # return None  # Return None if the key is not found
 
+    def set_(self, key: ItemType, value: ItemType) -> None:
+        """
+        Insert or update a key-value pair in the hash table.
+
+        This method handles collisions using separate chaining. If the key already
+        exists, its value is updated. Otherwise, a new key-value pair is added.
+
+        Args:
+            key (ItemType): The key to insert or update.
+            value (ItemType): The value associated with the key.
+        """
+        # Compute the hash index for the given key
+        index = self.__hash__(key)
+        # If the slot at the computed index is empty (None), initialize it with an empty list
+        if self.data_map[index] is None:
+            self.data_map[index] = []
+        # Check if the key already exists in the chain (list) at this index
+        for pair in self.data_map[index]:
+            if pair[0] == key:
+                # If the key exists, update its value and return
+                pair[1] = value
+                return
+        # If the key is not found, append the new key-value pair to the list at this index
+        self.data_map[index].append([key, value])
+
+    def keys(self) -> list[ItemType]:
+        """
+        Retrieve all keys from the hash table.
+
+        Returns:
+            list[ItemType]: A list of all keys stored in the hash table.
+        """
+        keys = []  # Initialize an empty list to store keys
+        for idx in range(self.size):
+            # Check if there is a chain (list) at this index
+            if self.data_map[idx] is not None:
+                for pair in self.data_map[idx]:
+                    keys.append(pair[0])  # Append the key to the list
+        return keys
+
+        # Time Complexity: O(n + m) - where n is the number of slots and m is the total key-value pairs.
+        # Space Complexity: O(k) - where k is the number of unique keys.
+
+    def values(self) -> list[ItemType]:
+        """
+        Retrieve all values from the hash table.
+
+        Returns:
+            list[ItemType]: A list of all values stored in the hash table.
+        """
+        values = []  # Initialize an empty list to store values
+        for idx in range(self.size):
+            # Check if there is a chain (list) at this index
+            if self.data_map[idx] is not None:
+                for pair in self.data_map[idx]:
+                    values.append(pair[1])  # Append the value to the list
+        return values
+
+        # Time Complexity: O(n + m), where n is the number of slots and m is the total values.
+        # Space Complexity: O(k), where k is the number of values stored in the hash table.
+
 
 def main():
     # Create a hash table with a specified size
@@ -162,7 +208,7 @@ def main():
     print()
     for pair in items:
         # Set key-value pairs
-        hash_table.set_item(pair[0], pair[1])
+        hash_table.set_(pair[0], pair[1])
     # Display the current state of the hash table
     hash_table.display()
     print("-" * 80)
@@ -170,9 +216,9 @@ def main():
     # Retrieve items
     print("\n==> Test: Retrieve items from the hash table\n")
     for element, _ in items:
-        print(f"\t. Value for '{element}':\t", hash_table.get_item(element))
+        print(f"\t. Value for '{element}':\t", hash_table.get_(element))
     print("\t. Value for a non-existing key 'pear':\t",
-          hash_table.get_item("pear"))  # Expected: None
+          hash_table.get_("pear"))  # Expected: None
     print()
     print("-" * 80)
 
@@ -181,13 +227,25 @@ def main():
     print("\t. Hash table before updating 'banana':\n")
     hash_table.display()
 
-    hash_table.set_item("banana", 5)
+    hash_table.set_("banana", 5)
     # Final display of the hash table state
     print("\t. Hash table after updating 'banana':\n")
     hash_table.display()
 
     print("\t. Value for 'banana' after update:",
-          hash_table.get_item("banana"), "\n")  # Expected: 5
+          hash_table.get_("banana"), "\n")  # Expected: 5
+    print("-" * 80)
+
+    # Test keys retrieval
+    print("\n==> Test: Retrieve all keys from the hash table\n")
+    all_keys = hash_table.keys()
+    print(f"\t. Keys in the hash table:  {all_keys}\n")
+    print("-" * 80)
+
+    # Test values retrieval
+    print("\n==> Test: Retrieve all values from the hash table\n")
+    all_values = hash_table.values()
+    print(f"\t. Values in the hash table:  {all_values}\n")
     print("-" * 80)
 
 
