@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Optional
+from typing import TypeVar, Generic, Optional, Iterator
 
 
 ItemType = TypeVar('ItemType')
@@ -53,10 +53,19 @@ class LinkedList(Generic[ItemType]):
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the linked list.
+        Return a string representation of the LinkedList for debugging.
 
         Returns:
-            str: The string representation of the linked list.
+            str: A detailed string representation of the linked list, including the head, tail, and length.
+        """
+        return f"LinkedList(Head: {self.head}, Tail: {self.tail}, Length: {self.length})"
+
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the linked list.
+
+        Returns:
+            str: A string representation of the linked list, with each node linked together.
         """
         display = "\n*  "
         temp = self.head
@@ -71,11 +80,37 @@ class LinkedList(Generic[ItemType]):
 """
         return display
 
+    def __iter__(self) -> Iterator[ItemType]:
+        """
+        Initialize the iterator by setting the current node to the head of the list.
+
+        Returns:
+            Iterator[ItemType]: The linked list iterator.
+        """
+        self._current = self.head
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next value in the linked list during iteration.
+
+        Raises:
+            StopIteration: When the end of the linked list is reached.
+
+        Returns:
+            ItemType: The value of the current node.
+        """
+        if self._current is None:
+            raise StopIteration
+        next_value = self._current.value
+        self._current = self._current.next
+        return next_value
+
     def display(self) -> None:
         """
-        Print the string representation of the linked list.
+        Print the string representation of the linked list to the console using the __str__ method.
         """
-        print(self)
+        print(str(self))
 
     def empty(self) -> bool:
         """
@@ -291,6 +326,37 @@ class LinkedList(Generic[ItemType]):
         self.length -= 1
         return node_to_remove
 
+    def delete_value(self, value: ItemType) -> Optional[Node_LL[ItemType]]:
+        """
+        Delete the first occurrence of a node with the specified value.
+
+        Args:
+            value (ItemType): The value to delete from the linked list.
+
+        Returns:
+            Optional[Node_LL[ItemType]]: The deleted node, or None if no node is found with the specified value.
+        """
+        if self.empty():
+            return None
+        if self.head.value == value:
+            return self.pop_first()
+        if self.tail.value == value:
+            return self.pop()
+        # Initialize current pointer and previous pointer to head
+        previous = current = self.head
+        # Traverse the list to find the node with the value
+        while current:
+            if current.value == value:
+                node_to_delete = current
+                previous.next = node_to_delete.next
+                node_to_delete.next = None
+                self.length -= 1
+                return node_to_delete
+            previous = current
+            current = current.next
+        # Return None if the value was not found in the list
+        return None
+
     def reverse(self) -> None:
         """
         Reverse the linked list in place.
@@ -301,11 +367,13 @@ class LinkedList(Generic[ItemType]):
         Returns:
             None
         """
+        # Check if the linked list is empty or has only one node
+        if self.length < 2:
+            return
         current = self.head
         # Swap the head and tail
         self.head, self.tail = self.tail, self.head
         before = after = None
-
         while current:
             # Temporarily store the next node
             after = current.next
@@ -315,80 +383,104 @@ class LinkedList(Generic[ItemType]):
             before = current
             current = after
 
+
 def main() -> None:
     # Create a new linked list
     linked_list = LinkedList[int]()
-    
-    print("==> Initial empty linked list:")
+
+    print("\n==> Initial empty linked list:")
     linked_list.display()
     print("-" * 80)
 
     # Test appending nodes
-    print("==> Appending values 1, 2, 3, 4, 5:")
+    print("\n==> Appending values 1, 2, 3, 4, and 5:")
     for i in range(1, 6):
         linked_list.append(i)
     linked_list.display()
     print("-" * 80)
 
     # Test prepending nodes
-    print("==> Prepending values 0, -1, -2:")
+    print("\n==> Prepending values 0, -1, -2:")
     for i in range(0, -3, -1):
         linked_list.prepend(i)
     linked_list.display()
     print("-" * 80)
 
     # Test removing nodes
-    print("==> Removing the last node:")
+    print("\n==> Removing the last node:")
     linked_list.pop()
     linked_list.display()
     print("-" * 80)
 
-    print("==> Removing the first node:")
+    print("\n==> Removing the first node:")
     linked_list.pop_first()
     linked_list.display()
     print("-" * 80)
 
     # Test inserting nodes at specific positions
-    print("==> Inserting values 10 at index 0 and 20 at index 3:")
+    print("\n==> Inserting values 10 at index 0 and 20 at index 3:")
     linked_list.insert(0, 10)
     linked_list.insert(3, 20)
     linked_list.display()
     print("-" * 80)
 
     # Test getting and setting values
-    print("==> Getting value at index 2:")
+    print("\n==> Getting value at index 2:")
     node = linked_list.get_node(2)
     print(f"\n*  Node at index 2: {node}\n")
     print("-" * 80)
 
-    print("==> Setting value at index 2 to 99:")
+    print("\n==> Setting value at index 2 to 99:")
     linked_list.set_value(2, 99)
     linked_list.display()
     print("-" * 80)
 
-    # Test removing nodes by index
-    print("==> Removing node at index 1:")
+    # Test removing node by index
+    print("\n==> Removing node at index 1:")
     linked_list.remove(1)
     linked_list.display()
     print("-" * 80)
 
+    # Test deleting node by value
+    print("\n==> Deleting node of value 20:")
+    linked_list.delete_value(20)
+    linked_list.display()
+    print("-" * 80)
+
     # Test reversing the linked list
-    print("==> Reversing the linked list:")
+    print("\n==> Reversing the linked list:")
     linked_list.reverse()
     linked_list.display()
     print("-" * 80)
 
+    # Test clearing the linked list
+    print("\n==> Clearing the linked list:")
+    linked_list.clear()
+    linked_list.display()
+    print("-" * 80)
+
+    # Test the from_list method
+    print("\n==> Creating linked list from [1, 2, 3, 4, 5]:")
+    linked_list.from_list([1, 2, 3, 4, 5])
+    linked_list.display()
+    print("-" * 80)
+
+    # Test the iteration
+    print("\n==> Iterating throught the linked list:")
+    print(f"\n\t. {repr(linked_list)}:\n")
+    for item in linked_list:
+        print(f"\t\t. {item}")
+    print("\n", "-" * 80)
+
     # Test converting to a Python list
-    print("==> Converting linked list to a Python list:")
+    print("\n==> Converting linked list to a Python list:")
     python_list = linked_list.to_list()
     print("\n* ", python_list, "\n")
     print("-" * 80)
 
-    # Test clearing the linked list
-    print("==> Clearing the linked list:")
+    # Clear the linked list
     linked_list.clear()
-    linked_list.display()
-    print("-" * 80)
+
 
 if __name__ == "__main__":
     main()

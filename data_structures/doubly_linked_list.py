@@ -1,4 +1,4 @@
-from typing import TypeVar, Generic, Optional
+from typing import TypeVar, Generic, Optional, Iterator
 
 
 ItemType = TypeVar('ItemType')
@@ -55,7 +55,17 @@ class DoublyLinkedList(Generic[ItemType]):
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the doubly linked list.
+        Return a string representation of the DoublyLinkedList for debugging.
+
+        Returns:
+            str: A detailed string representation of the doubly linked list,
+                including the head, tail, and length.
+        """
+        return f"DoublyLinkedList(Head: {self.head}, Tail: {self.tail}, Length: {self.length})"
+
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the doubly linked list.
 
         Returns:
             str: The string representation of the doubly linked list.
@@ -75,11 +85,37 @@ class DoublyLinkedList(Generic[ItemType]):
 """
         return display
 
+    def __iter__(self) -> Iterator[ItemType]:
+        """
+        Initialize the iterator by setting the current node to the head of the list.
+
+        Returns:
+            Iterator[ItemType]: The doubly linked list iterator.
+        """
+        self._current = self.head
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next value in the doubly linked list during iteration.
+
+        Raises:
+            StopIteration: When the end of the doubly linked list is reached.
+
+        Returns:
+            ItemType: The value of the current node.
+        """
+        if self._current is None:
+            raise StopIteration
+        next_value = self._current.value
+        self._current = self._current.next
+        return next_value
+
     def display(self) -> None:
         """
-        Print the string representation of the doubly linked list.
+        Print the string representation of the doubly linked list to the console using the __str__ method.
         """
-        print(self)
+        print(str(self))
 
     def empty(self) -> bool:
         """
@@ -267,6 +303,37 @@ class DoublyLinkedList(Generic[ItemType]):
         self.length -= 1
         return node_to_pop
 
+    def delete_value(self, value: ItemType) -> Optional[Node_DLL[ItemType]]:
+        """
+        Delete the first occurrence of a node with the specified value.
+
+        Args:
+            value (ItemType): The value to delete from the doubly linked list.
+
+        Returns:
+            Optional[Node_DLL[ItemType]]: The deleted node, or None if no node is found with the specified value.
+        """
+        if self.empty():
+            return None
+        if self.head.value == value:
+            return self.pop_first()
+        if self.tail.value == value:
+            return self.pop()
+        # Initialize current pointer to head
+        current = self.head
+        # Traverse the list to find the node with the value
+        while current:
+            if current.value == value:
+                node_to_delete = current
+                node_to_delete.prev.next = node_to_delete.next
+                node_to_delete.next.prev = node_to_delete.prev
+                node_to_delete.prev = node_to_delete.next = None
+                self.length -= 1
+                return node_to_delete
+            current = current.next
+        # Return None if the value was not found in the list
+        return None
+
     def from_list(self, values: list[ItemType]) -> None:
         """
         Populate the doubly linked list with values from a Python list.
@@ -292,16 +359,39 @@ class DoublyLinkedList(Generic[ItemType]):
             temp = temp.next
         return values
 
+    def reverse(self) -> None:
+        """
+        Reverse the doubly linked list in place.
+
+        This method reverses the order of the nodes in the doubly linked list.
+        After reversal, the head becomes the tail and vice versa.
+
+        Returns:
+            None
+        """
+        # Check if the doubly linked list is empty or has only one node
+        if self.length < 2:
+            return
+        current = self.head
+        # Swap the head and tail
+        self.head, self.tail = self.tail, self.head
+        while current:
+            # Temporarily store the next node
+            after = current.next
+            # Swap the previous and next pointers
+            current.prev, current.next = current.next, current.prev
+            # Move pointer one position ahead
+            current = after
+
 
 def main():
     # Create a new doubly linked list
     dll = DoublyLinkedList[int]()
 
     # Test the append method
-    print("\n==> Appending values 1, 2, and 3:")
-    dll.append(1)
-    dll.append(2)
-    dll.append(3)
+    print("\n==> Appending values 1, 2, 3, 4, and 5:")
+    for i in range(1, 6):
+        dll.append(i)
     dll.display()
     print("-" * 80)
 
@@ -348,6 +438,18 @@ def main():
     dll.display()
     print("-" * 80)
 
+    # Test the delete_value method
+    print("\n==> Deleting node of value 5:")
+    dll.delete_value(5)
+    dll.display()
+    print("-" * 80)
+
+    # Test reverse method
+    print("\n==> Reversing the doubly linked list:")
+    dll.reverse()
+    dll.display()
+    print("-" * 80)
+
     # Test the clear method
     print("\n==> Clearing the list:")
     dll.clear()
@@ -355,10 +457,17 @@ def main():
     print("-" * 80)
 
     # Test the from_list method
-    print("\n==> Creating list from [1, 2, 3, 4, 5]:")
+    print("\n==> Creating doubly linked list from [1, 2, 3, 4, 5]:")
     dll.from_list([1, 2, 3, 4, 5])
     dll.display()
     print("-" * 80)
+
+    # Test the iteration
+    print("\n==> Iterating throught the doubly linked list:")
+    print(f"\n\t. {repr(dll)}:\n")
+    for item in dll:
+        print(f"\t\t. {item}")
+    print("\n", "-" * 80)
 
     # Test the to_list method
     print("\n==> Converting the doubly linked list to a Python list:")
