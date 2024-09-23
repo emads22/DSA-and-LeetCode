@@ -38,7 +38,7 @@ class Stack(Generic[ItemType]):
     A class representing a stack implemented as a linked list.
 
     Attributes:
-        top (Optional[Node_LL[ItemType]]): The head node of the stack.
+        top (Optional[Node_LL[ItemType]]): The top node of the stack.
         height (int): The number of nodes in the stack.
     """
 
@@ -51,7 +51,16 @@ class Stack(Generic[ItemType]):
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the stack.
+        Return a string representation of the Stack for debugging.
+
+        Returns:
+            str: A detailed string representation of the stack, including the top and height.
+        """
+        return f"Stack(Top: {self.top}, Height: {self.height})"
+
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the stack.
 
         Returns:
             str: The string representation of the stack.
@@ -77,7 +86,7 @@ class Stack(Generic[ItemType]):
         """
         Print the string representation of the stack.
         """
-        print(self)
+        print(str(self))
 
     def empty(self) -> bool:
         """
@@ -146,12 +155,97 @@ class Stack(Generic[ItemType]):
         return self.top.value
 
 
+class StackList(Generic[ItemType]):
+    """
+    A class representing a stack implemented as a list.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initialize an empty stack.
+        """
+        self.stack_list: list = []
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the Stack for debugging.
+
+        Returns:
+            str: A detailed string representation of the stack, including the top and height.
+        """
+        return f"Stack(Top: {self.peek()}, Height: {self.height()})"
+
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the stack.
+        """
+        display = "\n*         <-- IN\n          --> OUT"
+        runner = ""
+        for element in self.stack_list:
+            runner = f"\n  | {element} |" + runner
+        else:
+            if runner == "":
+                runner += f"\n  |   |"
+        display += runner + f"""
+  |___|
+
+  . Top: {self.peek()}
+  . Height: {self.height()}
+"""
+        return display
+
+    def display(self) -> None:
+        """
+        Print the string representation of the stack.
+        """
+        print(str(self))
+
+    def height(self):
+        return len(self.stack_list)
+
+    def peek(self):
+        """
+        Return the top element of the stack without removing it.
+        """
+        if self.height() > 0:
+            return self.stack_list[-1]
+        return None
+
+    def empty(self) -> bool:
+        """
+        Check if the stack is empty.
+        """
+        return self.height() == 0
+
+    def clear(self) -> None:
+        """
+        Remove all elements from the stack.
+        """
+        self.stack_list.clear()
+
+    def push(self, value: ItemType) -> None:
+        """
+        Push an element onto the stack.
+        """
+        self.stack_list.append(value)
+
+    def pop(self) -> Optional[ItemType]:
+        """
+        Remove and return the top element of the stack.
+        """
+        if self.empty():
+            return None
+        return self.stack_list.pop()
+
 def main() -> None:
     """
     Test the Stack class by performing various operations.
     """
-    # Create a new stack
+    # Uncomment to create a new stack implemented as LinkedList
     stack = Stack[int]()
+    # Uncomment to create a new stack implemented as list
+    # stack = StackList[int]()
+    
     print("\n==> New stack created.")
 
     # Display the empty stack

@@ -53,7 +53,16 @@ class Queue(Generic[ItemType]):
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the queue.
+        Return a string representation of the Queue for debugging.
+
+        Returns:
+            str: A detailed string representation of the queue, including the first, last, and length.
+        """
+        return f"Queue(First: {self.first}, Last: {self.last}, Length: {self.length})"  
+            
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the queue.
 
         Returns:
             str: The string representation of the queue.
@@ -77,12 +86,39 @@ class Queue(Generic[ItemType]):
   . Length: {self.length}
 """
         return display
+    
+    # Forward reference using a string
+    def __iter__(self) -> 'Queue[ItemType]':
+        """
+        Initialize the iterator for the queue.
+
+        Returns:
+            Queue[ItemType]: The queue itself, as it will be iterated node by node.
+        """
+        self._current = self.first  # Set the current node to the first node in the queue
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next value in the queue during iteration.
+
+        Returns:
+            ItemType: The value of the current node in the iteration.
+
+        Raises:
+            StopIteration: When there are no more nodes to iterate over.
+        """
+        if self._current is None:
+            raise StopIteration  # No more nodes to iterate, stop the iteration
+        current_value = self._current.value  # Store the current node's value
+        self._current = self._current.next  # Move to the next node in the queue
+        return current_value  # Return the stored value
 
     def display(self) -> None:
         """
         Print the string representation of the queue.
         """
-        print(self)
+        print(str(self))
 
     def empty(self) -> bool:
         """
@@ -143,32 +179,7 @@ class Queue(Generic[ItemType]):
         self.length -= 1
         return node_to_dequeue
 
-    # Forward reference using a string
-    def __iter__(self) -> 'Queue[ItemType]':
-        """
-        Initialize the iterator for the queue.
-
-        Returns:
-            Queue[ItemType]: The queue itself, as it will be iterated node by node.
-        """
-        self._current = self.first  # Set the current node to the first node in the queue
-        return self
-
-    def __next__(self) -> ItemType:
-        """
-        Return the next value in the queue during iteration.
-
-        Returns:
-            ItemType: The value of the current node in the iteration.
-
-        Raises:
-            StopIteration: When there are no more nodes to iterate over.
-        """
-        if self._current is None:
-            raise StopIteration  # No more nodes to iterate, stop the iteration
-        current_value = self._current.value  # Store the current node's value
-        self._current = self._current.next  # Move to the next node in the queue
-        return current_value  # Return the stored value
+    
 
 
 def main():
@@ -176,7 +187,7 @@ def main():
     q = Queue[int]()
 
     # Test enqueue operation
-    print("\n==> Test: enqueue operation\n")
+    print("\n==> Test: enqueue operation")
     print("\n______ Enqueueing elements: 10, 20, 30 ______")
     q.enqueue(10)
     q.enqueue(20)
