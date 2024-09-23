@@ -57,7 +57,7 @@ class HashTable(Generic[ItemType]):
         """
         print(self)
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the hash table is empty.
 

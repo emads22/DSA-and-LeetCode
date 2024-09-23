@@ -40,7 +40,7 @@ class MaxHeap:
         """
         return len(self.heap)
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the max-heap is empty.
 
@@ -152,7 +152,7 @@ class MaxHeap:
         Returns:
             Optional[int]: The maximum value in the heap, or None if the heap is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None  # Return None if the heap is empty
         if self.size() == 1:
             return self.heap.pop()  # If only one element, pop and return it
@@ -170,7 +170,7 @@ class MaxHeap:
         Returns:
             Optional[int]: The maximum value in the heap, or None if the heap is empty.
         """
-        return self.heap[0] if not self.empty() else None
+        return self.heap[0] if not self.is_empty() else None
 
 
 class MinHeap:
@@ -212,7 +212,7 @@ class MinHeap:
         """
         return len(self.heap)
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the min-heap is empty.
 
@@ -324,7 +324,7 @@ class MinHeap:
         Returns:
             Optional[int]: The minimum value in the heap, or None if the heap is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None  # Return None if the heap is empty
         if self.size() == 1:
             return self.heap.pop()  # If only one element, pop and return it
@@ -342,7 +342,7 @@ class MinHeap:
         Returns:
             Optional[int]: The minimum value in the heap, or None if the heap is empty.
         """
-        return self.heap[0] if not self.empty() else None
+        return self.heap[0] if not self.is_empty() else None
 
 
 def main():
@@ -382,7 +382,7 @@ def main():
     print("-" * 40)
 
     # Check if the heap is empty
-    print(f"\n==> Is the heap empty? {'Yes' if heap.empty() else 'No'}\n")
+    print(f"\n==> Is the heap empty? {'Yes' if heap.is_empty() else 'No'}\n")
     print("-" * 80)
 
     print("\n\n\n\n2.\tTest: MinHeap\n")
@@ -422,7 +422,7 @@ def main():
     print("-" * 40)
 
     # Check if the heap is empty
-    print(f"\n==> Is the heap empty? {'Yes' if heap.empty() else 'No'}\n")
+    print(f"\n==> Is the heap empty? {'Yes' if heap.is_empty() else 'No'}\n")
     print("-" * 80)
 
 

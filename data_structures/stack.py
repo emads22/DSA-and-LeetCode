@@ -88,7 +88,7 @@ class Stack(Generic[ItemType]):
         """
         print(str(self))
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the stack is empty.
 
@@ -114,7 +114,7 @@ class Stack(Generic[ItemType]):
             value (ItemType): The value to be added to the stack.
         """
         new_node = Node_LL(value)
-        if self.empty():
+        if self.is_empty():
             # If the stack is empty, the new node becomes the top node.
             self.top = new_node
         else:
@@ -131,7 +131,7 @@ class Stack(Generic[ItemType]):
         Returns:
             Optional[Node_LL[ItemType]]: The node that was popped from the stack, or None if the stack is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None  # if the stack is empty.
         # Store the top node to return after removing it from the stack.
         node_to_pop = self.top
@@ -150,7 +150,7 @@ class Stack(Generic[ItemType]):
         Returns:
             Optional[ItemType]: The value at the top of the stack, or None if the stack is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         return self.top.value
 
@@ -200,10 +200,10 @@ class StackList(Generic[ItemType]):
         """
         print(str(self))
 
-    def height(self):
+    def height(self) -> int:
         return len(self.stack_list)
 
-    def peek(self):
+    def peek(self) -> Optional[ItemType]:
         """
         Return the top element of the stack without removing it.
         """
@@ -211,7 +211,7 @@ class StackList(Generic[ItemType]):
             return self.stack_list[-1]
         return None
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the stack is empty.
         """
@@ -233,7 +233,7 @@ class StackList(Generic[ItemType]):
         """
         Remove and return the top element of the stack.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         return self.stack_list.pop()
 
@@ -268,7 +268,7 @@ def main() -> None:
 
     # Pop elements from the stack
     print("\n==> Test: Pop elements from the stack...\n")
-    while not stack.empty():
+    while not stack.is_empty():
         popped = stack.pop()
         print(f"______ Popped: {popped} ______")
         stack.display()

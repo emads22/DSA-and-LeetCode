@@ -58,8 +58,8 @@ class Queue(Generic[ItemType]):
         Returns:
             str: A detailed string representation of the queue, including the first, last, and length.
         """
-        return f"Queue(First: {self.first}, Last: {self.last}, Length: {self.length})"  
-            
+        return f"Queue(First: {self.first}, Last: {self.last}, Length: {self.length})"
+
     def __str__(self) -> str:
         """
         Return a human-readable string representation of the queue.
@@ -86,7 +86,7 @@ class Queue(Generic[ItemType]):
   . Length: {self.length}
 """
         return display
-    
+
     # Forward reference using a string
     def __iter__(self) -> 'Queue[ItemType]':
         """
@@ -120,7 +120,7 @@ class Queue(Generic[ItemType]):
         """
         print(str(self))
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the queue is empty.
 
@@ -146,7 +146,7 @@ class Queue(Generic[ItemType]):
             value (ItemType): The value to be added to the queue.
         """
         new_node = Node_LL(value)
-        if self.empty():
+        if self.is_empty():
             # If the queue is empty, the new node becomes both the first and last node.
             self.first = self.last = new_node
         else:
@@ -163,7 +163,7 @@ class Queue(Generic[ItemType]):
         Returns:
             Optional[Node_LL[ItemType]]: The node that was dequeued from the front of the queue, or None if the queue is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None  # if the queue is empty.
         # Store the first node to return after removing it from the queue.
         node_to_dequeue = self.first
@@ -179,12 +179,150 @@ class Queue(Generic[ItemType]):
         self.length -= 1
         return node_to_dequeue
 
-    
+
+class QueueTwoStacks(Generic[ItemType]):
+    """
+    A class representing a queue implemented using two stacks, where each stack is implemented as a list.
+    """
+
+    def __init__(self) -> None:
+        """
+        Initialize an empty queue with two stacks.
+        `Stack1` primarily represents the queue, where elements are stored in the correct order.
+        `Stack2` is used temporarily during operations to maintain the queue order.
+        """
+        self.stack1 = []
+        self.stack2 = []
+
+    def __repr__(self) -> str:
+        """
+        Return a string representation of the Queue for debugging.
+
+        Returns:
+            str: A detailed string representation of the queue, including the first, last, and length.
+        """
+        return f"Queue(First: {self.first()}, Last: {self.last()}, Length: {self.length()})"
+
+    def __str__(self) -> str:
+        """
+        Return a human-readable string representation of the queue.
+        """
+        display = "\n*         <-- IN               <-- IN\n          --> OUT              --> OUT"
+        runner = ""
+        for element in self.stack1:
+            runner = f"\n  | {element:02} |                |   |" + runner
+        else:
+            if runner == "":
+                runner += f"\n  |    |"
+        display += runner + f"""
+  |____|                |___|
+
+  STACK_1              STACK_2
+
+
+  . First: {self.first()}
+  . Last: {self.last()}
+  . Length: {self.length()}
+"""
+        return display
+
+    # Forward reference using a string
+    def __iter__(self) -> 'QueueTwoStacks[ItemType]':
+        """
+        Initialize the iterator for the queue.
+
+        Returns:
+            QueueTwoStacks[ItemType]: The queue itself, as it will be iterated element by element.
+        """
+        self._idx = self.length() - 1
+        return self
+
+    def __next__(self) -> ItemType:
+        """
+        Return the next value in the queue during iteration.
+
+        Returns:
+            ItemType: The value of the current element in the iteration.
+
+        Raises:
+            StopIteration: When there are no more elements to iterate over.
+        """
+        if self._idx == -1:
+            raise StopIteration  # No more elements to iterate, stop the iteration
+        current_element = self.stack1[self._idx]  # Store the current element
+        self._idx -= 1  # Move to the next element in the queue
+        return current_element  # Return the stored element
+
+    def display(self) -> None:
+        """
+        Print the string representation of the queue.
+        """
+        print(str(self))
+
+    def length(self) -> int:
+        """
+        Return the number of elements in the queue.
+        """
+        return len(self.stack1)
+
+    def first(self) -> Optional[ItemType]:
+        """
+        Return the first element of the queue (top element of stack1) without removing it.
+        """
+        if self.length() > 0:
+            return self.stack1[-1]
+        return None
+
+    def last(self) -> Optional[ItemType]:
+        """
+        Return the last element of the queue (bottom element of stack1) without removing it.
+        """
+        if self.length() > 0:
+            return self.stack1[0]
+        return None
+
+    def is_empty(self) -> bool:
+        """
+        Check if the queue is empty.
+        """
+        return self.length() == 0
+
+    def clear(self) -> None:
+        """
+        Remove all elements from the queue.
+        """
+        self.stack1.clear()
+
+    def enqueue(self, value: ItemType) -> None:
+        """
+        Add an element to the back of the queue.
+        """        # Move all elements from stack1 to stack2 to access the bottom.
+        while len(self.stack1) > 0:
+            self.stack2.append(self.stack1.pop())
+        # Add the new value to the bottom of stack1.
+        self.stack1.append(value)
+        # Move all elements back from stack2 to stack1 to restore order.
+        while len(self.stack2) > 0:
+            self.stack1.append(self.stack2.pop())
+
+    def dequeue(self) -> Optional[ItemType]:
+        """        
+        Remove and return the front element of the queue.
+        """
+        if self.is_empty():
+            return None
+        return self.stack1.pop()
 
 
 def main():
-    # Create a queue of integers
+    # Uncomment to create a new queue implemented as LinkedList
     q = Queue[int]()
+
+    # Uncomment to create a new queue implemented as two stacks
+    # q = QueueTwoStacks[int]()
+
+    print("\n==> New Queue created.")
+    q.display()
 
     # Test enqueue operation
     print("\n==> Test: enqueue operation")
@@ -204,7 +342,7 @@ def main():
 
     # Test empty check
     print("\n==> Test: empty check")
-    print(f"\n\t. Is the queue empty? {q.empty()}\n")
+    print(f"\n\t. Is the queue empty? {q.is_empty()}\n")
     print("-" * 80)
 
     # Test clear operation
@@ -223,12 +361,12 @@ def main():
 
     # Test empty check after enqueue
     print("\n==> Test: empty check after enqueue")
-    print(f"\n\t. Is the queue empty? {q.empty()}\n")
+    print(f"\n\t. Is the queue empty? {q.is_empty()}\n")
     print("-" * 80)
 
     # Test dequeue after re-enqueue
     print("\n==> Test: dequeue after re-enqueue\n")
-    while not q.empty():
+    while not q.is_empty():
         dequeued = q.dequeue()
         print(f"\n______ Dequeued value: {dequeued} ______")
         q.display()
@@ -236,7 +374,7 @@ def main():
 
     # Test empty check after dequeuing all elements
     print("\n==> Test: empty check after dequeuing all elements")
-    print(f"\n\t. Is the queue empty? {q.empty()}\n")
+    print(f"\n\t. Is the queue empty? {q.is_empty()}\n")
     print("-" * 80)
 
     # Test iteration
@@ -256,7 +394,7 @@ def main():
     q.clear()
     q.display()
     print("4-\tAttempt to iterate over an empty queue:\n")
-    if q.empty():
+    if q.is_empty():
         print("\t. None")
     else:
         for item in q:

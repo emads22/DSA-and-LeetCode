@@ -112,7 +112,7 @@ class LinkedList(Generic[ItemType]):
         """
         print(str(self))
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the linked list is empty.
 
@@ -172,7 +172,7 @@ class LinkedList(Generic[ItemType]):
             bool: True if the node is successfully appended.
         """
         new_node = Node_LL(value)
-        if self.empty():
+        if self.is_empty():
             # If the list is empty, set the new node as both head and tail
             self.head = self.tail = new_node
         else:
@@ -193,7 +193,7 @@ class LinkedList(Generic[ItemType]):
             bool: True if the node is successfully prepended.
         """
         new_node = Node_LL(value)
-        if self.empty():
+        if self.is_empty():
             # If the list is empty, set the new node as both head and tail
             self.head = self.tail = new_node
         else:
@@ -210,7 +210,7 @@ class LinkedList(Generic[ItemType]):
         Returns:
             Optional[Node_LL[ItemType]]: The removed node, or None if the list is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         node_before = node_to_pop = self.head
         while node_to_pop.next:
@@ -220,7 +220,7 @@ class LinkedList(Generic[ItemType]):
         node_before.next = None
         self.tail = node_before
         self.length -= 1
-        if self.empty():
+        if self.is_empty():
             # If the list becomes empty, reset head and tail to None
             self.head = self.tail = None
         return node_to_pop
@@ -232,7 +232,7 @@ class LinkedList(Generic[ItemType]):
         Returns:
             Optional[Node_LL[ItemType]]: The removed node, or None if the list is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         node_to_pop = self.head
         if self.length == 1:
@@ -336,7 +336,7 @@ class LinkedList(Generic[ItemType]):
         Returns:
             Optional[Node_LL[ItemType]]: The deleted node, or None if no node is found with the specified value.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         if self.head.value == value:
             return self.pop_first()

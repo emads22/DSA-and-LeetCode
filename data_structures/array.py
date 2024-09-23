@@ -53,7 +53,7 @@ class StaticArray(Generic[ItemType]):
 """
         print(display)
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the array is empty.
 
@@ -117,7 +117,7 @@ class StaticArray(Generic[ItemType]):
         Raises:
             IndexError: If the array is empty.
         """
-        if self.empty():
+        if self.is_empty():
             raise IndexError("Pop from an empty array")
         # Retrieve the last item
         last_item = self.data[self.length - 1]
@@ -137,7 +137,7 @@ class StaticArray(Generic[ItemType]):
         Raises:
             IndexError: If the array is empty.
         """
-        if self.empty():
+        if self.is_empty():
             raise IndexError("Cannot pop from an empty array")
         return self.delete(0)
 
@@ -212,7 +212,7 @@ class StaticArray(Generic[ItemType]):
         Raises:
             IndexError: If the index is out of range or the array is empty.
         """
-        if self.empty():
+        if self.is_empty():
             raise IndexError("Cannot delete from an empty array")
         to_delete = self.data[index]
         # Shift elements to the left to fill the gap created by deletion
@@ -248,7 +248,7 @@ class StaticArray(Generic[ItemType]):
         """
         Reverse the array in place.
         """
-        if self.empty():
+        if self.is_empty():
             return
         # Reverse only the filled portion of the array
         self.data[:self.length] = self.data[:self.length][::-1]
@@ -311,7 +311,7 @@ class DynamicArray(Generic[ItemType]):
 """
         print(display)
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the array is empty.
 
@@ -356,7 +356,7 @@ class DynamicArray(Generic[ItemType]):
         Raises:
             IndexError: If the array is empty.
         """
-        if self.empty():
+        if self.is_empty():
             raise IndexError("pop from empty array")
         self.length -= 1
         return self.data.pop()
@@ -446,7 +446,7 @@ class DynamicArray(Generic[ItemType]):
         Raises:
             IndexError: If the index is out of range or the array is empty.
         """
-        if self.empty():
+        if self.is_empty():
             raise IndexError("Cannot delete from an empty array")
         to_delete = self.get(index)
         # Shift elements to the left
@@ -480,7 +480,7 @@ class DynamicArray(Generic[ItemType]):
         """
         Reverse the array in place.
         """
-        if self.empty():
+        if self.is_empty():
             return
         self.data[:] = self.data[::-1]
 

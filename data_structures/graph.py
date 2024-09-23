@@ -40,7 +40,7 @@ class Graph(Generic[ItemType]):
         """
         print(self)
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the graph is empty.
 
@@ -174,8 +174,8 @@ def main():
     print("-" * 60)
 
     # Check if the graph is empty
-    print("\n==> Test: empty()")
-    print(f"\n\t. Is the graph empty? {graph.empty()}\n")
+    print("\n==> Test: is_empty()")
+    print(f"\n\t. Is the graph empty? {graph.is_empty()}\n")
     print("-" * 60)
 
     # Attempt to add a vertex that already exists

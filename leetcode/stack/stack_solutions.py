@@ -44,7 +44,7 @@ class Solution:
             else:
                 return False  # Invalid character
 
-        return stack.empty()  # Check if all open parentheses were matched
+        return stack.is_empty()  # Check if all open parentheses were matched
 
     def reverse_string(self, string: str) -> str:
         """
@@ -83,9 +83,9 @@ def main() -> None:
 
     # Pop from the stack
     print("\n==> Test: Pop from the stack\n")
-    while not stack_list.empty():
+    while not stack_list.is_empty():
         print(f"\t\t. Popped value: {stack_list.pop()}")
-    print(f"\n\t. Is stack empty? {stack_list.empty()}\n")
+    print(f"\n\t. Is stack empty? {stack_list.is_empty()}\n")
     print("-" * 80)
 
     # Test is_balanced_parentheses method

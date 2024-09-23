@@ -206,7 +206,7 @@ class Solution:
         """
 
         # METHOD 1
-        if self.linked_list.empty():  # Check if the linked list is empty
+        if self.linked_list.is_empty():  # Check if the linked list is empty
             return None
 
         current = self.linked_list.head  # Start from the head of the linked list
@@ -221,7 +221,7 @@ class Solution:
         return decimal_value  # Return the calculated decimal value
 
         # # METHOD 2
-        # if self.linked_list.empty():  # Check if the linked list is empty
+        # if self.linked_list.is_empty():  # Check if the linked list is empty
         #     return None
 
         # current = self.linked_list.head  # Start from the head of the linked list

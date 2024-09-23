@@ -117,7 +117,7 @@ class DoublyLinkedList(Generic[ItemType]):
         """
         print(str(self))
 
-    def empty(self) -> bool:
+    def is_empty(self) -> bool:
         """
         Check if the doubly linked list is empty.
 
@@ -144,7 +144,7 @@ class DoublyLinkedList(Generic[ItemType]):
             bool: True if the node is successfully appended.
         """
         new_node = Node_DLL(value)
-        if self.empty():
+        if self.is_empty():
             self.head = self.tail = new_node
         else:
             self.tail.next = new_node
@@ -164,7 +164,7 @@ class DoublyLinkedList(Generic[ItemType]):
             bool: True if the node is successfully prepended.
         """
         new_node = Node_DLL(value)
-        if self.empty():
+        if self.is_empty():
             self.head = self.tail = new_node
         else:
             self.head.prev = new_node
@@ -180,7 +180,7 @@ class DoublyLinkedList(Generic[ItemType]):
         Returns:
             Optional[Node_DLL[ItemType]]: The removed node, or None if the list is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         node_to_pop = self.tail
         if self.length == 1:
@@ -199,7 +199,7 @@ class DoublyLinkedList(Generic[ItemType]):
         Returns:
             Optional[Node_DLL[ItemType]]: The removed node, or None if the list is empty.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         node_to_pop = self.head
         if self.length == 1:
@@ -313,7 +313,7 @@ class DoublyLinkedList(Generic[ItemType]):
         Returns:
             Optional[Node_DLL[ItemType]]: The deleted node, or None if no node is found with the specified value.
         """
-        if self.empty():
+        if self.is_empty():
             return None
         if self.head.value == value:
             return self.pop_first()
