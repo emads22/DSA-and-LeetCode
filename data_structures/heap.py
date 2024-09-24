@@ -1,9 +1,13 @@
-from typing import Optional
+from typing import TypeVar, Generic, Optional
 
 
-class MaxHeap:
+# Define a TypeVar for the heap items
+ItemType = TypeVar('ItemType')
+
+
+class MaxHeap(Generic[ItemType]):
     """
-    A max-heap implementation where the largest integer is always at the root.
+    A max-heap implementation where the largest element (in term of comparison) is always at the root.
 
     Attributes:
         heap (list): A list representing the binary heap structure.
@@ -13,15 +17,23 @@ class MaxHeap:
         """
         Initialize an empty max-heap.
         """
-        self.heap: list[int] = [
-        ]  # Explicitly declare the heap as a list of integers
+        self.heap: list[ItemType] = []
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the max-heap.
+        Return a concise string representation of the max-heap.
 
         Returns:
-            str: The string representation of the max-heap.
+            str: A string representation of the max-heap.
+        """
+        return f"MaxHeap(Root: {self.peek()})"
+
+    def __str__(self) -> str:
+        """
+        Return a formatted string representation of the max-heap.
+
+        Returns:
+            str: The formatted string representation of the max-heap.
         """
         return f"\n*  {self.heap}\n"
 
@@ -29,7 +41,7 @@ class MaxHeap:
         """
         Print the string representation of the max-heap.
         """
-        print(self)
+        print(str(self))
 
     def size(self) -> int:
         """
@@ -48,6 +60,15 @@ class MaxHeap:
             bool: True if the max-heap is empty, False otherwise.
         """
         return self.size() == 0
+
+    def peek(self) -> Optional[ItemType]:
+        """
+        Get the maximum value (the root) without removing it.
+
+        Returns:
+            Optional[ItemType]: The maximum value in the heap, or None if the heap is empty.
+        """
+        return self.heap[0] if not self.is_empty() else None
 
     def _left_child(self, index: int) -> int:
         """
@@ -94,6 +115,34 @@ class MaxHeap:
             index2 (int): The index of the second element.
         """
         self.heap[index1], self.heap[index2] = self.heap[index2], self.heap[index1]
+
+    def _bubble_up(self, index: int) -> None:
+        """
+        Bubble up the value to restore the max-heap order.
+
+        Args:
+            index (int): The index of the element to bubble up.
+        """
+        # Bubble up the value to restore heap order
+        while index > 0:
+            parent_idx = self._parent(index)
+            if self.heap[index] > self.heap[parent_idx]:
+                # Swap if the current value is greater than its parent
+                self._swap(index, parent_idx)
+                index = parent_idx  # Move up to the parent's index
+            else:
+                return  # Stop if the current value is in the correct position
+
+    def insert(self, value: ItemType) -> None:
+        """
+        Insert a new value into the max-heap.
+
+        Args:
+            value (ItemType): The value to insert into the heap.
+        """
+        self.heap.append(value)  # Add the new value at the end of the heap
+        # Start bubbling up at the last element
+        self._bubble_up(len(self.heap) - 1)
 
     def _sink_down(self, index: int) -> None:
         """
@@ -124,33 +173,12 @@ class MaxHeap:
                 # If the element is in the correct position, break the loop
                 return
 
-    def insert(self, value: int) -> None:
-        """
-        Insert a new value into the max-heap.
-
-        Args:
-            value (int): The value to insert into the heap.
-        """
-        # Only integers are inserted into the MaxHeap
-        if not isinstance(value, int):
-            raise TypeError(
-                "\n\n--- Only integers can be inserted into the MaxHeap. ---\n\n")
-        self.heap.append(value)  # Add the new value at the end of the heap
-        idx = len(self.heap) - 1  # Start at the last element
-        # Bubble up the value to restore heap order
-        while idx > 0:
-            parent_idx = self._parent(idx)
-            if self.heap[idx] > self.heap[parent_idx]:
-                # Swap if the current value is greater than its parent
-                self._swap(idx, parent_idx)
-            idx = parent_idx  # Move up to the parent's index
-
-    def remove(self) -> Optional[int]:
+    def remove(self) -> Optional[ItemType]:
         """
         Remove and return the maximum value (the root) from the heap.
 
         Returns:
-            Optional[int]: The maximum value in the heap, or None if the heap is empty.
+            Optional[ItemType]: The maximum value in the heap, or None if the heap is empty.
         """
         if self.is_empty():
             return None  # Return None if the heap is empty
@@ -163,19 +191,10 @@ class MaxHeap:
         self._sink_down(0)  # Restore heap order by sinking down the new root
         return max_value  # Return the maximum value
 
-    def peek(self) -> Optional[int]:
-        """
-        Get the maximum value (the root) without removing it.
 
-        Returns:
-            Optional[int]: The maximum value in the heap, or None if the heap is empty.
-        """
-        return self.heap[0] if not self.is_empty() else None
-
-
-class MinHeap:
+class MinHeap(Generic[ItemType]):
     """
-    A min-heap implementation where the smallest integer is always at the root.
+    A min-heap implementation where the smallest element (in term of comparison) is always at the root.
 
     Attributes:
         heap (list): A list representing the binary heap structure.
@@ -185,15 +204,23 @@ class MinHeap:
         """
         Initialize an empty min-heap.
         """
-        self.heap: list[int] = [
-        ]  # Explicitly declare the heap as a list of integers
+        self.heap: list[ItemType] = []
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the min-heap.
+        Return a concise string representation of the min-heap.
 
         Returns:
-            str: The string representation of the min-heap.
+            str: A string representation of the min-heap.
+        """
+        return f"MinHeap(Root: {self.peek()})"
+
+    def __str__(self) -> str:
+        """
+        Return a formatted string representation of the min-heap.
+
+        Returns:
+            str: The formatted string representation of the min-heap.
         """
         return f"\n*  {self.heap}\n"
 
@@ -201,7 +228,7 @@ class MinHeap:
         """
         Print the string representation of the min-heap.
         """
-        print(self)
+        print(str(self))
 
     def size(self) -> int:
         """
@@ -220,6 +247,15 @@ class MinHeap:
             bool: True if the min-heap is empty, False otherwise.
         """
         return self.size() == 0
+
+    def peek(self) -> Optional[ItemType]:
+        """
+        Get the minimum value (the root) without removing it.
+
+        Returns:
+            Optional[ItemType]: The minimum value in the heap, or None if the heap is empty.
+        """
+        return self.heap[0] if not self.is_empty() else None
 
     def _left_child(self, index: int) -> int:
         """
@@ -267,6 +303,34 @@ class MinHeap:
         """
         self.heap[index1], self.heap[index2] = self.heap[index2], self.heap[index1]
 
+    def _bubble_up(self, index: int) -> None:
+        """
+        Bubble up the value to restore the min-heap order.
+
+        Args:
+            index (int): The index of the element to bubble up.
+        """
+        # Bubble up the value to restore heap order
+        while index > 0:
+            parent_idx = self._parent(index)
+            if self.heap[index] < self.heap[parent_idx]:
+                # Swap if the current value is smaller than its parent
+                self._swap(index, parent_idx)
+                index = parent_idx  # Move up to the parent's index
+            else:
+                return  # Stop if the current value is in the correct position
+
+    def insert(self, value: ItemType) -> None:
+        """
+        Insert a new value into the min-heap.
+
+        Args:
+            value (ItemType): The value to insert into the heap.
+        """
+        self.heap.append(value)  # Add the new value at the end of the heap
+        # Start bubbling up at the last element
+        self._bubble_up(len(self.heap) - 1)
+
     def _sink_down(self, index: int) -> None:
         """
         Sink down the element at the given index to restore the min-heap property.
@@ -296,33 +360,12 @@ class MinHeap:
                 # If the element is in the correct position, break the loop
                 return
 
-    def insert(self, value: int) -> None:
-        """
-        Insert a new value into the min-heap.
-
-        Args:
-            value (int): The value to insert into the heap.
-        """
-        # Only integers are inserted into the MinHeap
-        if not isinstance(value, int):
-            raise TypeError(
-                "\n\n--- Only integers can be inserted into the MinHeap. ---\n\n")
-        self.heap.append(value)  # Add the new value at the end of the heap
-        idx = len(self.heap) - 1  # Start at the last element
-        # Bubble up the value to restore heap order
-        while idx > 0:
-            parent_idx = self._parent(idx)
-            if self.heap[idx] < self.heap[parent_idx]:
-                # Swap if the current value is smaller than its parent
-                self._swap(idx, parent_idx)
-            idx = parent_idx  # Move up to the parent's index
-
-    def remove(self) -> Optional[int]:
+    def remove(self) -> Optional[ItemType]:
         """
         Remove and return the minimum value (the root) from the heap.
 
         Returns:
-            Optional[int]: The minimum value in the heap, or None if the heap is empty.
+            Optional[ItemType]: The minimum value in the heap, or None if the heap is empty.
         """
         if self.is_empty():
             return None  # Return None if the heap is empty
@@ -335,21 +378,14 @@ class MinHeap:
         self._sink_down(0)  # Restore heap order by sinking down the new root
         return min_value  # Return the minimum value
 
-    def peek(self) -> Optional[int]:
-        """
-        Get the minimum value (the root) without removing it.
-
-        Returns:
-            Optional[int]: The minimum value in the heap, or None if the heap is empty.
-        """
-        return self.heap[0] if not self.is_empty() else None
-
 
 def main():
     print("\n\n1.\tTest: MaxHeap\n")
     # Create an instance of MaxHeap
     print("\n==> Creating an instance of MaxHeap...")
-    heap = MaxHeap()
+
+    heap = MaxHeap[int]()
+
     heap.display()
     print("-" * 40)
 
@@ -374,7 +410,7 @@ def main():
     print("-" * 40)
 
     # Peek at the maximum value
-    print(f"\n==> Current maximum value (peek): {heap.peek()}\n")
+    print(f"\n==> Current maximum value: {heap.peek()}\n")
     print("-" * 40)
 
     # Check the size of the heap
@@ -389,7 +425,7 @@ def main():
 
     # Create an instance of MinHeap
     print("\n==> Creating an instance of MinHeap...")
-    heap = MinHeap()
+    heap = MinHeap[int]()
     heap.display()
     print("-" * 40)
 
@@ -414,7 +450,7 @@ def main():
     print("-" * 40)
 
     # Peek at the minimum value
-    print(f"\n==> Current minimum value (peek): {heap.peek()}\n")
+    print(f"\n==> Current minimum value: {heap.peek()}\n")
     print("-" * 40)
 
     # Check the size of the heap

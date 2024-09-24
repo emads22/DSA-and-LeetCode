@@ -50,6 +50,29 @@ class BinarySearchTree(Generic[ItemType]):
         """
         self.root: Optional[Node_BST[ItemType]] = None
 
+    def __repr__(self) -> str:
+        """
+        Return a concise string representation of the Binary Search Tree (BST).
+
+        Returns:
+            str: A string representation of the BST.
+        """
+        return f"BinarySearchTree(Root: {self.root})"
+
+    def __str__(self) -> str:
+        """
+        Return a detailed formatted string representation of the Binary Search Tree (BST).
+
+        Returns:
+            str: A formatted string representing the BST.
+        """
+        # Convert the BST to a list format and include the root node in the string
+        return f"""
+*  {self._to_list(self.root)}
+
+    . Root: {self.root}
+"""
+
     def _to_list(self, node: Node_BST[ItemType]) -> list[ItemType]:
         """
         Convert the binary search tree (BST) to a list representation recursively.
@@ -68,14 +91,71 @@ class BinarySearchTree(Generic[ItemType]):
 
     def display(self) -> None:
         """
-        Print the string representation of the binary search tree.
+        Print the string representation of the Binary Search Tree (BST) using the __str__ method.
         """
-        display = f"""
-*  {self._to_list(self.root)}
+        print(str(self))
 
-    . Root: {self.root}
-"""
-        print(display)
+    def lookup(self, value: ItemType) -> Optional[Node_BST[ItemType]]:
+        """
+        Look up a specific value in the binary search tree and return the corresponding node.
+
+        Args:
+            value (ItemType): The value to search for in the tree.
+
+        Returns:
+            Optional[Node_BST[ItemType]]: The node containing the value if found, 
+                                        or None if the value is not in the tree.
+        """
+        temp = self.root
+        while temp:
+            if value < temp.value:
+                # Traverse to left subtree if the value is less than the current node's value
+                temp = temp.left
+            elif value > temp.value:
+                # Traverse to right subtree if the value is greater than the current node's value
+                temp = temp.right
+            else:
+                # Return the node if the value is found
+                return temp
+        # Return None if the value is not found in the tree (also if the tree is empty)
+        return None
+
+    def r_lookup(self, value: ItemType) -> Optional[Node_BST[ItemType]]:
+        """
+        Recursively looks up a value in the binary search tree (BST).
+
+        Args:
+            value (ItemType): The value to search for in the BST.
+
+        Returns:
+            Optional[Node_BST[ItemType]]: The node containing the value if found, otherwise None.
+        """
+
+        def _r_lookup_(node: Optional[Node_BST[ItemType]], value: ItemType) -> Optional[Node_BST[ItemType]]:
+            """
+            Helper function to perform the recursive lookup.
+
+            Args:
+                node (Optional[Node_BST[ItemType]]): The current node in the traversal.
+                value (ItemType): The value to search for.
+
+            Returns:
+                Optional[Node_BST[ItemType]]: The node containing the value if found, otherwise None.
+            """
+            # Base case: if the current node is None, the value is not found
+            if node is None:
+                return None
+            # If the current node's value matches the search value, return the current node
+            if value == node.value:
+                return node
+            # If the search value is less than the current node's value, search the left subtree
+            if value < node.value:
+                return _r_lookup_(node.left, value)
+            # If the search value is greater than the current node's value, search the right subtree
+            if value > node.value:
+                return _r_lookup_(node.right, value)
+        # Start the recursive lookup from the root node
+        return _r_lookup_(self.root, value)
 
     def contains(self, value: ItemType) -> bool:
         """
@@ -87,19 +167,9 @@ class BinarySearchTree(Generic[ItemType]):
         Returns:
             bool: True if the value is found in the tree, False otherwise.
         """
-        temp = self.root
-        while temp:
-            if value < temp.value:
-                # Traverse to left subtree if the value is less than the current node's value
-                temp = temp.left
-            elif value > temp.value:
-                # Traverse to right subtree if the value is greater than the current node's value
-                temp = temp.right
-            else:
-                # Return True if the value is found
-                return True
-        # Return False if the value is not found in the tree (also if the tree is empty)
-        return False
+        # Call the lookup method to check for the existence of the value
+        exists = True if self.lookup(value) else False
+        return exists
 
     def r_contains(self, value: ItemType) -> bool:
         """
@@ -111,32 +181,33 @@ class BinarySearchTree(Generic[ItemType]):
         Returns:
             bool: True if the value is found in the tree, False otherwise.
         """
+
+        def _r_contains_(current_node: Optional[Node_BST[ItemType]], value: ItemType) -> bool:
+            """
+            Recursively checks if a value exists in the binary search tree.
+
+            Args:
+                current_node (Optional[Node_BST[ItemType]]): The current node being checked.
+                value (ItemType): The value to search for in the tree.
+
+            Returns:
+                bool: True if the value is found in the tree, False otherwise.
+            """
+            if current_node is None:
+                # If the current node is None, the value is not in the tree
+                return False
+            if value == current_node.value:
+                # If the current node's value matches the target value, return True
+                return True
+            if value < current_node.value:
+                # If the target value is less than the current node's value, search the left subtree
+                return _r_contains_(current_node.left, value)
+            if value > current_node.value:
+                # If the target value is greater than the current node's value, search the right subtree
+                return _r_contains_(current_node.right, value)
+
         # Start the recursive search from the root of the tree
-        return self._r_contains_(self.root, value)
-
-    def _r_contains_(self, current_node: Optional[Node_BST[ItemType]], value: ItemType) -> bool:
-        """
-        Recursively checks if a value exists in the binary search tree.
-
-        Args:
-            current_node (Optional[Node_BST[ItemType]]): The current node being checked.
-            value (ItemType): The value to search for in the tree.
-
-        Returns:
-            bool: True if the value is found in the tree, False otherwise.
-        """
-        if current_node is None:
-            # If the current node is None, the value is not in the tree
-            return False
-        if value == current_node.value:
-            # If the current node's value matches the target value, return True
-            return True
-        if value < current_node.value:
-            # If the target value is less than the current node's value, search the left subtree
-            return self._r_contains_(current_node.left, value)
-        if value > current_node.value:
-            # If the target value is greater than the current node's value, search the right subtree
-            return self._r_contains_(current_node.right, value)
+        return _r_contains_(self.root, value)
 
     def insert(self, value: ItemType) -> bool:
         """
@@ -630,8 +701,8 @@ def main():
     bst.display()
     print("-" * 80)
 
-    # Test: Search for existing and non-existing values
-    print("\n==> Test: Search for existing and non-existing values\n")
+    # Test: Check for existing and non-existing values
+    print("\n==> Test: Check for existing and non-existing values\n")
     search_values = [70, 40, 100]  # 100 is not in the tree
     for value in search_values:
         result = bst.contains(value)
@@ -639,11 +710,28 @@ def main():
     print()
     print("-" * 80)
 
-    # Test: Recursively search for existing and non-existing values
-    print("\n==> Test: Recursively search for existing and non-existing values\n")
+    # Test: Recursively check for existing and non-existing values
+    print("\n==> Test: Recursively check existing and non-existing values\n")
     for value in search_values:
         result = bst.r_contains(value)
         print(f"\t. Recursively contains {value}: {result}")
+    print()
+    print("-" * 80)
+
+    # Test: Lookup for existing and non-existing values
+    print("\n==> Test: Lookup for existing and non-existing values\n")
+    search_values = [70, 40, 100]  # 100 is not in the tree
+    for value in search_values:
+        result = bst.lookup(value)
+        print(f"\t. Lookup {value}: {result}")
+    print()
+    print("-" * 80)
+
+    # Test: Recursively lookup for existing and non-existing values
+    print("\n==> Test: Recursively lookup for existing and non-existing values\n")
+    for value in search_values:
+        result = bst.r_lookup(value)
+        print(f"\t. Recursively lookup {value}: {result}")
     print()
     print("-" * 80)
 
