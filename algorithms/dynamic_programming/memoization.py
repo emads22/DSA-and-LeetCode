@@ -36,7 +36,7 @@ def fibonacci(n: int) -> int:
 memo = [None] * 100
 
 
-def fibonacci_memo(n: int) -> int:
+def fibonacci_memoization(n: int) -> int:
     """
     Recursive Fibonacci function with memoization.
 
@@ -68,7 +68,7 @@ def fibonacci_memo(n: int) -> int:
         return n
 
     # Recursive case: compute fibonacci(n - 1) + fibonacci(n - 2)
-    memo[n] = fibonacci_memo(n - 1) + fibonacci_memo(n - 2)
+    memo[n] = fibonacci_memoization(n - 1) + fibonacci_memoization(n - 2)
 
     return memo[n]
 
@@ -89,10 +89,10 @@ def main():
     print("\n\n==> Test the recursive Fibonacci function\n")
     for n in test_cases:
         n_calls = 0  # Reset function call counter
-        print(f"\t* Testing fibonacci({n})...")
+        print(f"\n\t* Testing fibonacci({n})...")
         result = fibonacci(n)
         print(f"\t\t. Result: {result}")
-        print(f"\t\t. Function Calls: {n_calls}")
+        print(f"\t\t. Function Calls: {n_calls}\n")
         print("   ", "-" * 40)
 
     # Test the memoized Fibonacci function
@@ -102,10 +102,10 @@ def main():
         # Reset memoization array for fresh calculation
         global memo
         memo = [None] * 100
-        print(f"\t* Testing fibonacci_memo({n})...")
-        result = fibonacci_memo(n)
+        print(f"\n\t* Testing fibonacci_memoization({n})...")
+        result = fibonacci_memoization(n)
         print(f"\t\t. Result: {result}")
-        print(f"\t\t. Function Calls: {n_calls}")
+        print(f"\t\t. Function Calls: {n_calls}\n")
         print("   ", "-" * 40)
 
 
