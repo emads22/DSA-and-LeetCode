@@ -116,6 +116,37 @@ class MaxHeap(Generic[ItemType]):
         """
         self.heap[index1], self.heap[index2] = self.heap[index2], self.heap[index1]
 
+    def _validate_value(self, value: ItemType) -> bool:
+        """
+        Validate the value to be inserted into the max-heap.
+
+        This method checks that the value is of a supported type, that it is
+        comparable to the existing elements in the heap, and raises a TypeError
+        if any checks fail.
+
+        Args:
+            value (ItemType): The value to validate for insertion into the heap.
+
+        Raises:
+            TypeError: If the value is a non-comparable type, or if it is not of
+                        the expected type for insertion into the heap.
+        """
+        # Exclude non-comparable types such as: list, dict, and set.
+        # Accepted comparable types such as: int, float, str, tuple, Custom comparable object (with proper comparison methods implemented).
+        excluded_types = (list, dict, set)
+        if isinstance(value, excluded_types):
+            raise TypeError(f"Cannot insert type: `{type(value).__name__}`")
+
+        # Check if the heap is not empty and ensure the value is of the same type
+        # as the existing elements in the heap.
+        if self.heap and not isinstance(value, type(self.heap[0])):
+            raise TypeError(f"Cannot insert type `{type(value).__name__}`, expected `{type(self.heap[0]).__name__}`")
+
+        # Ensure the value is comparable by checking for required comparison methods.
+        comparison_methods = ["__lt__", "__le__", "__gt__", "__ge__", "__eq__"]
+        if not all(hasattr(value, method) for method in comparison_methods):
+            raise TypeError(f"Cannot insert non-comparable type: `{type(value).__name__}`")
+
     def _bubble_up(self, index: int) -> None:
         """
         Bubble up the value to restore the max-heap order.
@@ -140,9 +171,13 @@ class MaxHeap(Generic[ItemType]):
         Args:
             value (ItemType): The value to insert into the heap.
         """
-        self.heap.append(value)  # Add the new value at the end of the heap
-        # Start bubbling up at the last element
-        self._bubble_up(len(self.heap) - 1)
+        try:
+            self._validate_value(value)
+            self.heap.append(value)  # Add the new value at the end of the heap
+            # Start bubbling up at the last element
+            self._bubble_up(len(self.heap) - 1)
+        except TypeError as error:
+            print(f"\n\t--- Error inserting '{value}', {error} ---\n")
 
     def _sink_down(self, index: int) -> None:
         """
@@ -303,6 +338,37 @@ class MinHeap(Generic[ItemType]):
         """
         self.heap[index1], self.heap[index2] = self.heap[index2], self.heap[index1]
 
+    def _validate_value(self, value: ItemType) -> bool:
+        """
+        Validate the value to be inserted into the min-heap.
+
+        This method checks that the value is of a supported type, that it is
+        comparable to the existing elements in the heap, and raises a TypeError
+        if any checks fail.
+
+        Args:
+            value (ItemType): The value to validate for insertion into the heap.
+
+        Raises:
+            TypeError: If the value is a non-comparable type, or if it is not of
+                        the expected type for insertion into the heap.
+        """
+        # Exclude non-comparable types such as: list, dict, and set.
+        # Accepted comparable types such as: int, float, str, tuple, Custom comparable object (with proper comparison methods implemented).
+        excluded_types = (list, dict, set)
+        if isinstance(value, excluded_types):
+            raise TypeError(f"Cannot insert type: `{type(value).__name__}`")
+
+        # Check if the heap is not empty and ensure the value is of the same type
+        # as the existing elements in the heap.
+        if self.heap and not isinstance(value, type(self.heap[0])):
+            raise TypeError(f"Cannot insert type `{type(value).__name__}`, expected `{type(self.heap[0]).__name__}`")
+
+        # Ensure the value is comparable by checking for required comparison methods.
+        comparison_methods = ["__lt__", "__le__", "__gt__", "__ge__", "__eq__"]
+        if not all(hasattr(value, method) for method in comparison_methods):
+            raise TypeError(f"Cannot insert non-comparable type: `{type(value).__name__}`")
+
     def _bubble_up(self, index: int) -> None:
         """
         Bubble up the value to restore the min-heap order.
@@ -327,9 +393,13 @@ class MinHeap(Generic[ItemType]):
         Args:
             value (ItemType): The value to insert into the heap.
         """
-        self.heap.append(value)  # Add the new value at the end of the heap
-        # Start bubbling up at the last element
-        self._bubble_up(len(self.heap) - 1)
+        try:
+            self._validate_value(value)
+            self.heap.append(value)  # Add the new value at the end of the heap
+            # Start bubbling up at the last element
+            self._bubble_up(len(self.heap) - 1)
+        except TypeError as error:
+            print(f"\n\t--- Error inserting '{value}', {error} ---\n")
 
     def _sink_down(self, index: int) -> None:
         """

@@ -21,24 +21,32 @@ class Graph(Generic[ItemType]):
 
     def __repr__(self) -> str:
         """
-        Return a string representation of the graph.
+        Return a concise string representation of the graph.
+
+        Returns:
+            str: A string representation of the graph.
+        """
+        return f"Graph(Vertices: {len(self.adj_list)}, Adjacency List: {self.adj_list})"
+
+    def __str__(self) -> str:
+        """
+        Return a formatted string representation of the graph.
 
         Returns:
             str: The string representation of the graph.
         """
         display = "\n*  "
         if not self.adj_list:
-            display += "\n None"
+            display += "\tNone\n"
         for vertex, adjacents in self.adj_list.items():
-            display += f"\n . '{vertex}' | {adjacents}"
-        display += "\n"
+            display += f"\t. '{vertex}' | {adjacents}\n"
         return display
 
     def display(self) -> None:
         """
         Print the string representation of the graph.
         """
-        print(self)
+        print(str(self))
 
     def is_empty(self) -> bool:
         """
