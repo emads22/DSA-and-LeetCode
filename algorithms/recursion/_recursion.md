@@ -45,6 +45,7 @@ Recursion is particularly useful in the following scenarios:
 - **Base Case**: Always ensure that a base case is defined to terminate the recursion.
 - **Performance**: Recursive solutions may lead to stack overflow for deep recursions. Iterative solutions can sometimes be more efficient in terms of memory usage.
 - **Readability**: While recursion can simplify code, it may be less intuitive for some programmers compared to iterative solutions. Choose based on your audience and context.
+- **Flexibility**: Anything you can achieve with recursion can also be done iteratively, allowing you to choose the most appropriate method for your needs.
 
 ## Conclusion
 
