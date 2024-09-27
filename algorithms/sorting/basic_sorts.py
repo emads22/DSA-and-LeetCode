@@ -23,6 +23,9 @@ def bubble_sort(my_list: list[ItemType]) -> list[ItemType]:
                 my_list[j], my_list[j + 1] = my_list[j + 1], my_list[j]
     return my_list
 
+    # Time Complexity: O(n^2) in the worst and average case, O(n) best case (if optimized).
+    # Space Complexity: O(1) since it sorts in-place.
+
 
 def selection_sort(my_list: list[ItemType]) -> list[ItemType]:
     """
@@ -46,6 +49,9 @@ def selection_sort(my_list: list[ItemType]) -> list[ItemType]:
         if min_idx != i:
             my_list[i], my_list[min_idx] = my_list[min_idx], my_list[i]
     return my_list
+
+    # Time Complexity: O(n^2) for all cases.
+    # Space Complexity: O(1) since it sorts in-place.
 
 
 def insertion_sort(my_list: list[ItemType]) -> list[ItemType]:
@@ -78,6 +84,9 @@ def insertion_sort(my_list: list[ItemType]) -> list[ItemType]:
     #         j -= 1
     # return my_list
 
+    # Time Complexity: O(n^2) in the worst and average case, O(n) best case.
+    # Space Complexity: O(1) since it sorts in-place.
+
 
 def main():
     """
@@ -96,31 +105,43 @@ def main():
     }
 
     # Testing bubble_sort
-    print("\n\n=========={ Testing bubble_sort }==========\n\n")
-    for case, _list in test_cases.items():
-        print(f"* {case}:\n")
+    print("\n\n", "=" * 80, sep="")
+    print("\t" * 6, "Bubble Sort Test", sep="")
+    print("=" * 80, "\n\n", sep="")
+    items = list(test_cases.items())
+    for idx, (case, _list) in enumerate(items):
+        print(f"\n==> {case}:\n")
         print(f"  . Original: {_list}")
         sorted_list = bubble_sort(_list.copy())
-        print(f"  . Sorted:   {sorted_list}")
-        print("-" * 40)
+        print(f"  . Sorted:   {sorted_list}\n")
+        if idx != len(items) - 1:
+            print("-" * 60)
 
     # Testing selection_sort
-    print("\n\n=========={ Testing selection_sort }==========\n\n")
-    for case, _list in test_cases.items():
-        print(f"* {case}:\n")
+    print("\n\n", "=" * 80, sep="")
+    print("\t" * 6, "Selection Sort Test", sep="")
+    print("=" * 80, "\n\n", sep="")
+    items = list(test_cases.items())
+    for idx, (case, _list) in enumerate(items):
+        print(f"\n==> {case}:\n")
         print(f"  . Original: {_list}")
         sorted_list = selection_sort(_list.copy())
-        print(f"  . Sorted:   {sorted_list}")
-        print("-" * 40)
+        print(f"  . Sorted:   {sorted_list}\n")
+        if idx != len(items) - 1:
+            print("-" * 60)
 
     # Testing insertion_sort
-    print("\n\n=========={ Testing insertion_sort }==========\n\n")
-    for case, _list in test_cases.items():
-        print(f"* {case}:\n")
+    print("\n\n", "=" * 80, sep="")
+    print("\t" * 6, "Insertion Sort Test", sep="")
+    print("=" * 80, "\n\n", sep="")
+    items = list(test_cases.items())
+    for idx, (case, _list) in enumerate(items):
+        print(f"\n==> {case}:\n")
         print(f"  . Original: {_list}")
         sorted_list = insertion_sort(_list.copy())
-        print(f"  . Sorted:   {sorted_list}")
-        print("-" * 40)
+        print(f"  . Sorted:   {sorted_list}\n")
+        if idx != len(items) - 1:
+            print("-" * 60)
 
 
 if __name__ == "__main__":

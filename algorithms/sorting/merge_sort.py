@@ -40,6 +40,9 @@ def merge(list1: list[ItemType], list2: list[ItemType]) -> list[ItemType]:
 
     return combined
 
+    # Time Complexity: O(n), where n is the total number of elements in list1 and list2.
+    # Space Complexity: O(n), due to the combined list created to store the result.
+
 
 def merge_sort(a_list: list[ItemType]) -> list[ItemType]:
     """
@@ -66,57 +69,60 @@ def merge_sort(a_list: list[ItemType]) -> list[ItemType]:
     # Merge the two sorted halves and return the result
     return merge(left, right)
 
+    # Time Complexity: O(n log n), due to dividing the list (log n) and merging (O(n)) at each level.
+    # Space Complexity: O(n), as each recursive call generates new sublists.
+
 
 def main():
     """
     Main function to test the merge_sort function with various cases.
     """
     # Test case 1: Sorting an unsorted list of integers
-    print("\n\n==> Test case 1: Sorting an unsorted list of integers\n")
+    print("\n==> Test case 1: Sorting an unsorted list of integers\n")
     list1 = [38, 27, 43, 3, 9, 82, 10]
-    print(f"  . Original list: {list1}")
+    print(f"\t. Original list: {list1}")
     sorted_list1 = merge_sort(list1)
-    print(f"  . Sorted list: {sorted_list1}\n")
+    print(f"\t. Sorted list: {sorted_list1}\n")
     print("-" * 60)
 
     # Test case 2: Sorting a list with negative integers
-    print("\n\n==> Test case 2: Sorting a list with negative integers\n")
+    print("\n==> Test case 2: Sorting a list with negative integers\n")
     list2 = [-3, -1, -7, -5, 2, 6, 4]
-    print(f"Original list: {list2}")
+    print(f"\t. Original list: {list2}")
     sorted_list2 = merge_sort(list2)
-    print(f"Sorted list: {sorted_list2}\n")
+    print(f"\t. Sorted list: {sorted_list2}\n")
     print("-" * 60)
 
     # Test case 3: Sorting a list that is already sorted
-    print("\n\n==> Test case 3: Sorting a list that is already sorted\n")
+    print("\n==> Test case 3: Sorting a list that is already sorted\n")
     list3 = [1, 2, 3, 4, 5, 6]
-    print(f"Original list: {list3}")
+    print(f"\t. Original list: {list3}")
     sorted_list3 = merge_sort(list3)
-    print(f"Sorted list: {sorted_list3}\n")
+    print(f"\t. Sorted list: {sorted_list3}\n")
     print("-" * 60)
 
     # Test case 4: Sorting a list with duplicate values
-    print("\n\n==> Test case 4: Sorting a list with duplicate values\n")
+    print("\n==> Test case 4: Sorting a list with duplicate values\n")
     list4 = [5, 1, 3, 1, 2, 5, 4]
-    print(f"Original list: {list4}")
+    print(f"\t. Original list: {list4}")
     sorted_list4 = merge_sort(list4)
-    print(f"Sorted list: {sorted_list4}\n")
+    print(f"\t. Sorted list: {sorted_list4}\n")
     print("-" * 60)
 
     # Test case 5: Sorting an empty list
-    print("\n\n==> Test case 5: Sorting an empty list\n")
+    print("\n==> Test case 5: Sorting an empty list\n")
     list5 = []
-    print(f"Original list: {list5}")
+    print(f"\t. Original list: {list5}")
     sorted_list5 = merge_sort(list5)
-    print(f"Sorted list: {sorted_list5}\n")
+    print(f"\t. Sorted list: {sorted_list5}\n")
     print("-" * 60)
 
     # Test case 6: Sorting a list with only one element
-    print("\n\n==> Test case 6: Sorting a list with only one element\n")
+    print("\n==> Test case 6: Sorting a list with only one element\n")
     list6 = [42]
-    print(f"Original list: {list6}")
+    print(f"\t. Original list: {list6}")
     sorted_list6 = merge_sort(list6)
-    print(f"Sorted list: {sorted_list6}\n")
+    print(f"\t. Sorted list: {sorted_list6}\n")
     print("-" * 60)
 
 
