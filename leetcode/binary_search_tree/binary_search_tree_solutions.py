@@ -9,16 +9,16 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
+from data_structures import Node_BST, rBinarySearchTree
 from typing import Optional
-from data_structures import Node_BST, BinarySearchTree
 
 
 class Solution:
     """
-    A class that provides solutions for operations on a binary search tree.
+    A class that provides solutions for operations on a binary search tree (recursive implementation).
 
     Attributes:
-        bst (BinarySearchTree[int]): The binary search tree to perform operations on.
+        bst (rBinarySearchTree[int]): The binary search tree to perform operations on.
     """
 
     def __init__(self) -> None:
@@ -26,7 +26,7 @@ class Solution:
         Initialize the Solution with a new binary search tree instance.
         """
         # Specifying int as the type for the BST
-        self.bst = BinarySearchTree[int]()
+        self.r_bst = rBinarySearchTree[int]()
 
     def sorted_list_to_bst(self, sorted_nums: list[int]) -> None:
         """
@@ -35,35 +35,36 @@ class Solution:
         Args:
             sorted_nums (list[int]): A sorted list of integers to be converted into a BST.
         """
+
+        def __sorted_list_to_bst(sorted_nums: list[int], left: int, right: int) -> Optional[Node_BST[int]]:
+            """
+            Recursively converts a sorted list into a balanced binary search tree (BST).
+
+            Args:
+                sorted_nums (list[int]): A sorted list of integers to be converted into a BST.
+                left (int): The left boundary of the current sublist.
+                right (int): The right boundary of the current sublist.
+
+            Returns:
+                Optional[Node_BST[int]]: The root node of the subtree created from the sorted list.
+            """
+            if left > right:
+                return None  # Base case: If the left index exceeds the right, return None
+            # Find the middle index to make the current root
+            middle_idx = (left + right) // 2
+            # Create a new node with the middle value
+            current_node = Node_BST(sorted_nums[middle_idx])
+            # Recursively construct the left and right subtrees
+            current_node.left = __sorted_list_to_bst(
+                sorted_nums, left, middle_idx - 1)
+            current_node.right = __sorted_list_to_bst(
+                sorted_nums, middle_idx + 1, right)
+            # Return the current node as the root of this subtree.
+            return current_node
+
         # Convert the sorted list to a BST and set it as the root of the binary search tree
-        self.bst.root = self.__sorted_list_to_bst(
+        self.r_bst.root = __sorted_list_to_bst(
             sorted_nums, 0, len(sorted_nums) - 1)
-
-    def __sorted_list_to_bst(self, sorted_nums: list[int], left: int, right: int) -> Optional[Node_BST[int]]:
-        """
-        Recursively converts a sorted list into a balanced binary search tree (BST).
-
-        Args:
-            sorted_nums (list[int]): A sorted list of integers to be converted into a BST.
-            left (int): The left boundary of the current sublist.
-            right (int): The right boundary of the current sublist.
-
-        Returns:
-            Optional[Node_BST[int]]: The root node of the subtree created from the sorted list.
-        """
-        if left > right:
-            return None  # Base case: If the left index exceeds the right, return None
-        # Find the middle index to make the current root
-        middle_idx = (left + right) // 2
-        # Create a new node with the middle value
-        current_node = Node_BST(sorted_nums[middle_idx])
-        # Recursively construct the left and right subtrees
-        current_node.left = self.__sorted_list_to_bst(
-            sorted_nums, left, middle_idx - 1)
-        current_node.right = self.__sorted_list_to_bst(
-            sorted_nums, middle_idx + 1, right)
-        # Return the current node as the root of this subtree.
-        return current_node
 
     def invert(self) -> None:
         """
@@ -71,51 +72,52 @@ class Solution:
 
         Inverts the binary search tree such that all left children are swapped with right children, effectively mirroring the tree.
         """
+
+        def __invert_tree(node: Optional[Node_BST[int]]) -> Optional[Node_BST[int]]:
+            """
+            Recursively inverts the binary search tree.
+
+            Args:
+                node (Optional[Node_BST[int]]): The current node to be inverted.
+
+            Returns:
+                Optional[Node_BST[int]]: The root node of the inverted subtree or None if the node is None.
+            """
+            # METHOD 1 (returning value):
+            if node is None:
+                # Base case: if the current node is None, return None
+                return None
+            # Swap the left and right children of the current node
+            temp_node = node.left
+            node.left = node.right
+            node.right = temp_node
+            # Recursively invert the left and right subtrees
+            node.left = __invert_tree(node.left)
+            node.right = __invert_tree(node.right)
+            # Return the current node as the new root of this inverted subtree
+            return node
+
+            # # METHOD 2 (in place):
+            # if node is None:
+            #     # Base case: if the current node is None, there is nothing to invert
+            #     return
+            # # Swap the left and right children of the current node
+            # temp_node = node.left
+            # node.left = node.right
+            # node.right = temp_node
+            # # Recursively invert the left and right subtrees
+            # __invert_tree(node.left)
+            # __invert_tree(node.right)
+
         # METHOD 1 (returning value):
         # Start the recursive inversion from the root of the tree and update the root reference
-        self.bst.root = self.__invert_tree(self.bst.root)
+        self.r_bst.root = __invert_tree(self.r_bst.root)
 
         # # METHOD 2 (in place):
         # # Start the recursive inversion from the root of the tree directly
         # without assignement since the root does not change
         # but the explicit assignment makes it clearer
-        # self.__invert_tree(self.bst.root)
-
-    def __invert_tree(self, node: Optional[Node_BST[int]]) -> Optional[Node_BST[int]]:
-        """
-        Recursively inverts the binary search tree.
-
-        Args:
-            node (Optional[Node_BST[int]]): The current node to be inverted.
-
-        Returns:
-            Optional[Node_BST[int]]: The root node of the inverted subtree or None if the node is None.
-        """
-        # METHOD 1 (returning value):
-        if node is None:
-            # Base case: if the current node is None, return None
-            return None
-        # Swap the left and right children of the current node
-        temp_node = node.left
-        node.left = node.right
-        node.right = temp_node
-        # Recursively invert the left and right subtrees
-        node.left = self.__invert_tree(node.left)
-        node.right = self.__invert_tree(node.right)
-        # Return the current node as the new root of this inverted subtree
-        return node
-
-        # # METHOD 2 (in place):
-        # if node is None:
-        #     # Base case: if the current node is None, there is nothing to invert
-        #     return
-        # # Swap the left and right children of the current node
-        # temp_node = node.left
-        # node.left = node.right
-        # node.right = temp_node
-        # # Recursively invert the left and right subtrees
-        # self.__invert_tree(node.left)
-        # self.__invert_tree(node.right)
+        # __invert_tree(self.r_bst.root)
 
     def is_valid_bst(self) -> bool:
         """
@@ -135,7 +137,7 @@ class Solution:
         """
         # # METHOD 1: Check if the in-order traversal is sorted.
         # # An in-order traversal of a BST should produce a sorted list.
-        # bst_list = self.bst.DFS_in_order()  # O(n) time complexity for the in-order traversal.
+        # bst_list = self.r_bst.DFS_in_order()  # O(n) time complexity for the in-order traversal.
         # # Check if the BST list matches its sorted version.
         # # This comparison takes O(n), but the sorting operation takes O(n log n),
         # # making this method less efficient overall.
@@ -144,7 +146,7 @@ class Solution:
 
         # METHOD 2: Check if each element is less than the next in the in-order traversal.
         # O(n) time complexity for the in-order traversal.
-        bst_list = self.bst.DFS_in_order()
+        bst_list = self.r_bst.DFS_in_order()
         # Iterate through the list and check if each value is less than the next.
         # O(n) time complexity for the loop.
         for i in range(len(bst_list) - 1):
@@ -167,7 +169,7 @@ class Solution:
         """
         # METHOD 1: Iterative In-Order Traversal
         stack = []
-        left_side_leftmost = self.bst.root
+        left_side_leftmost = self.r_bst.root
         # Traverse to the leftmost node, pushing nodes onto the stack.
         while left_side_leftmost:
             stack.append(left_side_leftmost)
@@ -268,7 +270,7 @@ class Solution:
             return None
 
         # Call the recursive helper function starting from the root node of the BST.
-        return _kth_smallest_element(self.bst.root, k)
+        return _kth_smallest_element(self.r_bst.root, k)
 
 
 def main():
@@ -290,23 +292,23 @@ def main():
     }
 
     for case, sorted_list in sorted_lists.items():
-        solution.bst.clear()
+        solution.r_bst.clear()
         solution.sorted_list_to_bst(sorted_list)
-        print(f"\t. {case} {sorted_list} --> {solution.bst.DFS_in_order()}")
+        print(f"\t. {case} {sorted_list} --> {solution.r_bst.DFS_in_order()}")
     print()
     print("-" * 80)
 
     print("\n==> Testing invert:\n")
     # Reuse some test cases for inverting the BST
     for case, sorted_list in sorted_lists.items():
-        solution.bst.clear()
+        solution.r_bst.clear()
         print(f"\t. {case} {sorted_list}:")
         solution.sorted_list_to_bst(sorted_list)
         print(
-            f"\t\t. Original BST In-order traversal: {solution.bst.DFS_in_order()}")
+            f"\t\t. Original BST In-order traversal: {solution.r_bst.DFS_in_order()}")
         solution.invert()
         print(
-            f"\t\t. Inverted BST In-order traversal: {solution.bst.DFS_in_order()}\n")
+            f"\t\t. Inverted BST In-order traversal: {solution.r_bst.DFS_in_order()}\n")
     print("-" * 80)
 
     print("\n==> Testing is_valid_bst:\n")
@@ -321,17 +323,17 @@ def main():
     }
 
     for case, valid_bst in valid_bsts.items():
-        solution.bst.clear()
+        solution.r_bst.clear()
         print(f"\t. {case} {valid_bst}:")
         solution.sorted_list_to_bst(valid_bst)
-        print(f"\t\t. BST In-order traversal: {solution.bst.DFS_in_order()}")
+        print(f"\t\t. BST In-order traversal: {solution.r_bst.DFS_in_order()}")
         print(f"\t\t. Is valid BST: {solution.is_valid_bst()}\n")
     print("-" * 80)
 
     print("\n==> Testing find_kth_smallest_iterative:")
     ks = [1, 2, 3, 4]  # Various k values to test
     for case, sorted_list in sorted_lists.items():
-        solution.bst.clear()
+        solution.r_bst.clear()
         print(f"\n\t. {case} {sorted_list}:")
         solution.sorted_list_to_bst(sorted_list)
         for k in ks:
@@ -342,7 +344,7 @@ def main():
 
     print("\n==> Testing find_kth_smallest_recursive:")
     for case, sorted_list in sorted_lists.items():
-        solution.bst.clear()
+        solution.r_bst.clear()
         print(f"\n\t. {case} {sorted_list}:")
         solution.sorted_list_to_bst(sorted_list)
         for k in ks:
