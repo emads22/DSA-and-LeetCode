@@ -9,8 +9,9 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from data_structures import Node_BST, rBinarySearchTree
+
 from typing import Optional
+from data_structures import Node_BST, rBinarySearchTree
 
 
 class Solution:
@@ -135,14 +136,15 @@ class Solution:
         Returns:
             bool: True if the BST is valid, False otherwise.
         """
-        # # METHOD 1: Check if the in-order traversal is sorted.
-        # # An in-order traversal of a BST should produce a sorted list.
-        # bst_list = self.r_bst.DFS_in_order()  # O(n) time complexity for the in-order traversal.
-        # # Check if the BST list matches its sorted version.
-        # # This comparison takes O(n), but the sorting operation takes O(n log n),
-        # # making this method less efficient overall.
-        # if bst_list == sorted(bst_list):  # Sorting takes O(n log n) time.
-        #     return True
+        # METHOD 1: Check if the in-order traversal is sorted.
+        # An in-order traversal of a BST should produce a sorted list.
+        # O(n) time complexity for the in-order traversal.
+        bst_list = self.r_bst.DFS_in_order()
+        # Check if the BST list matches its sorted version.
+        # This comparison takes O(n), but the sorting operation takes O(n log n),
+        # making this method less efficient overall.
+        if bst_list == sorted(bst_list):  # Sorting takes O(n log n) time.
+            return True
 
         # METHOD 2: Check if each element is less than the next in the in-order traversal.
         # O(n) time complexity for the in-order traversal.
@@ -155,6 +157,98 @@ class Solution:
                 return False
         # Return True if all checks pass, confirming a valid BST.
         return True
+
+        # METHOD 3: using BFS
+        if self.r_bst.root is None:
+            return True
+        # Initialize an empty queue to hold nodes to be processed and an output list to store the values.
+        queue = []
+        output = []
+        # Start the traversal from the root node.
+        current_node = self.r_bst.root
+        # Add the root node to the queue if it exists.
+        queue.append(current_node)
+        # Continue until there are no more nodes to process in the queue.
+        while len(queue) > 0:
+            # Dequeue the first node from the queue.
+            current_node = queue.pop(0)
+            # Enqueue the left child node if it exists.
+            if current_node.left is not None:
+                if current_node.value <= current_node.left.value:
+                    return False
+                else:
+                    queue.append(current_node.left)
+            # Enqueue the right child node if it exists.
+            if current_node.right is not None:
+                if current_node.value >= current_node.right.value:
+                    return False
+                else:
+                    queue.append(current_node.right)
+        return True
+
+    def is_valid_bst(self) -> bool:
+        """
+        Check if the binary search tree (BST) is valid.
+
+        A valid BST is defined as a tree where for every node,
+        all values in its left subtree are less than the node's value,
+        and all values in its right subtree are greater.
+
+        This function provides three methods to verify if the tree is a valid BST:
+        - **Method 1**: Compares the in-order traversal of the BST with its sorted version.
+        - **Method 2**: Checks each adjacent element in the in-order traversal to ensure
+          that the current value is less than the next value.
+        - **Method 3**: Uses breadth-first search (BFS) to validate the BST properties.
+
+        Returns:
+            bool: True if the BST is valid, False otherwise.
+        """
+        # # METHOD 1: Check if the in-order traversal is sorted.
+        # bst_list = self.r_bst.DFS_in_order()  # O(n) time complexity in-order traversal
+        # if bst_list == sorted(bst_list):  # Sorting takes O(n log n) time.
+        #     return True
+        # return False
+
+        # Time Complexity: O(n log n) due to sorting.
+        # Space Complexity: O(n) for storing the in-order traversal list.
+
+        # # METHOD 2: Check if each element is less than the next in the in-order traversal.
+        # bst_list = self.r_bst.DFS_in_order()  # O(n) time complexity in-order traversal
+        # for i in range(len(bst_list) - 1):
+        #     if bst_list[i] >= bst_list[i + 1]:
+        #         # Return False if the current element is not less than the next.
+        #         return False
+        # return True  # Return True confirming a valid BST.
+
+        # Time Complexity: O(n) for iterating through the list.
+        # Space Complexity: O(n) for storing the in-order traversal list.
+
+        # METHOD 3: Use BFS to check the validity of the BST.
+        if self.r_bst.root is None:
+            return True  # An empty tree is a valid BST.
+        # Initialize a queue for BFS and start from the root node.
+        queue = [self.r_bst.root]
+        while queue:
+            # Dequeue the first node from the queue.
+            current_node = queue.pop(0)
+            # Check the left child node if it exists.
+            if current_node.left is not None:
+                if current_node.value <= current_node.left.value:
+                    # Return False if the left child's value is not less.
+                    return False
+                # Add the left child to the queue.
+                queue.append(current_node.left)
+            # Check the right child node if it exists.
+            if current_node.right is not None:
+                if current_node.value >= current_node.right.value:
+                    # Return False if the right child's value is not greater.
+                    return False
+                # Add the right child to the queue.
+                queue.append(current_node.right)
+        return True  # Return True if all checks pass, confirming a valid BST.
+
+        # Time Complexity: O(n) for traversing all nodes.
+        # Space Complexity: O(n) for the queue that can store all nodes in the worst case (full tree).
 
     def find_kth_smallest_iterative(self, k: int) -> Optional[int]:
         """
@@ -313,12 +407,13 @@ def main():
 
     print("\n==> Testing is_valid_bst:\n")
     valid_bsts = {
-        "Edge case: empty tree": [],                   # Edge case: empty tree
-        # Edge case: single element
+        # Edge case: empty tree ->  Expected: True
+        "Edge case: empty tree": [],
+        # Edge case: single element ->  Expected: True
         "Edge case: single element": [1],
-        # Simple case: three elements forming a valid BST
+        # Simple case: three elements forming a valid BST   ->  Expected: True
         "Simple case: three elements forming a valid BST": [1, 2, 3],
-        # Simple case: three elements forming a valid BST after inversion
+        # Simple case: three elements forming a valid BST after inversion   ->  Expected: False
         "Simple case: three elements forming a valid BST after inversion": [3, 2, 1]
     }
 
