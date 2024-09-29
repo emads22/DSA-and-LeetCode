@@ -150,23 +150,23 @@ class Solution:
             return n
 
         # Initialization:
-        # - 'n_ways_till_previous' is the number of ways to reach the previous step (n-1).
-        # - 'n_ways_till_two_before_previous' is the number of ways to reach the step two steps before (n-2).
-        n_ways_till_previous = 2  # There are 2 ways to reach step 2.
-        n_ways_till_two_before_previous = 1  # There is 1 way to reach step 1.
+        # - 'ways_till_previous' is the number of ways to reach the previous step (n-1).
+        # - 'ways_till_before_previous' is the number of ways to reach the step two steps before (n-2).
+        ways_till_previous = 2  # There are 2 ways to reach step 2.
+        ways_till_before_previous = 1  # There is 1 way to reach step 1.
         total_ways = 0
 
         # Iterate from step 3 to step 'n' to calculate the number of ways to reach each step.
         for i in range(3, n + 1):
             # The number of ways to reach the current step is the sum of the ways
             # to reach the previous step and the step two steps back.
-            total_ways = n_ways_till_previous + n_ways_till_two_before_previous
+            total_ways = ways_till_previous + ways_till_before_previous
 
             # Update the values for the next iteration:
-            # - 'n_ways_till_two_before_previous' becomes the old 'n_ways_till_previous'
-            # - 'n_ways_till_previous' becomes the current 'total_ways'
-            n_ways_till_two_before_previous = n_ways_till_previous
-            n_ways_till_previous = total_ways
+            # - 'ways_till_before_previous' becomes the old 'ways_till_previous'
+            # - 'ways_till_previous' becomes the current 'total_ways'
+            ways_till_before_previous = ways_till_previous
+            ways_till_previous = total_ways
 
         # After the loop, 'total_ways' holds the number of ways to reach step 'n'.
         return total_ways
@@ -230,25 +230,25 @@ def main():
     n1 = 2
     climb_stairs1 = solution.climb_stairs(n1)  # Output: 2
     print(f"\t. Total number of stairs: {n1}")
-    print(f"\t. Total number of distinct ways to climb to the top: {
+    print(f"\t. Total distinct ways to climb to the top: {
           climb_stairs1}\n")
 
     n2 = 3
     climb_stairs2 = solution.climb_stairs(n2)  # Output: 3
     print(f"\t. Total number of stairs: {n2}")
-    print(f"\t. Total number of distinct ways to climb to the top: {
+    print(f"\t. Total distinct ways to climb to the top: {
           climb_stairs2}\n")
 
     n3 = 4
     climb_stairs3 = solution.climb_stairs(n3)  # Output: 5
     print(f"\t. Total number of stairs: {n3}")
-    print(f"\t. Total number of distinct ways to climb to the top: {
+    print(f"\t. Total distinct ways to climb to the top: {
           climb_stairs3}\n")
 
     n4 = 5
     climb_stairs4 = solution.climb_stairs(n4)  # Output: 8
     print(f"\t. Total number of stairs: {n4}")
-    print(f"\t. Total number of distinct ways to climb to the top: {
+    print(f"\t. Total distinct ways to climb to the top: {
           climb_stairs4}\n")
     print("-" * 60)
 
