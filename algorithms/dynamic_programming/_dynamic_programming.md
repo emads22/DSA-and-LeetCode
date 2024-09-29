@@ -66,6 +66,36 @@ Memoization is a technique in dynamic programming used to optimize recursive alg
 - **Improves Efficiency**: For problems with overlapping subproblems, memoization reduces the time complexity from exponential to linear or polynomial.
 - **Easy to Implement**: Memoization can often be implemented with minimal modifications to a basic recursive solution.
 
+### Memoization can be applied in the following scenarios:
+1. **Overlapping Subproblems**:
+   - If the same subproblem is solved multiple times, memoization can store and reuse the result, avoiding redundant calculations.
+   - Example: Fibonacci sequence.
+
+2. **Optimal Substructure**:
+   - If the problem's solution can be constructed from solutions to subproblems, memoization can store those subproblem results.
+   - Example: Shortest path problem.
+
+3. **Recursive Solutions with Exponential Time Complexity**:
+   - Problems with recursion and exponential time complexity (e.g., O(2^n)) can benefit from memoization to reduce complexity to O(n).
+   - Example: Knapsack problem, recursive tree algorithms.
+
+4. **Problems with Repeated Queries**:
+   - If the same inputs are queried repeatedly, memoization can store the results of previous queries to avoid recalculations.
+   - Example: Caching web requests or database queries.
+
+5. **Dynamic Programming (Top-Down Approach)**:
+   - Memoization is useful in dynamic programming problems, particularly in the top-down approach, where recursive subproblem solutions can be stored.
+   - Example: Longest common subsequence (LCS), 0/1 knapsack problem.
+
+6. **Pure Functions**:
+   - Memoization works well with pure functions, which always return the same output for the same input.
+   - Example: Mathematical functions like factorial or Fibonacci.
+
+### Memoization is **not useful** when:
+- The function is non-deterministic (relies on randomness, external inputs, or side effects).
+- The input space is extremely large, leading to high memory usage.
+- The function is rarely called with the same inputs, making memoization overhead unnecessary.
+
 ### Uses
 Memoization is particularly effective in scenarios where:
 - The same subproblems are solved multiple times, such as in recursive algorithms for sequences or combinatorial problems.

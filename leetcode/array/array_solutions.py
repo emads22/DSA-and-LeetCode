@@ -9,9 +9,9 @@ sys.path.append(str(main_project_path))
 
 # Alternatively: sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from typing import Optional
-from data_structures import DynamicArray
 import re
+from data_structures import DynamicArray
+from typing import Optional
 
 
 class Solution:
@@ -409,8 +409,8 @@ class Solution:
         """
         Calculate the maximum profit from buying and selling a single share of stock.
 
-        This function implements two methods to find the maximum profit possible given a list of stock prices. It assumes 
-        that you can only buy and sell once.
+        This function implements two methods (both greedy algorithms) to find the maximum profit possible given a list of stock prices. 
+        It assumes that you can only buy and sell once.
 
         Parameters:
         prices (list[int]): A list of integers where each element represents the stock price on a particular day.
@@ -437,6 +437,9 @@ class Solution:
             max_profit = max(profit, max_profit)
         return max_profit
 
+        # Time Complexity: O(n) - Each price is examined once.
+        # Space Complexity: O(1) - Only a fixed amount of space is used (variables).
+
         # # METHOD 2: Tracks the minimum price seen so far and calculates profit in a single pass
         # # Initialize the buy price to the positive infinity (also will hande empty list case)
         # buy_price = float('+inf')
@@ -449,6 +452,9 @@ class Solution:
         #     # Update the maximum profit found so far
         #     max_profit = max(profit, max_profit)
         # return max_profit
+
+        # Time Complexity: O(n) - Each price is examined once.
+        # Space Complexity: O(1) - Only a fixed amount of space is used (variables).
 
     def rotate(self, nums: list[int], k: int) -> None:
         """
