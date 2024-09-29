@@ -150,10 +150,10 @@ class Solution:
             return n
 
         # Initialization:
-        # - 'ways_till_previous' is the number of ways to reach the previous step (n-1).
         # - 'ways_till_before_previous' is the number of ways to reach the step two steps before (n-2).
-        ways_till_previous = 2  # There are 2 ways to reach step 2.
+        # - 'ways_till_previous' is the number of ways to reach the previous step (n-1).
         ways_till_before_previous = 1  # There is 1 way to reach step 1.
+        ways_till_previous = 2  # There are 2 ways to reach step 2.
         total_ways = 0
 
         # Iterate from step 3 to step 'n' to calculate the number of ways to reach each step.
