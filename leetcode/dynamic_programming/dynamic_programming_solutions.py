@@ -150,23 +150,23 @@ class Solution:
             return n
 
         # Initialization:
-        # - 'one_step_before' is the number of ways to reach step 2 (which is 2 ways).
-        # - 'two_step_before' is the number of ways to reach step 1 (which is 1 way).
-        one_step_before = 2
-        two_step_before = 1
+        # - 'n_ways_till_previous' is the number of ways to reach the previous step (n-1).
+        # - 'n_ways_till_two_before_previous' is the number of ways to reach the step two steps before (n-2).
+        n_ways_till_previous = 2  # There are 2 ways to reach step 2.
+        n_ways_till_two_before_previous = 1  # There is 1 way to reach step 1.
         total_ways = 0
 
         # Iterate from step 3 to step 'n' to calculate the number of ways to reach each step.
         for i in range(3, n + 1):
             # The number of ways to reach the current step is the sum of the ways
-            # to reach the two previous steps (either from one step before or two steps before).
-            total_ways = one_step_before + two_step_before
+            # to reach the previous step and the step two steps back.
+            total_ways = n_ways_till_previous + n_ways_till_two_before_previous
 
             # Update the values for the next iteration:
-            # - 'two_step_before' becomes the old 'one_step_before'
-            # - 'one_step_before' becomes the current 'total_ways'
-            two_step_before = one_step_before
-            one_step_before = total_ways
+            # - 'n_ways_till_two_before_previous' becomes the old 'n_ways_till_previous'
+            # - 'n_ways_till_previous' becomes the current 'total_ways'
+            n_ways_till_two_before_previous = n_ways_till_previous
+            n_ways_till_previous = total_ways
 
         # After the loop, 'total_ways' holds the number of ways to reach step 'n'.
         return total_ways
