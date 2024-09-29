@@ -121,6 +121,8 @@ class Solution:
         """
         Given the number of steps 'n', this function returns the number of distinct ways
         to reach the top of the staircase.
+        The problem can be thought of as a Fibonacci sequence, where the number of ways to reach
+        step n is the sum of ways to reach steps n-1 and n-2.
 
         Parameters:
         n (int): The number of steps to reach the top.
@@ -128,7 +130,20 @@ class Solution:
         Returns:
         int: The number of distinct ways to climb to the top of the staircase.
         """
+        # # METHOD 1: Recursive approach similar to Fibonacci (inefficient without memoization)
+        # # Base cases: If there are 1 or 2 steps, the answer is n itself.
+        # if n == 1:
+        #     return 1
+        # if n == 2:
+        #     return 2
 
+        # # Recursive case: sum of ways to get to the previous step and the step before that
+        # return self.climb_stairs(n-1) + self.climb_stairs(n-2)
+
+        # Time Complexity - O(2^n) (without memoization)
+        # Space Complexity - O(n) (due to recursion stack)
+
+        # METHOD 2: Iterative dynamic programming approach (efficient)
         # Base case: If there are 1 or 2 steps, return 'n' directly.
         # There is only 1 way to climb 1 step, and 2 ways to climb 2 steps.
         if n <= 2:
