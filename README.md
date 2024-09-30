@@ -1,5 +1,7 @@
 # Python DSA
 
+![Python_DSA_logo](./python_dsa_logo.png)
+
 ## Overview
 Python DSA is a personal repository that includes my implementations of various data structures and algorithms (DSA) in Python, along with solutions to LeetCode problems. It aims to provide a clear understanding of DSA concepts and practical implementations to help users prepare for technical interviews and improve their problem-solving skills.
 
