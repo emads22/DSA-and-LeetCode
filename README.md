@@ -1,7 +1,7 @@
-# DSA and LeetCode Solutions in Python
+# Python DSA
 
 ## Overview
-DSA and LeetCode Solutions in Python is a personal repository that includes my implementations of various data structures and algorithms (DSA) in Python, along with solutions to LeetCode problems. It aims to provide a clear understanding of DSA concepts and practical implementations to help users prepare for technical interviews and improve their problem-solving skills.
+Python DSA is a personal repository that includes my implementations of various data structures and algorithms (DSA) in Python, along with solutions to LeetCode problems. It aims to provide a clear understanding of DSA concepts and practical implementations to help users prepare for technical interviews and improve their problem-solving skills.
 
 ## Features
 - **Data Structures**: Implementations of common data structures such as linked lists, stacks, queues, trees, graphs, and more.
@@ -12,21 +12,23 @@ DSA and LeetCode Solutions in Python is a personal repository that includes my i
 
 ## Setup
 1. Clone the repository.
-    ```bash
-    git clone https://github.com/emads22/dsa-and-leetcode-python.git
+    ```python
+    git clone https://github.com/emads22/python-dsa.git
     ```
 2. Ensure Python 3.x is installed.
-3. Install the required dependencies using:
-    ```bash
-    pip install -r requirements.txt
-    ```
 
 ## Usage
 1. Navigate to the specific data structure or algorithm file you want to run, for example:
-    ```bash
+
+    ```python
     cd data_structures
     python linked_list.py
     ```
+   Alternatively, you can run the files directly from the main directory using:  
+
+    ```
+    python data_structures/linked_list.py
+    ``` 
 2. Follow the instructions or examples provided within each file to test and understand the implementations.
 3. For LeetCode solutions, navigate to the `leetcode` directory and run the desired solution file.
 
