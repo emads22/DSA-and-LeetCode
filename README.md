@@ -13,7 +13,7 @@ Python DSA is a personal repository that includes my implementations of various 
 ## Setup
 1. Clone the repository.
     ```python
-    git clone https://github.com/emads22/python-dsa.git
+    git clone https://github.com/emads22/Python-DSA.git
     ```
 2. Ensure Python 3.x is installed.
 
