@@ -81,3 +81,46 @@ class Solution:
             a = a ^ b               # Sum without carry
             b = carry << 1          # Shift carry to the left
         return a                     # Return the final sum
+
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """
+        Reverses a singly linked list.
+        """
+        # METHOD 1: ITERATIVE
+        before = None  # Initialize 'before' as None, will be the new head
+        current = head  # Start traversing from the head
+        while current is not None:
+            after = current.next  # Store the next node
+            current.next = before  # Reverse the current node's pointer
+            before = current  # Move 'before' one step forward
+            current = after  # Move 'current' one step forward
+        # The 'before' pointer will be the new head of the reversed list
+        return before
+
+        # Time Complexity: O(n)
+        # Space Complexity: O(1)
+
+        # # METHOD 2: RECURSIVE
+        # # Base case: If the list is empty or has only one node
+        # if head is None or head.next is None:
+        #     return head
+        # # Recursively reverse the rest of the list
+        # new_head = self.reverseList(head.next)
+        # # Reverse the current node's pointer
+        # head.next.next = head
+        # head.next = None
+        # return new_head
+
+        # Time Complexity: O(n)
+        # Space Complexity: O(n)
+
+    def deleteNode(self, node: ListNode) -> None:
+        """
+        Delete the given node from the linked list.
+        Given the node to be deleted node with no access to the first node or head.
+        It does not return anything, modifies node in-place instead.
+        """
+        # Copy the value of the next node to the current node
+        node.val = node.next.val
+        # Bypass the next node
+        node.next = node.next.next

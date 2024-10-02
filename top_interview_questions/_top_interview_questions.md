@@ -1,4 +1,4 @@
-# Reverse String
+# 1. Reverse String
 
 Write a function that reverses a string. The input string is given as an array of characters `s`.
 
@@ -18,7 +18,7 @@ You must do this by modifying the input array **in-place** with O(1) extra memor
 
 --------------------------------------------------------------------------------
 
-# Fizz Buzz
+# 2. Fizz Buzz
 
 Given an integer `n`, return a string array `answer` (1-indexed) where:
 
@@ -44,7 +44,7 @@ Given an integer `n`, return a string array `answer` (1-indexed) where:
 
 --------------------------------------------------------------------------------
 
-# Single Number
+# 3. Single Number
 
 Given a non-empty array of integers `nums`, every element appears twice except for one. Find that single one.
 
@@ -69,7 +69,7 @@ You must implement a solution with a **linear runtime complexity** and use only 
 
 --------------------------------------------------------------------------------
 
-# Maximum Depth of Binary Tree
+# 4. Maximum Depth of Binary Tree
 
 Given the root of a binary tree, return its maximum depth.
 
@@ -97,7 +97,7 @@ A binary tree's maximum depth is the number of nodes along the longest path from
 
 --------------------------------------------------------------------------------
 
-# Move Zeroes
+# 5. Move Zeroes
 
 Given an integer array `nums`, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
 
@@ -120,7 +120,7 @@ Could you minimize the total number of operations done?
 
 --------------------------------------------------------------------------------
 
-# Sum of Two Integers
+# 6. Sum of Two Integers
 
 Given two integers `a` and `b`, return the sum of the two integers without using the operators `+` and `-`.
 
@@ -134,5 +134,64 @@ Given two integers `a` and `b`, return the sum of the two integers without using
 
 ## Constraints:
 - `-1000 <= a, b <= 1000`
+
+--------------------------------------------------------------------------------
+
+# 7. Reverse Linked List
+
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+### Example 1:
+- **Input:** head = [1,2,3,4,5]  
+- **Output:** [5,4,3,2,1]
+
+### Example 2:
+- **Input:** head = [1,2]  
+- **Output:** [2,1]
+
+### Example 3:
+- **Input:** head = []  
+- **Output:** []
+
+### Constraints:
+- The number of nodes in the list is in the range [0, 5000].
+- -5000 <= Node.val <= 5000
+
+--------------------------------------------------------------------------------
+
+# 8. Delete Node in a Linked List
+
+There is a singly-linked list `head` and we want to delete a node `node` in it.
+
+You are given the node to be deleted `node`. You will not be given access to the first node of `head`.
+
+All the values of the linked list are unique, and it is guaranteed that the given node `node` is not the last node in the linked list.
+
+Delete the given node. Note that by deleting the node, we do not mean removing it from memory. We mean:
+
+- The value of the given node should not exist in the linked list.
+- The number of nodes in the linked list should decrease by one.
+- All the values before `node` should be in the same order.
+- All the values after `node` should be in the same order.
+
+### Custom testing:
+
+For the input, you should provide the entire linked list `head` and the node to be given `node`. `node` should not be the last node of the list and should be an actual node in the list. We will build the linked list and pass the node to your function. The output will be the entire list after calling your function.
+
+### Example 1:
+- **Input:** head = [4,5,1,9], node = 5  
+- **Output:** [4,1,9]  
+  **Explanation:** You are given the second node with value 5, the linked list should become 4 -> 1 -> 9 after calling your function.
+
+### Example 2:
+- **Input:** head = [4,5,1,9], node = 1  
+- **Output:** [4,5,9]  
+  **Explanation:** You are given the third node with value 1, the linked list should become 4 -> 5 -> 9 after calling your function.
+
+### Constraints:
+- The number of the nodes in the given list is in the range [2, 1000].
+- -1000 <= Node.val <= 1000
+- The value of each node in the list is unique.
+- The node to be deleted is in the list and is not a tail node.
 
 --------------------------------------------------------------------------------

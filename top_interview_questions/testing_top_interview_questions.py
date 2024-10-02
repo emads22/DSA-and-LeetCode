@@ -141,9 +141,61 @@ def test_getSum():
     print("-" * 80)
 
 
+def test_reverseList():
+    """Test reverseList with multiple cases."""
+    s = Solution()
+    tests = [
+        ([1, 2, 3, 4, 5], [5, 4, 3, 2, 1]),
+        ([1, 2], [2, 1]),
+        ([], [])
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: reverseList()\n")
+    for test_input, expected_output in tests:
+        ll = LinkedList()
+        ll.build_from_list(test_input)
+        print(f"\t. Before:  {test_input}")
+        ll.head = s.reverseList(ll.head)  # Reverse the linked list
+        output = ll.to_list()  # Get list representation of the reversed list
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"\t. After:   {output}  -->  OK\n")
+    print("-" * 80)
+
+
+def test_deleteNode():
+    """Test deleteNode with multiple cases."""
+    s = Solution()
+    tests = [
+        ({"head": [4, 5, 1, 9], "node": 5}, [4, 1, 9]),
+        ({"head": [4, 5, 1, 9], "node": 1}, [4, 5, 9])
+    ]
+    print("-" * 80)
+    print("\n==> Test: deleteNode()\n")
+    for test_input, expected_output in tests:
+        ll = LinkedList()
+        ll.build_from_list(test_input["head"])
+        print(f"\t. Before:  {test_input["head"]},  Node to delete = {
+              test_input["node"]}")
+        node_to_delete = ll.get_node(test_input["node"])
+        s.deleteNode(node_to_delete)  # Delete the node
+        output = ll.to_list()  # List representation of after delete
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"\t. After:   {output}  -->  OK\n")
+    print("-" * 80)
+
+
 def main():
-    FUNCTIONS = {"1": test_reverseString, "2": test_fizzBuzz, "3": test_singleNumber, "4": test_maxDepth,
-                 "5": test_moveZeroes, "6": test_getSum, }
+    FUNCTIONS = {"1": test_reverseString,
+                 "2": test_fizzBuzz,
+                 "3": test_singleNumber,
+                 "4": test_maxDepth,
+                 "5": test_moveZeroes,
+                 "6": test_getSum,
+                 "7": test_reverseList,
+                 "8": test_deleteNode}
 
     print("\n\n", "=" * 80)
 
