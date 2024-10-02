@@ -157,6 +157,9 @@ Given the head of a singly linked list, reverse the list, and return the reverse
 - The number of nodes in the list is in the range [0, 5000].
 - -5000 <= Node.val <= 5000
 
+### Follow up: 
+- A linked list can be reversed either iteratively or recursively. Could you implement both?
+
 --------------------------------------------------------------------------------
 
 # 8. Delete Node in a Linked List
@@ -193,5 +196,34 @@ For the input, you should provide the entire linked list `head` and the node to 
 - -1000 <= Node.val <= 1000
 - The value of each node in the list is unique.
 - The node to be deleted is in the list and is not a tail node.
+
+--------------------------------------------------------------------------------
+
+# 9. Binary Tree Inorder Traversal
+
+Given the root of a binary tree, return the inorder traversal of its nodes' values.
+
+## Example 1:
+- **Input:** `root = [1,null,2,3]`  
+- **Output:** `[1,3,2]`  
+
+## Example 2:
+- **Input:** `root = [1,2,3,4,5,null,8,null,null,6,7,9]`  
+- **Output:** `[4,2,6,5,7,1,3,9,8]`  
+
+## Example 3:
+- **Input:** `root = []`  
+- **Output:** `[]`  
+
+## Example 4:
+- **Input:** `root = [1]`  
+- **Output:** `[1]`  
+
+## Constraints:
+- The number of nodes in the tree is in the range `[0, 100]`.
+- `-100 <= Node.val <= 100`
+
+**Follow up:** 
+- Recursive solution is trivial; could you do it iteratively?
 
 --------------------------------------------------------------------------------

@@ -35,7 +35,7 @@ def test_fizzBuzz():
     print("\n==> Test: fizzBuzz()\n")
     for test_input, expected_output in tests:
         output = s.fizzBuzz(test_input)
-        print(f"\t. Input:  {test_input}")
+        print(f"\t. Input:   {test_input}")
         assert output == expected_output, f"""Test failed. Expected `{
             expected_output}`, got `{output}`"""
         print(f"\t. Output:  {output}  -->  OK\n")
@@ -55,7 +55,7 @@ def test_singleNumber():
     print("\n==> Test: singleNumber()\n")
     for test_input, expected_output in tests:
         output = s.singleNumber(test_input)
-        print(f"\t. Input:  {test_input}")
+        print(f"\t. Input:   {test_input}")
         assert output == expected_output, f"""Test failed. Expected `{
             expected_output}`, got `{output}`"""
         print(f"\t. Output:  {output}  -->  OK\n")
@@ -75,7 +75,7 @@ def test_singleNumber():
     print("\n==> Test: singleNumber()\n")
     for test_input, expected_output in tests:
         output = s.singleNumber(test_input)
-        print(f"\t. Input:  {test_input}")
+        print(f"\t. Input:   {test_input}")
         assert output == expected_output, f"""Test failed. Expected `{
             expected_output}`, got `{output}`"""
         print(f"\t. Output:  {output}  -->  OK\n")
@@ -96,7 +96,7 @@ def test_maxDepth():
         bt = BinaryTree()
         bt.build_from_list(test_input)
         output = s.maxDepth(bt.root)
-        print(f"\t. Input:  {test_input}")
+        print(f"\t. Input:   {test_input}")
         assert output == expected_output, f"""Test failed. Expected `{
             expected_output}`, got `{output}`"""
         print(f"\t. Output:  {output}  -->  OK\n")
@@ -133,7 +133,7 @@ def test_getSum():
     print("-" * 80)
     print("\n==> Test: getSum()\n")
     for test_input, expected_output in tests:
-        print(f"\t. Input:   a = {test_input["a"]}, b = {test_input["b"]}")
+        print(f"\t. Input:   a = {test_input["a"]},  b = {test_input["b"]}")
         output = s.getSum(a=test_input["a"], b=test_input["b"])
         assert output == expected_output, f"""Test failed. Expected `{
             expected_output}`, got `{output}`"""
@@ -176,14 +176,37 @@ def test_deleteNode():
     for test_input, expected_output in tests:
         ll = LinkedList()
         ll.build_from_list(test_input["head"])
-        print(f"\t. Before:  {test_input["head"]},  Node to delete = {
-              test_input["node"]}")
+        print(f"""\t. Before:  {test_input["head"]},  Node to delete = {
+              test_input["node"]}""")
         node_to_delete = ll.get_node(test_input["node"])
         s.deleteNode(node_to_delete)  # Delete the node
         output = ll.to_list()  # List representation of after delete
         assert output == expected_output, f"""Test failed. Expected `{
             expected_output}`, got `{output}`"""
         print(f"\t. After:   {output}  -->  OK\n")
+    print("-" * 80)
+
+
+def test_inorderTraversal():
+    """Test inorderTraversal with multiple cases."""
+    s = Solution()
+    tests = [
+        ([1, None, 2, 3], [1, 3, 2]),
+        ([1, 2, 3, 4, 5, None, 8, None, None, 6, 7, 9], [4, 2, 6, 5, 7, 1, 3, 9, 8]),
+        ([], []),
+        ([1], [1])
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: inorderTraversal()\n")
+    for test_input, expected_output in tests:
+        bt = BinaryTree()
+        bt.build_from_list(test_input)
+        output = s.inorderTraversal(bt.root)
+        print(f"\t. Input:   {test_input}")
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"\t. Output:  {output}  -->  OK\n")
     print("-" * 80)
 
 
@@ -195,7 +218,9 @@ def main():
                  "5": test_moveZeroes,
                  "6": test_getSum,
                  "7": test_reverseList,
-                 "8": test_deleteNode}
+                 "8": test_deleteNode,
+                 "9": test_inorderTraversal,
+                 }
 
     print("\n\n", "=" * 80)
 

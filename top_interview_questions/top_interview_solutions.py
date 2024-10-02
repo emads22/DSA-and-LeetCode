@@ -124,3 +124,11 @@ class Solution:
         node.val = node.next.val
         # Bypass the next node
         node.next = node.next.next
+
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """
+        Perform an in-order traversal of a binary tree.
+        """
+        if root is None:
+            return []
+        return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right)
