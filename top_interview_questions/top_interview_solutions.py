@@ -226,7 +226,7 @@ class Solution:
         # Convert the integer to its binary representation (in reverse order)
         while n != 0:
             # Append the least significant bit (0 or 1) to the binary string
-            bin_str.append(str(n & 1))
+            bin_str.append(str(n % 2))
             n = n // 2  # Divide n by 2 to process the next bit
         # Pad the binary string with leading zeros to ensure it is 32 bits long
         bin_str += "0" * (32 - len(bin_str))
