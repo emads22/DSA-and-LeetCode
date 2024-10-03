@@ -101,3 +101,17 @@ class LinkedList:
                 return current
             current = current.next  # Move to the next node
         return None
+
+
+def to_binary_32_bits(n: int):
+    """ Convert an integer to its binary representation as a 32-bit string. """
+    if n == 0:
+        return "0"  # Handle the case where n is 0
+    bin_str = ""
+    while n != 0:
+        # Prepend the least significant bit to the binary string
+        bin_str = str(int(n % 2)) + bin_str
+        n = n // 2  # Divide n by 2 to process the next bit
+    # Pad the binary string with leading zeros to ensure it is 32 bits long
+    bin_str = "0" * (32 - len(bin_str)) + bin_str
+    return bin_str  # Return binary representation as a string

@@ -210,6 +210,70 @@ def test_inorderTraversal():
     print("-" * 80)
 
 
+def test_titleToNumber():
+    """Test titleToNumber with multiple cases."""
+    s = Solution()
+    tests = [
+        ("A", 1),
+        ("AB", 28),
+        ("ZY", 701)
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: titleToNumber()\n")
+    for test_input, expected_output in tests:
+        print(f"\t. Input:   {test_input}")
+        output = s.titleToNumber(test_input)
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"\t. Output:  {output}  -->  OK\n")
+    print("-" * 80)
+
+
+def test_reverseBits():
+    """Test reverseBits with multiple cases."""
+    s = Solution()
+    tests = [
+        ((43261596, "00000010100101000001111010011100"),
+         (964176192, "00111001011110000010100101000000")),
+        ((4294967293, "11111111111111111111111111111101"),
+         (3221225471, "10111111111111111111111111111111"))
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: reverseBits()\n")
+    for test_input, expected_output in tests:
+        n, binary = test_input
+        print(f"\t. Input:   n = {n},  binary = {binary}")
+        output = s.reverseBits(n)
+        n_expected, binary_expected = expected_output
+        assert output == n_expected, f"""Test failed. Expected `{
+            n_expected} (binary = {binary_expected})`, got `{output} (binary = {to_binary(output)})`"""
+        print(f"""\t. Output:  n = {output},  binary = {
+              to_binary_32_bits(output)}  -->  OK\n""")
+    print("-" * 80)
+
+
+def test_reverse():
+    """Test reverse with multiple cases."""
+    s = Solution()
+    tests = [
+        (123, 321),
+        (-123, -321),
+        (120, 21)
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: reverse()\n")
+    for test_input, expected_output in tests:
+        print(f"\t. Input:   {test_input}")
+        output = s.reverse(test_input)
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"""\t. Output:  n = {output}  -->  OK\n""")
+    print("-" * 80)
+
+
 def main():
     FUNCTIONS = {"1": test_reverseString,
                  "2": test_fizzBuzz,
@@ -220,6 +284,9 @@ def main():
                  "7": test_reverseList,
                  "8": test_deleteNode,
                  "9": test_inorderTraversal,
+                 "10": test_titleToNumber,
+                 "11": test_reverseBits,
+                 "12": test_reverse,
                  }
 
     print("\n\n", "=" * 80)
