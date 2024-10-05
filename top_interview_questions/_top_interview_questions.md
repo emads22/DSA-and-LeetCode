@@ -364,3 +364,97 @@ Given a Roman numeral, convert it to an integer.
 - It is guaranteed that `s` is a valid Roman numeral in the range [1, 3999].
 
 --------------------------------------------------------------------------------
+
+# 14. Rotate Array
+
+Given an integer array `nums`, rotate the array to the right by `k` steps, where `k` is non-negative.
+
+### Example 1:
+- **Input:**  `nums = [1,2,3,4,5,6,7]`, `k = 3`  
+- **Output:**  `[5,6,7,1,2,3,4]`  
+- **Explanation:**  
+    - Rotate 1 step to the right: `[7,1,2,3,4,5,6]`  
+    - Rotate 2 steps to the right: `[6,7,1,2,3,4,5]`  
+    - Rotate 3 steps to the right: `[5,6,7,1,2,3,4]`
+
+### Example 2:
+- **Input:**  `nums = [-1,-100,3,99]`, `k = 2`  
+- **Output:**  `[3,99,-1,-100]`  
+- **Explanation:**  
+    - Rotate 1 step to the right: `[99,-1,-100,3]`  
+    - Rotate 2 steps to the right: `[3,99,-1,-100]`
+
+### Constraints:
+- `1 <= nums.length <= 10^5`
+- `-2^31 <= nums[i] <= 2^31 - 1`
+- `0 <= k <= 10^5`
+
+### Follow-up:
+- Try to come up with as many solutions as you can. There are at least three different ways to solve this problem. 
+- Could you do it in-place with O(1) extra space?
+
+--------------------------------------------------------------------------------
+
+# Two Sum
+
+Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+### Example 1:
+
+- **Input:**  `nums = [2,7,11,15]`, `target = 9`  
+- **Output:**  `[0,1]`  
+- **Explanation:**  
+    - Because `nums[0] + nums[1] == 9`, we return `[0, 1]`.
+
+### Example 2:
+
+- **Input:**  `nums = [3,2,4]`, `target = 6`  
+- **Output:**  `[1,2]`
+
+### Example 3:
+
+- **Input:**  `nums = [3,3]`, `target = 6`  
+- **Output:**  `[0,1]`
+
+### Constraints:
+- `2 <= nums.length <= 10^4`
+- `-10^9 <= nums[i] <= 10^9`
+- `-10^9 <= target <= 10^9`
+- Only one valid answer exists.
+
+### Follow-up:
+- Can you come up with an algorithm that is less than O(n²) time complexity?
+
+--------------------------------------------------------------------------------
+
+# Merge Two Sorted Lists
+
+You are given the heads of two sorted linked lists `list1` and `list2`. Merge the two lists into one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+Return the head of the merged linked list.
+
+### Example 1:
+
+- **Input:**  `list1 = [1,2,4]`, `list2 = [1,3,4]`  
+- **Output:**  `[1,1,2,3,4,4]`
+
+### Example 2:
+
+- **Input:**  `list1 = []`, `list2 = []`  
+- **Output:**  `[]`
+
+### Example 3:
+
+- **Input:**  `list1 = []`, `list2 = [0]`  
+- **Output:**  `[0]`
+
+### Constraints:
+- The number of nodes in both lists is in the range `[0, 50]`.
+- `-100 <= Node.val <= 100`
+- Both `list1` and `list2` are sorted in non-decreasing order.
+
+--------------------------------------------------------------------------------

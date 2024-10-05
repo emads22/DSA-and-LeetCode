@@ -248,9 +248,9 @@ def test_reverseBits():
         output = s.reverseBits(n)
         n_expected, binary_expected = expected_output
         assert output == n_expected, f"""Test failed. Expected `{
-            n_expected} (binary = {binary_expected})`, got `{output} (binary = {to_binary(output)})`"""
+            n_expected} (binary = {binary_expected})`, got `{output} (binary = {int_to_bin(output)})`"""
         print(f"""\t. Output:  n = {output},  binary = {
-              to_binary_32_bits(output)}  -->  OK\n""")
+              int_to_bin(output)}  -->  OK\n""")
     print("-" * 80)
 
 
@@ -274,6 +274,72 @@ def test_reverse():
     print("-" * 80)
 
 
+def test_rotate():
+    """Test rotate with multiple cases."""
+    s = Solution()
+    tests = [
+        (([1, 2, 3, 4, 5, 6, 7], 3), [5, 6, 7, 1, 2, 3, 4]),
+        (([-1, -100, 3, 99], 2), [3, 99, -1, -100])
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: rotate()\n")
+    for test_input, expected_output in tests:
+        nums, k = test_input
+        print(f"\t. Before:  {nums},  k = {k}")
+        s.rotate(nums, k)
+        assert nums == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{nums}`"""
+        print(f"""\t. After:   {nums}  -->  OK\n""")
+    print("-" * 80)
+
+
+def test_twoSum():
+    """Test twoSum with multiple cases."""
+    s = Solution()
+    tests = [
+        (([2, 7, 11, 15], 9), [0, 1]),
+        (([3, 2, 4], 6), [1, 2]),
+        (([3, 3], 6), [0, 1])
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: twoSum()\n")
+    for test_input, expected_output in tests:
+        nums, target = test_input
+        print(f"\t. Input:   {nums},  target = {target}")
+        output = s.twoSum(nums, target)
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"""\t. Output:  {output}  -->  OK\n""")
+    print("-" * 80)
+
+
+def test_mergeTwoLists():
+    """Test mergeTwoLists with multiple cases."""
+    s = Solution()
+    tests = [
+        (([1, 2, 4], [1, 3, 4]), [1, 1, 2, 3, 4, 4]),
+        (([], []), []),
+        (([], [0]), [0])
+    ]
+
+    print("-" * 80)
+    print("\n==> Test: mergeTwoLists()\n")
+    for test_input, expected_output in tests:
+        list1, list2 = test_input
+        ll1, ll2, ll3 = LinkedList(), LinkedList(), LinkedList()
+        ll1.build_from_list(list1)
+        ll2.build_from_list(list2)
+        print(f"\t. Input:   List1 = {list1},  List2 = {list2}")
+        ll3.head = s.mergeTwoLists(ll1.head, ll2.head)
+        output = ll3.to_list()
+        assert output == expected_output, f"""Test failed. Expected `{
+            expected_output}`, got `{output}`"""
+        print(f"""\t. Output:  {output}  -->  OK\n""")
+    print("-" * 80)
+
+
 def main():
     FUNCTIONS = {"1": test_reverseString,
                  "2": test_fizzBuzz,
@@ -287,6 +353,9 @@ def main():
                  "10": test_titleToNumber,
                  "11": test_reverseBits,
                  "12": test_reverse,
+                 "13": test_rotate,
+                 "14": test_twoSum,
+                 "15": test_mergeTwoLists,
                  }
 
     print("\n\n", "=" * 80)

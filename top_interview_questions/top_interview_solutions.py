@@ -10,6 +10,7 @@ class Solution:
         """
         end = len(s)
         mid = end // 2
+
         for i in range(mid):
             s[i], s[end-1-i] = s[end-1-i], s[i]
 
@@ -24,6 +25,7 @@ class Solution:
         - Otherwise, append the number as a string.
         """
         output = []
+
         for i in range(1, n + 1):
             if i % 3 == 0 and i % 5 == 0:
                 output.append("FizzBuzz")
@@ -33,6 +35,7 @@ class Solution:
                 output.append("Buzz")
             else:
                 output.append(str(i))
+
         return output
 
     def singleNumber(self, nums: List[int]) -> int:
@@ -44,9 +47,11 @@ class Solution:
         zero is the number itself.
         """
         result = 0
+
         for num in nums:
             # Using XOR (exclusive OR: `0 ^ 0 = 0` and `1 ^ 1 = 0`, and `0 ^ 1 = 1`)
             result ^= num  # result = result ^ num
+
         return result
 
     def maxDepth(self, root: Optional[TreeNode]) -> int:
@@ -55,6 +60,7 @@ class Solution:
         """
         if root is None:
             return 0
+
         return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
     def moveZeroes(self, nums: List[int]) -> None:
@@ -65,6 +71,7 @@ class Solution:
         """
         # METHOD 1: Avoids unnecessary checks, does minimal swaps, has fewer conditional checks
         next_non_zero = 0
+
         for i in range(len(nums)):
             if nums[i] != 0:
                 nums[next_non_zero], nums[i] = nums[i], nums[next_non_zero]
@@ -91,6 +98,7 @@ class Solution:
             carry = a & b           # Calculate carry
             a = a ^ b               # Sum without carry
             b = carry << 1          # Shift carry to the left
+
         return a                     # Return the final sum
 
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
@@ -100,11 +108,13 @@ class Solution:
         # METHOD 1: ITERATIVE
         before = None  # Initialize 'before' as None, will be the new head
         current = head  # Start traversing from the head
+
         while current is not None:
             after = current.next  # Store the next node
             current.next = before  # Reverse the current node's pointer
             before = current  # Move 'before' one step forward
             current = after  # Move 'current' one step forward
+
         # The 'before' pointer will be the new head of the reversed list
         return before
 
@@ -143,6 +153,7 @@ class Solution:
         # METHOD 1: RECURSIVE
         if root is None:
             return []
+
         return self.inorderTraversal(root.left) + [root.val] + self.inorderTraversal(root.right)
 
         # # METHOD 2: ITERATIVE
@@ -180,11 +191,13 @@ class Solution:
 
         # METHOD 1: Accumulating the result using base-26 multiplication
         number = 0
+
         for letter in columnTitle:
             # Calculate the value of each letter ('A' = 1, 'B' = 2, ..., 'Z' = 26)
             value = ord(letter) - ord('A') + 1
             # Shift the current number by multiplying by 26, then add the current letter's value
             number = number * 26 + value
+
         return number
 
         # # METHOD 2: Positional calculation using base-26 powers
@@ -204,55 +217,151 @@ class Solution:
         """ Reverses the bits of a given 32-bit unsigned integer. """
 
         # # METHOD 1
-        # bin_str = ""  # binary representation of n
-        # reversed_n = 0
-        # # Convert the integer to its binary representation (in correct order)
-        # while n != 0:
-        #     # Prepend the least significant bit to the binary string
-        #     bin_str = str(int(n % 2)) + bin_str
-        #     n = n // 2  # Divide n by 2 to process the next bit
-        # # Pad the binary string with leading zeros to ensure it is 32 bits long
-        # bin_str = "0" * (32 - len(bin_str)) + bin_str
-        # # Convert the binary string back to an integer (iterating in reverse)
-        # for bit in bin_str[::-1]:  # Iterate through the binary string in reverse order
-        #     # Shift the current result left by 1 and add the current bit
-        #     reversed_n = (reversed_n * 2) + int(bit)
-        # return reversed_n
+        # # Create a list to store binary digits (initialized with '0')
+        # # better than str and inefficient concatenation
+        # s = ["0"] * 32
+        # num = 0
+        # i = 0
+        # while n != 0:  # Convert the integer to binary
+        #     s[i] = str(n % 2)  # Store the least significant bit
+        #     n = n // 2  # Divide by 2 to shift right
+        #     i += 1  # Move to the next index in the list
 
-        # METHOD 2: efficient
-        # Use a list for efficient appending (O(1)) vs. string concatenation (O(n²))
-        bin_str = []
-        reversed_n = 0
-        # Convert the integer to its binary representation (in reverse order)
-        while n != 0:
-            # Append the least significant bit (0 or 1) to the binary string
-            bin_str.append(str(n % 2))
-            n = n // 2  # Divide n by 2 to process the next bit
-        # Pad the binary string with leading zeros to ensure it is 32 bits long
-        bin_str += "0" * (32 - len(bin_str))
-        # Join the bits list into a string and convert to int with base 2
-        # The base 2 specifies that the string is in binary format for correct conversion
-        reversed_n = int("".join(bin_str), 2)
-        return reversed_n
+        # for bit in s:  # Convert the binary list back to an integer
+        #     num = (num * 2) + int(bit)  # Build the integer from binary digits
+        # return num
 
-        # # METHOD 3: Optimized version, most efficient
+        # # METHOD 2
+        # # Create a list to store binary digits (initialized with '0')
+        # s = ["0"] * 32
+        # num = 0
+        # i = 0
+        # while n != 0:  # Convert the integer to binary
+        #     s[i] = str(n % 2)  # Store the least significant bit
+        #     n = n // 2  # Divide by 2 to shift right
+        #     i += 1  # Move to the next index in the list
+        # # Join the list into a string and convert to an integer
+        # return int("".join(s), 2)
+
+        # METHOD 3: efficient
+        # Get binary string of n, pad with zeros
+        bin_str = bin(abs(n))[2:].zfill(32)
+        # Reverse the string and convert back to an integer
+        reversed_n = int(bin_str[::-1], 2)
+
+        if n < 0:  # Check if the original number is negative
+            return -reversed_n  # Return the negative of the reversed number
+
+        return reversed_n  # Return the reversed number
+
+        # # METHOD 4: Optimized version, most efficient
         # reversed_n = 0  # Initialize the result to 0
         # for _ in range(32):  # Process each bit (32 bits in total)
         #     # Shift reversed_n left by 1 and add the least significant bit of n
+        #     # Add the LSB of n to reversed_n
         #     reversed_n = (reversed_n << 1) | (n & 1)
         #     n >>= 1  # Shift n right by 1 to process the next bit
         # return reversed_n  # Return the reversed bits as an integer
 
     def reverse(self, x: int) -> int:
         """ Reverse the digits of a signed 32-bit integer. """
-        # Use a list for efficient appending (O(1)) vs. string concatenation (O(n²))
-        r = []
+
         is_negative = x < 0  # Check if the number is negative
-        x = abs(x)  # Work with the absolute value
-        # Collect digits in reverse order
-        while x != 0:
-            r.append(str(x % 10))  # Append last digit as a string
-            x //= 10  # Remove last digit
-        r = int("".join(r))  # Convert the list of strings back to an integer
-        # Restore sign if negative
-        return -r if is_negative else r  # Return the reversed integer
+
+        # Reverse the string representation of the absolute value of x
+        r = str(abs(x))[::-1]
+
+        # Convert the reversed string back to an integer
+        r = int(r)
+
+        # Check for overflow; if the reversed integer is out of the 32-bit signed integer bounds
+        if r < -2**31 or r > 2**31 - 1:
+            return 0  # Return 0 if the reversed integer overflows
+
+        # Restore the sign if the original number was negative and return the result
+        return -r if is_negative else r
+
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Rotate the array to the right by k steps in-place.
+        The function does not return anything; it modifies the nums array in-place.
+
+        1. Pop and Insert Method:
+        - Time Complexity: O(n * k), where n is the length of the array.
+        - Space Complexity: O(1) (constant extra space).
+
+        2. Slicing with Reassignment in Loop:
+        - Time Complexity: O(n * k), as the list is sliced and reassigned k times.
+        - Space Complexity: O(n) (due to slicing creating new lists).
+
+        3. Optimized Slicing:
+        - Time Complexity: O(n), as the array is rotated in one slicing operation.
+        - Space Complexity: O(n) (due to slicing creating new lists).
+        """
+
+        # # METHOD 1: Pop and Insert
+        # # Rotate by popping the last element and inserting it at the beginning.
+        # # Repeats k times (inefficient for large k).
+        # k = k % len(nums)  # Ensure k is within bounds of the array length.
+        # for _ in range(k):
+        #     # Pop the last element and insert it at the start.
+        #     popped = nums.pop()
+        #     nums.insert(0, popped)
+
+        # # METHOD 2: Slicing with Reassignment in a Loop
+        # # Shift the entire list by one position to the right, repeat k times.
+        # # Each iteration reassigns the list using slicing (inefficient for large k).
+        # k = k % len(nums)  # Ensure k is within bounds of the array length.
+        # while k > 0:
+        #     # Take the last element, put it at the front, and adjust the rest of the array.
+        #     nums[:] = [nums[-1]] + nums[:-1]
+        #     k -= 1
+
+        # METHOD 3: Optimized Slicing
+        # The most efficient method which rotates the array using slicing.
+        # This operation is done in one step, making it O(n) time complexity.
+        k = k % len(nums)  # Ensure k is within bounds of the array length.
+        nums[:] = nums[-k:] + nums[:-k]  # Perform the rotation in one step.
+
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        """
+        Find indices of the two numbers in nums that add up to target.
+        """
+        # Dict to store numbers and their indices (hash table structure)
+        sum_idx = {}
+
+        for idx, num in enumerate(nums):
+            # Calculate the required complement and check if it  exists in dict.
+            complement = target - num
+
+            if complement in sum_idx:
+                # Return the indices if found.
+                return [sum_idx[complement], idx]
+
+            # Otherwise store the current number and its index.
+            sum_idx[num] = idx
+
+        return []  # Return an empty list if no solution is found
+
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        """Merges two sorted linked lists into one sorted linked list."""
+        # Create a dummy node to simplify merging
+        current = dummy = ListNode()
+
+        while list1 and list2:
+            if list1.val < list2.val:
+                # Attach list1 node to merged list
+                current.next = list1
+                list1 = list1.next  # Advance list1
+            else:
+                # Attach list2 node to merged list
+                current.next = list2
+                list2 = list2.next  # Advance list2
+
+            current = current.next  # Move current pointer
+
+        # Attach remaining nodes from non-exhausted list
+        current.next = list1 or list2
+
+        # Return merged list starting from the dummy's next
+        return dummy.next

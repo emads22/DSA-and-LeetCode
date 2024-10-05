@@ -24,24 +24,24 @@ class Solution:
         int: The maximum amount of money that can be robbed without alerting the police.
         """
         # # METHOD 1
-        if len(nums) == 0:  # If there are no houses, return 0
-            return 0
-        if len(nums) == 1:  # If there's only one house, return its money
-            return nums[0]
-        max_money1 = money1 = 0  # Initialize variables for even-indexed houses
-        max_money2 = money2 = 0  # Initialize variables for odd-indexed houses
-        # Loop through all houses
-        for i in range(len(nums)):
-            if i % 2 == 0:  # If the index is even
-                money1 += nums[i]  # Add money from the even-indexed house
-                # Update the maximum for even-indexed houses
-                max_money1 = max(max_money1, money1)
-            else:  # If the index is odd
-                money2 += nums[i]  # Add money from the odd-indexed house
-                # Update the maximum for odd-indexed houses
-                max_money2 = max(max_money2, money2)
-        # Return the maximum money robbed from either the even or odd indexed houses
-        return max(max_money1, max_money2)
+        # if len(nums) == 0:  # If there are no houses, return 0
+        #     return 0
+        # if len(nums) == 1:  # If there's only one house, return its money
+        #     return nums[0]
+        # max_money1 = money1 = 0  # Initialize variables for even-indexed houses
+        # max_money2 = money2 = 0  # Initialize variables for odd-indexed houses
+        # # Loop through all houses
+        # for i in range(len(nums)):
+        #     if i % 2 == 0:  # If the index is even
+        #         money1 += nums[i]  # Add money from the even-indexed house
+        #         # Update the maximum for even-indexed houses
+        #         max_money1 = max(max_money1, money1)
+        #     else:  # If the index is odd
+        #         money2 += nums[i]  # Add money from the odd-indexed house
+        #         # Update the maximum for odd-indexed houses
+        #         max_money2 = max(max_money2, money2)
+        # # Return the maximum money robbed from either the even or odd indexed houses
+        # return max(max_money1, max_money2)
 
         # Time Complexity: O(n) - Each house is examined once, making the function efficient.
         # Space Complexity: O(1) - The function uses a constant amount of space for variables.
